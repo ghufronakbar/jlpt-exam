@@ -80,11 +80,12 @@ Bukan bagian dari bank soal produksi (itu tetap di Fase 8) — ini cuma jalan pi
 
 ## Fase 6 — Hasil & Review
 
-- [ ] Server action `get` summary attempt (nilai, total benar/salah/tidak dijawab/flag)
-- [ ] `/result/[attemptId]` — tampilkan summary
-- [ ] Server action `get` detail review (include kunci jawaban, explanation, comment — attempt sudah selesai jadi aman dikirim)
-- [ ] `/result/[attemptId]/detail` — soal + jawaban user + kunci + explanation, furigana & comment tampil
-- [ ] Server action `mutate`: tambah `QuestionComment` baru per soal dari halaman detail
+- [x] Server action `get` summary (`getAttemptSummary`, di-cache per attempt via `CACHE_TAGS.attemptSummary`): skor %, total benar/salah/tidak dijawab/flag, durasi. Guard: attempt bukan milik user → `notFound()`; belum `COMPLETED` → redirect balik ke `/test-package/[id]`
+- [x] `/result/[attemptId]` — tampilkan summary + link ke review lengkap
+- [x] Server action `get` detail (`getAttemptDetail`, tidak di-cache karena termasuk comment yang harus read-your-own-writes): kunci jawaban, explanation, comment, plus jawaban user & `isCorrect` per soal (join `attemptAnswers` di-filter by `attemptId`)
+- [x] `/result/[attemptId]/detail` — soal + jawaban user (badge benar/salah/tidak dijawab, pilihan user & kunci di-highlight beda warna) + explanation + comment, furigana tampil (termasuk aturan `MOJI_GOI_READ_KANJI`)
+- [x] Server action `mutate`: `addQuestionCommentAction` — tambah `QuestionComment`, invalidasi cache `testPackageQuestions` (mode baca) via `updateTag` supaya comment baru ikut muncul di sana juga; halaman detail sendiri langsung fresh (`router.refresh()`) karena tidak di-cache
+- [x] Verifikasi: `npm run build` sukses (`/result/[attemptId]`, `/result/[attemptId]/detail` = `ƒ`), `npm run lint` bersih (1 warning unused import dibersihkan)
 
 ## Fase 7 — Analytics
 
