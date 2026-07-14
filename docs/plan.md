@@ -10,12 +10,12 @@ Checklist ini dikerjakan berurutan per fase (fase belakang bergantung pada fase 
 - [x] Setup Tailwind v4 + shadcn/ui (`components.json`, komponen dasar sudah ter-generate di `src/components/ui`)
 - [x] Prisma schema awal lengkap (`User`, `TestPackage`, `TestPackageItem`, `QuestionContext`, `Question`, `QuestionChoice`, `QuestionComment`, `Attempt`, `AttemptAnswer`)
 - [x] Migration awal dijalankan (`prisma/migrations/20260714151325`, `20260714154804`)
-- [ ] Install dependency inti yang belum ada: `bcryptjs`, `@types/bcryptjs`, `jose`, `zod`, `react-hook-form`, `@hookform/resolvers`
-- [ ] Tambah `SESSION_SECRET` ke `.env`
-- [ ] Tambah kredensial Supabase Storage ke `.env` (jika sudah tersedia bucket-nya)
-- [ ] `src/constants/index.ts` — validasi env vars pakai `zod` (fail fast jika ada yang hilang), export constants
-- [ ] `src/constants/cache-key.ts` — daftar cache key/tag terpusat untuk `unstable_cache`/`revalidateTag`
-- [ ] `src/lib/prisma.ts` — Prisma Client singleton (guard hot-reload dev)
+- [x] Install dependency inti: `bcryptjs`, `@types/bcryptjs`, `jose`, `zod`, `react-hook-form`, `@hookform/resolvers`
+- [x] Tambah `SESSION_SECRET` ke `.env` (dan `.env.example`)
+- [x] Kredensial Cloudinary sudah ada di `.env` (`CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`)
+- [x] `src/constants/index.ts` — validasi env vars pakai `zod` (fail fast jika ada yang hilang), export constants
+- [x] `src/constants/cache-key.ts` — daftar cache key/tag terpusat untuk `unstable_cache`/`revalidateTag`
+- [x] `src/lib/prisma.ts` — Prisma Client singleton (guard hot-reload dev)
 
 ## Fase 1 — Autentikasi & Session
 

@@ -6,7 +6,7 @@
 |---|---|
 | Framework | Next.js (App Router) |
 | Database | PostgreSQL (Supabase) via Prisma |
-| File storage | Supabase Storage (audio/images; DB stores URLs only) |
+| File storage | Cloudinary (audio/images; DB stores URLs only) |
 | Styling | Tailwind CSS v4 + shadcn/ui |
 | State | React Context |
 | Auth | Custom credential auth: `bcryptjs` + `jose` (JWT in httpOnly cookie) |
@@ -51,7 +51,7 @@ This is a **single-user** app. Auth is intentionally minimal — no OAuth, no ro
 * **Location:** `./src/constants/index.ts`
 * NEVER access `process.env.YOUR_VARIABLE` directly inside UI components, hooks, or business logic.
 * All environment variables and global constants MUST be recalled, validated, and exported from `./src/constants/index.ts`.
-* Required env vars: `DATABASE_URL`, `DIRECT_URL`, `SESSION_SECRET`, Supabase Storage credentials. Validate presence at startup (zod schema in the constants file); fail fast with a clear error if missing.
+* Required env vars: `DATABASE_URL`, `DIRECT_URL`, `SESSION_SECRET`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`. Validate presence at startup (zod schema in the constants file); fail fast with a clear error if missing.
 * NEVER expose server-only secrets to the client (no `NEXT_PUBLIC_` prefix on secrets).
 
 ## 8. State Management
