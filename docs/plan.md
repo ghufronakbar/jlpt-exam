@@ -46,12 +46,13 @@ Checklist ini dikerjakan berurutan per fase (fase belakang bergantung pada fase 
 
 ## Fase 4 — Test Package
 
-- [ ] Server action `get`: daftar test package (grouped per `jlptLevel`), detail test package by id
-- [ ] `/test-package` — daftar paket dikelompokkan per level (N1, N2, ...)
-- [ ] Komponen shared render markup teks Jepang: `{漢字|かんじ}` furigana, `__teks__` underline, `[_]`/`[★]` slot — dipakai di banyak halaman
-- [ ] `/test-package/[id]` — overview paket, riwayat attempt + hasil, info waktu resmi per sesi, tombol mulai mock test / latihan per seksi
-- [ ] Server action `mutate`: `createAttempt` (mock test `sectionScope=null` atau per-section) → redirect ke `/exam/[attemptId]/[session]`
-- [ ] `/test-package/[id]/questions` — mode baca (furigana + comment tampil, bukan mode pengerjaan)
+- [x] Server action `get`: `getTestPackages` (list, grouped di layer page pakai `JLPT_LEVEL_ORDER`), `getTestPackageDetail` (paket + testPackageItems + riwayat attempt user), `getTestPackageQuestions` (dump lengkap untuk mode baca) — `src/features/test-package/actions.ts`
+- [x] `/test-package` — daftar paket dikelompokkan per level (N1 → N5, urutan eksplisit karena Postgres enum order beda dari yang diinginkan)
+- [x] Komponen shared render markup teks Jepang: `src/lib/japanese-markup.ts` (parser rekursif, dukung nesting furigana-dalam-underline) + `src/components/japanese-text.tsx` (`<JapaneseText>`, prop `hideFuriganaInUnderline` untuk kasus `MOJI_GOI_READ_KANJI`)
+- [x] `/test-package/[id]` — overview paket, waktu resmi JLPT per sesi (`src/constants/jlpt.ts`, sumber [jlpt.jp](https://www.jlpt.jp/e/guideline/testsections.html)), riwayat attempt + link hasil, tombol mulai mock test / latihan per seksi (`StartAttemptActions`)
+- [x] Server action `mutate`: `createAttemptAction` (mock test `sectionScope=null` atau per-section) → redirect ke `/exam/[attemptId]/1`
+- [x] `/test-package/[id]/questions` — mode baca: furigana, kunci jawaban (choice benar di-highlight), explanation, dan comment semua tampil (bukan mode pengerjaan jadi tidak kena guard data-leak `/exam`); grouping `QuestionContext` supaya bacaan bersama tidak diulang render per soal
+- [x] Verifikasi: `npm run build` sukses (semua route baru `ƒ` dynamic), `npm run lint` bersih untuk kode baru (2 error lint yang ada murni di file boilerplate shadcn, tidak terkait Fase 4)
 
 ## Fase 5 — Exam Flow
 
