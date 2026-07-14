@@ -1,0 +1,82 @@
+# Database Rules
+
+Aturan dan konteks database untuk project JLPT practice platform (single-user).
+Stack: Next.js + Prisma + PostgreSQL (Supabase).
+
+## Prinsip Umum
+
+- Schema ada di `prisma/schema.prisma`. Jangan mengubah schema tanpa diminta eksplisit.
+- Semua perubahan schema HARUS lewat migration (`prisma migrate dev`), jangan `db push` kecuali diminta.
+- Supabase: `DATABASE_URL` = pooled connection (pgbouncer) untuk runtime, `DIRECT_URL` = direct connection untuk migration. Jangan menukar keduanya.
+- Ini aplikasi single-user. Jangan menambahkan fitur multi-tenant, role, atau permission tanpa diminta.
+- Jangan pernah menulis password plaintext — selalu hash (bcrypt/argon2) sebelum insert ke `User.password`.
+
+## Struktur Data (hierarki)
+
+```
+TestPackage (1 paket ujian, mis. "JLPT N2 - Juli 2025")
+└── TestPackageItem (1 blok mondai, mis. 問題1 漢字読み)
+    └── Question (1 soal)
+        └── QuestionChoice (pilihan 1-4)
+
+QuestionContext (bacaan/audio/gambar yang dipakai >1 soal, terikat ke TestPackage)
+Attempt (1 sesi pengerjaan) └── AttemptAnswer (jawaban per soal)
+```
+
+## Aturan Penempatan Konten
+
+- `Question.questionText` HANYA berisi stem soal (mis. 「筆者の考えに合うものはどれか」). JANGAN menaruh bacaan panjang di sini.
+- Bacaan/audio/gambar yang dipakai lebih dari satu soal → `QuestionContext`. Konten yang hanya untuk satu soal → kolom di `Question` (`questionImage`, `questionAudio`).
+- `QuestionContext` harus terikat ke `TestPackage` yang sama dengan soal yang memakainya. Jangan membuat context lintas paket.
+- `questionText` dan `answerText` boleh string kosong (bukan null) untuk soal/pilihan yang hanya berupa audio (mis. 即時応答).
+- `Question.explanation` = penjelasan "resmi" (hasil AI, dikurasi). `QuestionComment` = catatan belajar pribadi user. Jangan mencampur keduanya.
+
+## Markup Teks Jepang
+
+Semua kolom teks soal (`questionText`, `answerText`, `storyText`, `instruction`, `explanation`) memakai markup ringan berikut. JANGAN menyimpan HTML mentah di database.
+
+| Markup | Arti | Render frontend |
+|---|---|---|
+| `{漢字|かんじ}` | furigana | `<ruby>漢字<rt>かんじ</rt></ruby>` |
+| `__teks__` | underline (下線部, kata yang ditanya) | span dengan underline |
+| `[_]` | slot kosong (文の組み立て) | garis kosong |
+| `[★]` | slot bintang (文の組み立て) | garis dengan ★ |
+
+Aturan tambahan:
+
+- Markup boleh bersarang: `__{勉強|べんきょう}する__` valid.
+- `[_]` dan `[★]` TIDAK pernah punya isi — selalu literal persis seperti itu.
+- Pada mondai `MOJI_GOI_READ_KANJI`, furigana di dalam segmen `__...__` tidak boleh dirender (itu jawabannya) — ini urusan frontend, data tetap disimpan lengkap dengan furigananya.
+
+## Aturan Kunci Jawaban & Attempt
+
+- `QuestionChoice.codeAnswer` = 1–4. `Question.questionAnswer` dan `AttemptAnswer.selectedAnswer` merujuk ke nilai ini, BUKAN ke `QuestionChoice.id`.
+- Soal `BUNPOU_SENTENCE_COMPOSITION` (★): `questionAnswer` = codeAnswer pilihan yang jatuh di posisi ★ (sesuai format JLPT asli). Tidak perlu skema khusus.
+- `AttemptAnswer.isCorrect` adalah field denormalized: dihitung sekali saat submit (`selectedAnswer == questionAnswer`), disimpan agar query analitik tidak perlu join kunci jawaban. Jika kunci jawaban dikoreksi setelah ada attempt, `isCorrect` attempt lama HARUS dihitung ulang.
+- `selectedAnswer = null` berarti soal dilewati/tidak dijawab (dihitung salah dalam skor, tapi bisa dibedakan di analitik).
+- Jawaban per soal di-UPDATE (upsert), bukan insert baru — ditegakkan oleh `@@unique([attemptId, questionId])`.
+- `Attempt.sectionScope = null` berarti full test; jika terisi, hanya soal dari section tersebut yang dinilai.
+- `Attempt` berstatus `ABANDONED` tidak boleh masuk perhitungan analitik.
+
+## Unique Constraints (jangan dihapus)
+
+Constraint berikut menjaga integritas saat import/ekstraksi soal via AI:
+
+- `TestPackageItem`: `@@unique([testPackageId, mondaiType])` — satu paket tidak boleh punya 2 blok mondai bertipe sama.
+- `Question`: `@@unique([testPackageItemId, order])` — nomor soal tidak boleh dobel.
+- `QuestionChoice`: `@@unique([questionId, codeAnswer])` — kode pilihan tidak boleh dobel.
+- `AttemptAnswer`: `@@unique([attemptId, questionId])` — satu jawaban per soal per attempt.
+
+Saat import data soal, tangani pelanggaran constraint sebagai sinyal error ekstraksi — laporkan, jangan di-skip diam-diam.
+
+## Aturan Query
+
+- Analitik kelemahan per tipe mondai: `AttemptAnswer → Question → TestPackageItem`, group by `mondaiType`. Filter `Attempt.status = COMPLETED`.
+- Saat mengambil soal untuk mode attempt, JANGAN mengirim `questionAnswer` dan `explanation` ke client sebelum attempt disubmit.
+- Gunakan `include`/`select` eksplisit di Prisma — jangan fetch semua relasi tanpa perlu (bacaan `storyText` bisa panjang).
+- Urutan render soal: `TestPackageItem.session` → `TestPackageItem.order` → `Question.order`.
+
+## Data Files & Storage
+
+- File audio/gambar disimpan di Supabase Storage; kolom `*Audio`/`*Image` di database hanya menyimpan URL/path, bukan binary.
+- `TestPackage.sessionTimeLimits` = JSON `{"1": 105, "2": 50}` (menit per sesi). Nomor sesi mengikuti `TestPackageItem.session`.

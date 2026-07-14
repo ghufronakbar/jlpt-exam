@@ -1,0 +1,292 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL") // supabase: connection pooling via DATABASE_URL, migrasi via DIRECT_URL
+}
+
+// ============================================================
+// ENUMS
+// ============================================================
+
+enum JlptLevel {
+  N5
+  N4
+  N3
+  N2
+  N1
+}
+
+enum JlptSection {
+  MOJI_GOI // 文字・語彙 (kosakata & kanji)
+  BUNPOU // 文法 (tata bahasa)
+  DOKKAI // 読解 (membaca)
+  CHOUKAI // 聴解 (mendengarkan)
+}
+
+// Tipe mondai (問題). Menentukan format render di frontend,
+// mis. BUNPOU_SENTENCE_COMPOSITION dirender dengan slot [_] dan [★].
+enum MondaiType {
+  // --- moji goi (文字・語彙) ---
+  MOJI_GOI_READ_KANJI // 漢字読み: cara baca kanji yang digarisbawahi
+  MOJI_GOI_WRITE_KANJI // 表記: kanji dari kata hiragana yang digarisbawahi
+  MOJI_GOI_WORD_FORMATION // 語形成: pembentukan kata (imbuhan/kata majemuk)
+  MOJI_GOI_CONTEXT // 文脈規定: kata yang tepat sesuai konteks kalimat
+  MOJI_GOI_SYNONYM // 言い換え類義: sinonim/parafrase kata yang digarisbawahi
+  MOJI_GOI_WORD_USAGE // 用法: penggunaan kata yang benar dalam kalimat
+
+  // --- bunpou (文法) ---
+  BUNPOU_GRAMMAR // 文法形式の判断: pilih bentuk grammar yang tepat
+  BUNPOU_SENTENCE_COMPOSITION // 文の組み立て: susun kalimat, jawaban = posisi ★
+  BUNPOU_TEXT_GRAMMAR // 文章の文法: grammar dalam wacana (cloze test)
+
+  // --- dokkai (読解) ---
+  DOKKAI_SHORT_TEXT // 内容理解（短文）
+  DOKKAI_MEDIUM_TEXT // 内容理解（中文）
+  DOKKAI_LONG_TEXT // 内容理解（長文）
+  DOKKAI_INTEGRATED // 統合理解: membandingkan 2 teks
+  DOKKAI_MAIN_IDEA // 主張理解: memahami klaim/opini penulis
+  DOKKAI_INFORMATION_RETRIEVAL // 情報検索: cari info dari pengumuman/brosur
+
+  // --- choukai (聴解) ---
+  CHOUKAI_TASK_BASED // 課題理解: apa yang harus dilakukan selanjutnya
+  CHOUKAI_MAIN_POINT // ポイント理解: poin penting dari percakapan
+  CHOUKAI_OUTLINE // 概要理解: gambaran umum isi audio
+  CHOUKAI_EXPRESSION // 発話表現: ungkapan yang tepat untuk situasi (ada gambar)
+  CHOUKAI_QUICK_RESPONSE // 即時応答: respon cepat, pilihan hanya audio
+  CHOUKAI_INTEGRATED // 統合理解: audio panjang, integrasi informasi
+}
+
+enum AttemptStatus {
+  IN_PROGRESS // sedang dikerjakan (timer jalan)
+  COMPLETED // disubmit, sudah dinilai
+  ABANDONED // ditinggal / dibatalkan, tidak masuk analitik
+}
+
+// ============================================================
+// USER
+// ============================================================
+
+// Single-user app: registrasi hanya sekali saat first-time setup,
+// setelah ada 1 row maka endpoint register ditutup.
+model User {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  password String // simpan hash (bcrypt/argon2), JANGAN plaintext
+
+  questionComments QuestionComment[]
+  attempts         Attempt[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ============================================================
+// BANK SOAL (pure data soal, terpisah dari data attempt)
+// ============================================================
+
+// Satu paket ujian utuh, mis. "JLPT N2 - Juli 2025".
+model TestPackage {
+  id        Int       @id @default(autoincrement())
+  name      String // "JLPT 2025 Juli", "JLPT 2024 Desember", dst.
+  jlptLevel JlptLevel
+
+  // Batas waktu (menit) per sesi ujian, key = nomor sesi.
+  // Contoh N2: {"1": 105, "2": 50}
+  // (sesi 1 = 言語知識+読解, sesi 2 = 聴解; N5-N4 punya 3 sesi)
+  sessionTimeLimits Json?
+
+  testPackageItems TestPackageItem[]
+  questionContexts QuestionContext[]
+  attempts         Attempt[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Satu blok mondai di dalam paket, mis. "問題1 漢字読み".
+// Grouping: TestPackage -> TestPackageItem (per mondai) -> Question.
+model TestPackageItem {
+  id         Int         @id @default(autoincrement())
+  mondaiType MondaiType
+  section    JlptSection
+  session    Int // sesi ujian ke berapa: 1 | 2 | 3
+  order      Int // urutan mondai di dalam sesi (問題1, 問題2, ...)
+
+  // Instruksi mondai, mis. 「＿＿の言葉の読み方として最もよいものを...」
+  // Nullable karena bisa diisi belakangan / pakai template default per mondaiType.
+  instruction String? @db.Text
+
+  testPackageId Int
+  testPackage   TestPackage @relation(fields: [testPackageId], references: [id], onDelete: Cascade)
+
+  questions Question[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // satu paket tidak boleh punya 2 blok mondai bertipe sama
+  @@unique([testPackageId, mondaiType])
+}
+
+// Konten bersama yang dipakai >1 soal:
+// bacaan panjang dokkai, teks 文章の文法, atau audio choukai 統合理解.
+// Soal yang kontennya hanya untuk dirinya sendiri TIDAK perlu context
+// (pakai kolom di Question langsung).
+model QuestionContext {
+  id Int @id @default(autoincrement())
+
+  // Context terikat ke paket: mencegah context "yatim" atau
+  // tertukar dipakai soal dari paket lain.
+  testPackageId Int
+  testPackage   TestPackage @relation(fields: [testPackageId], references: [id], onDelete: Cascade)
+
+  // Markup konten teks (berlaku juga untuk semua kolom teks soal):
+  //   {漢字|かんじ}  -> furigana (render <ruby>)
+  //   __teks__       -> underline (下線部)
+  //   [_] dan [★]    -> slot kosong soal 文の組み立て
+  storyText  String? @db.Text // bacaan/wacana; null jika context-nya hanya audio
+  storyImage String? @db.Text // url gambar (brosur 情報検索, dsb.)
+  storyAudio String? @db.Text // url audio yang dipakai beberapa soal
+
+  questions Question[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Question {
+  id Int @id @default(autoincrement())
+
+  testPackageItem   TestPackageItem @relation(fields: [testPackageItemId], references: [id], onDelete: Cascade)
+  testPackageItemId Int
+
+  order Int // nomor soal di dalam mondai: 1,2,3,...
+
+  // HANYA stem soal, mis. 「筆者の考えに合うものはどれか」.
+  // Bacaan panjang yang dipakai beberapa soal masuk QuestionContext, BUKAN di sini.
+  // Boleh string kosong untuk soal yang tidak punya stem tertulis
+  // (mis. 即時応答 yang semuanya audio).
+  questionText  String  @db.Text
+  questionImage String? @db.Text // url gambar khusus soal ini (mis. 発話表現)
+  questionAudio String? @db.Text // url audio khusus soal ini (mayoritas choukai = 1 audio per soal)
+
+  questionChoices QuestionChoice[]
+
+  // Kunci jawaban = codeAnswer pilihan yang benar (1-4).
+  // Untuk 文の組み立て: pilihan yang jatuh di posisi ★ (sesuai format JLPT asli).
+  questionAnswer Int
+
+  // Penjelasan soal (hasil koreksi AI ditempel di sini). Markup sama berlaku.
+  explanation String? @db.Text
+
+  questionContext   QuestionContext? @relation(fields: [questionContextId], references: [id])
+  questionContextId Int?
+
+  questionComments QuestionComment[]
+  attemptAnswers   AttemptAnswer[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // mencegah nomor soal dobel saat ekstraksi AI
+  @@unique([testPackageItemId, order])
+}
+
+model QuestionChoice {
+  id         Int @id @default(autoincrement())
+  codeAnswer Int // 1,2,3,4 -- direferensikan oleh Question.questionAnswer & AttemptAnswer.selectedAnswer
+
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId Int
+
+  // Boleh string kosong untuk pilihan yang tidak tertulis
+  // (mis. 即時応答: pilihan 1-3 hanya terdengar di audio).
+  answerText  String  @db.Text
+  answerImage String? @db.Text // url, untuk pilihan berupa gambar
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // mencegah pilihan dengan kode sama dobel dalam satu soal
+  @@unique([questionId, codeAnswer])
+}
+
+// ============================================================
+// CATATAN BELAJAR
+// ============================================================
+
+// Catatan/review pribadi per soal (beda dengan Question.explanation
+// yang merupakan penjelasan "resmi"): insight, jebakan, mnemonic, dsb.
+model QuestionComment {
+  id Int @id @default(autoincrement())
+
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId Int
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  commentText   String   @db.Text
+  commentImages String[] // url gambar lampiran
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ============================================================
+// ATTEMPT & ANALITIK
+// ============================================================
+
+// Satu sesi pengerjaan. Analitik kelemahan per mondaiType:
+// AttemptAnswer -> Question -> TestPackageItem, group by mondaiType.
+model Attempt {
+  id Int @id @default(autoincrement())
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  testPackage   TestPackage @relation(fields: [testPackageId], references: [id])
+  testPackageId Int
+
+  // null = full test satu paket; diisi jika latihan satu seksi saja
+  // (mis. hanya CHOUKAI). Soal yang dinilai difilter berdasarkan ini.
+  sectionScope JlptSection?
+
+  status     AttemptStatus @default(IN_PROGRESS)
+  startedAt  DateTime      @default(now())
+  finishedAt DateTime? // diisi saat submit; durasi total = finishedAt - startedAt
+
+  answers AttemptAnswer[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AttemptAnswer {
+  id Int @id @default(autoincrement())
+
+  attempt   Attempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  attemptId Int
+
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId Int
+
+  selectedAnswer Int? // codeAnswer yang dipilih (1-4); null = tidak dijawab/dilewati
+
+  // Denormalized dari (selectedAnswer == questionAnswer), dihitung saat submit.
+  // Sengaja disimpan agar query analitik tidak perlu join kunci jawaban.
+  isCorrect Boolean @default(false)
+
+  flagged      Boolean @default(false) // ditandai ragu-ragu saat mengerjakan; flagged+salah = sinyal analitik bagus
+  timeSpentSec Int? // waktu yang dihabiskan di soal ini (opsional)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // satu soal hanya boleh punya satu jawaban per attempt (jawaban di-update, bukan insert baru)
+  @@unique([attemptId, questionId])
+}
