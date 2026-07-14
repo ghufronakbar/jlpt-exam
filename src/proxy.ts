@@ -7,9 +7,13 @@ import { getSession } from "@/lib/auth";
 // Optimistic check only — every Server Action still verifies the session itself.
 const PUBLIC_ROUTES = ["/", "/first-time-setup", "/login"];
 
+// Dev-only seed endpoint (Fase 5.1) — intentionally public, not real production API.
+const PUBLIC_PREFIXES = ["/api/seed/"];
+
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
+  const isPublicRoute =
+    PUBLIC_ROUTES.includes(pathname) || PUBLIC_PREFIXES.some((prefix) => pathname.startsWith(prefix));
 
   if (isPublicRoute) {
     return NextResponse.next();

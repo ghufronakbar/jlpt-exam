@@ -69,13 +69,14 @@ Checklist ini dikerjakan berurutan per fase (fase belakang bergantung pada fase 
 
 Bukan bagian dari bank soal produksi (itu tetap di Fase 8) — ini cuma jalan pintas dev-only supaya ada data `Attempt`-able saat testing Exam Flow, Result, dan Analytics, tanpa nunggu tooling import asli selesai.
 
-- [ ] `src/app/api/seed/demo-test-package/route.ts` — Route Handler `GET`, **tanpa proteksi sesi/password dan tanpa query param** (sesuai permintaan eksplisit)
-- [ ] Idempotent: cek dulu apakah paket demo sudah ada (mis. `TestPackage` dengan `name` unik penanda seperti `"DEMO - Seed Testing"`) via `count`/`findFirst` — kalau sudah ada, skip seeding dan return status `"skipped"`; kalau belum, baru seed dan return `"seeded"`
-- [ ] Seed seminimal mungkin tapi tetap ngikutin `database.md`: 1 `TestPackage`, beberapa `TestPackageItem` (minimal lintas section MOJI_GOI/BUNPOU/DOKKAI — CHOUKAI opsional karena butuh asset audio), tiap item 2–3 `Question` + 4 `QuestionChoice`, `questionAnswer` terisi benar sesuai `codeAnswer`
-- [ ] Minimal 1 soal pakai markup furigana `{漢字|かんじ}` dan 1 soal pakai underline `__teks__`, supaya rendering markup ikut ketes
-- [ ] Minimal 1 `QuestionContext` (bacaan dipakai >1 soal) supaya alur dokkai/context ikut ketes
-- [ ] Response JSON ringkas: `{ status: "seeded" | "skipped", testPackageId }`
-- [ ] Dipanggil manual (browser/curl) saat butuh data testing, bukan bagian dari build/deploy pipeline
+- [x] `src/app/api/seed/demo-test-package/route.ts` — Route Handler `GET`, **tanpa proteksi sesi/password dan tanpa query param** (sesuai permintaan eksplisit)
+- [x] Idempotent: cek `TestPackage` dengan `name` unik penanda `"DEMO - Seed Testing"` via `findFirst` — kalau sudah ada, skip seeding dan return status `"skipped"`; kalau belum, baru seed dan return `"seeded"`
+- [x] Seed: 1 `TestPackage` (N5), 4 `TestPackageItem` lintas section (`MOJI_GOI_READ_KANJI`, `MOJI_GOI_CONTEXT` di sesi 1; `BUNPOU_GRAMMAR`, `DOKKAI_SHORT_TEXT` di sesi 2 — CHOUKAI di-skip, butuh asset audio), tiap item 2 `Question` + 4 `QuestionChoice`, `questionAnswer` terisi benar
+- [x] 2 soal pertama pakai markup furigana `{漢字|かんじ}` dalam underline `__teks__` (menguji aturan sembunyi-furigana `MOJI_GOI_READ_KANJI`)
+- [x] 1 `QuestionContext` (bacaan) dipakai bersama oleh 2 soal `DOKKAI_SHORT_TEXT`
+- [x] Response JSON ringkas: `{ status: "seeded" | "skipped", testPackageId }`
+- [x] **Fix**: route ini awalnya ikut ke-redirect ke `/login` oleh guard `src/proxy.ts` (semua route diproteksi kecuali daftar publik) — ditambahkan `PUBLIC_PREFIXES = ["/api/seed/"]` di `proxy.ts` supaya endpoint dev-only ini benar-benar tanpa proteksi sesuai permintaan
+- [x] Verifikasi: dipanggil manual via curl — call pertama `{"status":"seeded","testPackageId":1}`, call kedua `{"status":"skipped","testPackageId":1}`; isi data dicek query langsung ke DB, sesuai rencana (8 soal, 4 mondai, furigana/underline & context bacaan bersama)
 
 ## Fase 6 — Hasil & Review
 
