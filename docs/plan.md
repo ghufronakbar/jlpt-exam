@@ -39,9 +39,10 @@ Checklist ini dikerjakan berurutan per fase (fase belakang bergantung pada fase 
 
 ## Fase 3 — Route Group `(dashboard)` — Shell
 
-- [ ] Layout `(dashboard)` dengan sidebar (pakai `components/ui/sidebar.tsx`)
-- [ ] Guard session di layout (selain middleware)
-- [ ] `/dashboard` — attempt terakhir, statistik ringkas, CTA ke test package
+- [x] Layout `(dashboard)` — `src/app/(dashboard)/layout.tsx`, pakai `SidebarProvider`/`SidebarInset`/`AppSidebar` (`components/ui/sidebar.tsx`), nav: Dashboard/Test Package/Analytics + tombol Keluar (`logoutAction`)
+- [x] Guard session di layout (selain proxy): `getSession()` + cek user masih ada di DB, redirect `/login` jika tidak valid
+- [x] `/dashboard` — `src/features/dashboard/actions.ts` (`getDashboardSummary`, di-cache per user via `unstable_cache` + `CACHE_TAGS.dashboardSummary`), tampilkan total attempt selesai + attempt terakhir + CTA ke `/test-package`
+- [x] Verifikasi: `npm run build` sukses (`/dashboard` = `ƒ` dynamic), guard tanpa cookie redirect ke `/login` (dicek via curl), user konfirmasi `/dashboard` render `200` tanpa error di log dev server
 
 ## Fase 4 — Test Package
 
