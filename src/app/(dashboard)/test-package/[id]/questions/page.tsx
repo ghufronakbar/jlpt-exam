@@ -91,7 +91,10 @@ export default async function TestPackageQuestionsPage({
                       </span>
                       <div className="flex flex-col gap-2">
                         {question.questionText && (
-                          <JapaneseText text={question.questionText} />
+                          <JapaneseText
+                            text={question.questionText}
+                            hideFuriganaInUnderline={item.mondaiType === "MOJI_GOI_READ_KANJI"}
+                          />
                         )}
                         {question.questionImage && (
                           // eslint-disable-next-line @next/next/no-img-element

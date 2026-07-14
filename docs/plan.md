@@ -56,12 +56,14 @@ Checklist ini dikerjakan berurutan per fase (fase belakang bergantung pada fase 
 
 ## Fase 5 — Exam Flow
 
-- [ ] `src/features/exam/schemas.ts` — zod schema submit jawaban per sesi
-- [ ] Exam context (React Context) — state jawaban + flag per soal, persist ke `sessionStorage`
-- [ ] Server action `get` soal untuk attempt — **wajib** exclude `questionAnswer` & `explanation`, filter by `sectionScope`, urutan `TestPackageItem.session → order → Question.order`
-- [ ] `/exam/[attemptId]/[session]` — halaman pengerjaan; navigasi via `?questionNumber=` + fallback jika query param invalid/di luar range
-- [ ] Guard: attempt `COMPLETED` → redirect ke `/result/[attemptId]`
-- [ ] Server action submit sesi — upsert `AttemptAnswer` (unique `[attemptId, questionId]`), hitung `isCorrect`, set `Attempt.status = COMPLETED` + `finishedAt` jika sesi terakhir
+- [x] `src/features/exam/schemas.ts` — `ExamAnswerSchema` + `SubmitExamSessionSchema` (per soal: `questionId`, `selectedAnswer` 1–4|null, `flagged`)
+- [x] Exam context (`src/features/exam/components/exam-provider.tsx`) — state jawaban+flag per soal (keyed by `questionId`), persist ke `sessionStorage` (key `exam-state-{attemptId}-{session}`), hidrasi via `useLayoutEffect` sebelum paint
+- [x] Server action `get` (`getExamQuestions`): exclude `questionAnswer` & `explanation` total (tidak di-select sama sekali, bukan cuma disembunyikan di UI), exclude `questionComments`, filter by `sectionScope` (latihan per seksi = gabungkan semua `TestPackageItem` section itu lintas `session` asli, jadi virtual "sesi 1" tunggal — sesuai `project-overview.md`), urutan `session → order → Question.order`
+- [x] `/exam/[attemptId]/[session]` — halaman pengerjaan; navigasi via `?questionNumber=` + fallback (soal pertama yang belum dijawab, atau soal 1) kalau query param invalid/di luar range; furigana disembunyikan penuh (mode kerja) + aturan khusus `MOJI_GOI_READ_KANJI` (furigana dalam underline selalu disembunyikan)
+- [x] Guard: attempt `COMPLETED` → redirect ke `/result/[attemptId]`; kepemilikan attempt divalidasi (`attempt.userId === session.userId`) di get & submit action
+- [x] Server action submit sesi (`submitExamSessionAction`) — upsert `AttemptAnswer`, `isCorrect` dihitung ulang server-side dari kunci jawaban asli (tidak percaya client), `Attempt.status = COMPLETED` + `finishedAt` kalau sesi terakhir (section-scoped selalu langsung final di sesi 1), redirect ke sesi berikutnya atau `/result/[attemptId]`
+- [x] **Breaking change lain ketemu**: `revalidateTag(tag)` 1-argumen sudah deprecated di versi ini — sekarang butuh `revalidateTag(tag, profile)`, atau pakai `updateTag(tag)` (khusus Server Action, cocok untuk read-your-own-writes) — dipakai untuk invalidasi cache dashboard setelah attempt selesai. Lihat `node_modules/next/dist/docs/.../updateTag.md`
+- [x] Verifikasi: `npm run build` sukses (`/exam/[attemptId]/[session]` = `ƒ`), `npm run lint` bersih (1 error `react-hooks/set-state-in-effect` di-suppress sengaja untuk hidrasi `sessionStorage` — pola yang secara struktural butuh effect, bukan bug), guard tanpa cookie redirect ke `/login`
 
 ## Fase 5.1 — Demo Seed API (untuk bantu testing Fase 5–7)
 
