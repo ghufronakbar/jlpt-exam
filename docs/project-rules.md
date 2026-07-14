@@ -32,7 +32,7 @@ This is a **single-user** app. Auth is intentionally minimal — no OAuth, no ro
 * **Password hashing:** `bcryptjs` with cost factor 12. Hash on register (first-time setup) and compare with `bcrypt.compare()` on login. NEVER store or log plaintext passwords.
 * **Session:** stateless JWT signed with `jose` (HS256, secret from `SESSION_SECRET` env var), stored in an **httpOnly, secure, sameSite=lax** cookie named `session`. Expiry: 7 days. No session table in the database.
 * **Session helpers location:** `./src/lib/auth.ts` — `createSession()`, `getSession()`, `destroySession()`. All session reads/writes go through these helpers; never read the cookie manually elsewhere.
-* **Route protection:** `middleware.ts` guards all routes except `(auth)` group routes and static assets. No valid session → redirect to `/login`. Server Actions that mutate data MUST also verify the session themselves (middleware alone is not sufficient).
+* **Route protection:** `src/proxy.ts` (the `middleware.ts` convention was renamed to `proxy.ts` in this Next.js version — see `node_modules/next/dist/docs`) guards all routes except `(auth)` group routes and static assets. No valid session → redirect to `/login`. This is an **optimistic** check only (JWT read from cookie, no DB round-trip); Server Actions that mutate data MUST also verify the session themselves via `getSession()`.
 * **Registration lock:** the register action MUST check `count(User) === 0` before creating a user. If a user already exists, reject and redirect — registration is one-time only (see `project-overview.md`).
 * **Login safety:** on failed login, return a generic error message ("invalid credentials"), never reveal whether the username exists.
 

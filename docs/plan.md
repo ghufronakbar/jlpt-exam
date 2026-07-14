@@ -19,12 +19,13 @@ Checklist ini dikerjakan berurutan per fase (fase belakang bergantung pada fase 
 
 ## Fase 1 — Autentikasi & Session
 
-- [ ] `src/lib/auth.ts` — `createSession()`, `getSession()`, `destroySession()` (JWT `jose` HS256, cookie `session` httpOnly+secure+sameSite=lax, expiry 7 hari)
-- [ ] `middleware.ts` — guard semua route kecuali group `(auth)` & static assets, redirect ke `/login` jika tidak ada session
-- [ ] `src/features/auth/schemas.ts` — zod schema register & login (dipakai bareng form client + server action)
-- [ ] Server action register (first-time-setup): guard `count(User) === 0`, hash bcrypt cost 12, buat session
-- [ ] Server action login: `bcrypt.compare`, pesan error generik ("invalid credentials"), buat session
-- [ ] Server action logout: `destroySession()`
+- [x] `src/lib/auth.ts` — `createSession()`, `getSession()` (cached per request), `destroySession()` (JWT `jose` HS256, cookie `session` httpOnly+secure+sameSite=lax, expiry 7 hari)
+- [x] `src/proxy.ts` — guard semua route kecuali `/`, `/first-time-setup`, `/login`; redirect ke `/login` jika tidak ada session. **Catatan breaking change:** di versi Next.js ini `middleware.ts` dideprecate → jadi `proxy.ts` (fungsi `proxy`), lihat `node_modules/next/dist/docs/01-app/03-api-reference/03-file-conventions/proxy.md`
+- [x] `src/features/auth/schemas.ts` — zod schema `RegisterSchema` (+ confirm password) & `LoginSchema`
+- [x] Server action `registerAction` (first-time-setup): guard `count(User) === 0`, hash bcrypt cost 12, buat session
+- [x] Server action `loginAction`: `bcrypt.compare`, pesan error generik ("Username atau password salah."), buat session
+- [x] Server action `logoutAction`: `destroySession()`
+- [x] `npm run build` sukses, `src/proxy.ts` terdeteksi sebagai "ƒ Proxy (Middleware)"
 
 ## Fase 2 — Route Group `(auth)`
 
