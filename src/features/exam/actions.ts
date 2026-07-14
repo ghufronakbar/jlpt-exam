@@ -165,6 +165,7 @@ export async function submitExamSessionAction(input: SubmitExamSessionInput) {
       data: { status: "COMPLETED", finishedAt: new Date() },
     });
     updateTag(CACHE_TAGS.dashboardSummary(authSession.userId));
+    updateTag(CACHE_TAGS.analytics(authSession.userId));
     redirect(`/result/${attemptId}`);
   }
 

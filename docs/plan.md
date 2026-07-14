@@ -89,8 +89,10 @@ Bukan bagian dari bank soal produksi (itu tetap di Fase 8) — ini cuma jalan pi
 
 ## Fase 7 — Analytics
 
-- [ ] Server action analitik: skor per attempt, tren, kelemahan per `mondaiType`/section — join `AttemptAnswer → Question → TestPackageItem`, filter `Attempt.status = COMPLETED` (exclude `ABANDONED`)
-- [ ] `/analytics` — rapor hasil belajar (chart pakai `recharts`)
+- [x] Server action `getAnalytics` (di-cache per user via `CACHE_TAGS.analytics`): tren skor per attempt, kelemahan per `mondaiType` & per `section` — agregasi manual di JS (bukan Prisma `groupBy`, karena `mondaiType`/`section` dua relasi jauh dari `AttemptAnswer`), filter `Attempt.status = COMPLETED` (otomatis exclude `ABANDONED` & `IN_PROGRESS`)
+- [x] Cache analytics diinvalidasi (`updateTag`) bareng dashboard summary saat attempt selesai di `submitExamSessionAction`
+- [x] `/analytics` — chart pakai `recharts` (dibungkus `components/ui/chart.tsx`): line chart tren skor, bar chart horizontal kelemahan per mondai & per section. **Cek dulu skill dataviz** sebelum nulis chart — ternyata tema project ini monokrom murni (`--chart-1..5` semua abu-abu, cuma `--destructive` berwarna), jadi dipakai satu hue netral untuk magnitude (bukan palet kategorikal baru → validator palet tidak perlu dijalankan), dan `--destructive` dipakai spesifik sebagai status-flag bar di bawah 60% akurasi (bukan identitas seri)
+- [x] Verifikasi: `npm run build` sukses (`/analytics` = `ƒ`), `npm run lint` bersih, guard tanpa cookie redirect ke `/login`
 
 ## Fase 8 — Bank Soal (Data)
 
