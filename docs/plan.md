@@ -29,10 +29,13 @@ Checklist ini dikerjakan berurutan per fase (fase belakang bergantung pada fase 
 
 ## Fase 2 — Route Group `(auth)`
 
-- [ ] Layout `(auth)`
-- [ ] `/` — redirect logic: `count(User) === 0` → `/first-time-setup`; ada user tanpa session → `/login`; ada session → `/dashboard`
-- [ ] `/first-time-setup` — form registrasi, guard tertutup jika `count(User) > 0`
-- [ ] `/login` — form login, redirect ke `/dashboard` jika sudah ada session
+- [x] Layout `(auth)` — `src/app/(auth)/layout.tsx`, container center tanpa sidebar
+- [x] `/` — redirect logic: `count(User) === 0` → `/first-time-setup`; ada user tanpa session → `/login`; ada session → `/dashboard`
+- [x] `/first-time-setup` — form registrasi (`RegisterForm`, react-hook-form + zodResolver), guard tertutup jika `count(User) > 0`
+- [x] `/login` — form login (`LoginForm`), redirect ke `/dashboard` jika sudah ada session
+- [x] **Bug ditemukan & diperbaiki**: Next.js men-static-kan `/` dan `/first-time-setup` karena tidak ada Request-time API yang terdeteksi di jalur eksekusi build — guard `count(User)` jadi ter-cache basi (celah keamanan: form registrasi tetap tampil ke publik setelah user pertama ada). Fix: `export const dynamic = "force-dynamic"` di kedua halaman. Diverifikasi via `npm run build` (kolom route berubah dari `○` ke `ƒ`).
+- [x] shadcn versi ini tidak punya `Form` wrapper klasik (registry `form.json` kosong) — dipakai komponen `Field`/`FieldLabel`/`FieldError`/`FieldGroup` (`src/components/ui/field.tsx`) dikombinasikan manual dengan `react-hook-form`'s `register()` + `zodResolver`, bukan `useActionState`
+- [x] Verifikasi: `npm run build` sukses, halaman ter-render dengan field form yang benar (dicek via curl), tidak ada error di log dev server. Testing interaktif submit form diserahkan ke user (manual di browser)
 
 ## Fase 3 — Route Group `(dashboard)` — Shell
 

@@ -5,38 +5,22 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { createSession, destroySession } from "@/lib/auth";
 import { BCRYPT_COST_FACTOR } from "@/constants";
-import { RegisterSchema, LoginSchema } from "./schemas";
+import { RegisterSchema, LoginSchema, type RegisterInput, type LoginInput } from "./schemas";
 
-export type AuthFormState =
-  | {
-      errors?: {
-        username?: string[];
-        password?: string[];
-        confirmPassword?: string[];
-      };
-      message?: string;
-    }
-  | undefined;
+export type AuthActionResult = { message: string } | undefined;
 
 // Registration is one-time only: closed as soon as the first User row exists.
-export async function registerAction(
-  _prevState: AuthFormState,
-  formData: FormData,
-): Promise<AuthFormState> {
+export async function registerAction(input: RegisterInput): Promise<AuthActionResult> {
   const existingUserCount = await prisma.user.count();
 
   if (existingUserCount > 0) {
     redirect("/login");
   }
 
-  const validatedFields = RegisterSchema.safeParse({
-    username: formData.get("username"),
-    password: formData.get("password"),
-    confirmPassword: formData.get("confirmPassword"),
-  });
+  const validatedFields = RegisterSchema.safeParse(input);
 
   if (!validatedFields.success) {
-    return { errors: validatedFields.error.flatten().fieldErrors };
+    return { message: validatedFields.error.issues[0]?.message ?? "Data tidak valid." };
   }
 
   const { username, password } = validatedFields.data;
@@ -52,17 +36,11 @@ export async function registerAction(
 
 const INVALID_CREDENTIALS_MESSAGE = "Username atau password salah.";
 
-export async function loginAction(
-  _prevState: AuthFormState,
-  formData: FormData,
-): Promise<AuthFormState> {
-  const validatedFields = LoginSchema.safeParse({
-    username: formData.get("username"),
-    password: formData.get("password"),
-  });
+export async function loginAction(input: LoginInput): Promise<AuthActionResult> {
+  const validatedFields = LoginSchema.safeParse(input);
 
   if (!validatedFields.success) {
-    return { errors: validatedFields.error.flatten().fieldErrors };
+    return { message: validatedFields.error.issues[0]?.message ?? "Data tidak valid." };
   }
 
   const { username, password } = validatedFields.data;
