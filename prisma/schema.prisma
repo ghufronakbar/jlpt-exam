@@ -94,11 +94,6 @@ model TestPackage {
   name      String // "JLPT 2025 Juli", "JLPT 2024 Desember", dst.
   jlptLevel JlptLevel
 
-  // Batas waktu (menit) per sesi ujian, key = nomor sesi.
-  // Contoh N2: {"1": 105, "2": 50}
-  // (sesi 1 = 言語知識+読解, sesi 2 = 聴解; N5-N4 punya 3 sesi)
-  sessionTimeLimits Json?
-
   testPackageItems TestPackageItem[]
   questionContexts QuestionContext[]
   attempts         Attempt[]

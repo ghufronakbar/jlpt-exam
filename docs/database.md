@@ -78,5 +78,9 @@ Saat import data soal, tangani pelanggaran constraint sebagai sinyal error ekstr
 
 ## Data Files & Storage
 
-- File audio/gambar disimpan di Supabase Storage; kolom `*Audio`/`*Image` di database hanya menyimpan URL/path, bukan binary.
-- `TestPackage.sessionTimeLimits` = JSON `{"1": 105, "2": 50}` (menit per sesi). Nomor sesi mengikuti `TestPackageItem.session`.
+- File audio/gambar disimpan di kolom `*Audio`/`*Image` di database hanya menyimpan URL/path, bukan binary.
+
+## Timer
+
+- Time limit ujian TIDAK disimpan di database — timer diatur user secara manual di sisi frontend. Jangan menambahkan kolom time limit ke schema tanpa diminta.
+- Durasi pengerjaan tetap terekam via `Attempt.startedAt`/`finishedAt` dan `AttemptAnswer.timeSpentSec` (opsional) untuk analitik.

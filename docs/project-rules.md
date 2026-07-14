@@ -1,38 +1,73 @@
 # Project-Specific Architecture & Rules
 
-## 1. Modular Folder Structure
+## 1. Tech Stack Summary
+
+| Concern | Choice |
+|---|---|
+| Framework | Next.js (App Router) |
+| Database | PostgreSQL (Supabase) via Prisma |
+| File storage | Supabase Storage (audio/images; DB stores URLs only) |
+| Styling | Tailwind CSS v4 + shadcn/ui |
+| State | React Context |
+| Auth | Custom credential auth: `bcryptjs` + `jose` (JWT in httpOnly cookie) |
+| Validation | `zod` (single source of truth for all input schemas) |
+| Forms | `react-hook-form` + `@hookform/resolvers/zod` |
+
+Do NOT introduce other libraries for these concerns (e.g., NextAuth/Auth.js, Redux, axios, styled-components) without explicit approval.
+
+## 2. Modular Folder Structure
 * Maintain a modular and feature-driven folder structure.
 * Separate global/generic UI building blocks (`./src/components/ui`) from feature-specific logic.
 * Group components, hooks, and local state by feature (e.g., inside `./src/features/[feature-name]`) to encapsulate logic and maintain scalability.
 
-## 2. UI Components & shadcn/ui
+## 3. UI Components & shadcn/ui
 * **Location:** `./src/components/ui`
 * Always check for and utilize existing shadcn/ui components before creating new custom components.
 * Prefer utilizing existing hooks from the shadcn ecosystem (e.g., `use-toast`, `use-form`) for standard UI behaviors.
 * When extending or overriding shadcn component styles, always use the `cn()` utility to prevent Tailwind class conflicts.
 
-## 3. Server Actions & Caching
+## 4. Authentication & Session
+This is a **single-user** app. Auth is intentionally minimal — no OAuth, no roles, no multi-tenant logic.
+
+* **Password hashing:** `bcryptjs` with cost factor 12. Hash on register (first-time setup) and compare with `bcrypt.compare()` on login. NEVER store or log plaintext passwords.
+* **Session:** stateless JWT signed with `jose` (HS256, secret from `SESSION_SECRET` env var), stored in an **httpOnly, secure, sameSite=lax** cookie named `session`. Expiry: 7 days. No session table in the database.
+* **Session helpers location:** `./src/lib/auth.ts` — `createSession()`, `getSession()`, `destroySession()`. All session reads/writes go through these helpers; never read the cookie manually elsewhere.
+* **Route protection:** `middleware.ts` guards all routes except `(auth)` group routes and static assets. No valid session → redirect to `/login`. Server Actions that mutate data MUST also verify the session themselves (middleware alone is not sufficient).
+* **Registration lock:** the register action MUST check `count(User) === 0` before creating a user. If a user already exists, reject and redirect — registration is one-time only (see `project-overview.md`).
+* **Login safety:** on failed login, return a generic error message ("invalid credentials"), never reveal whether the username exists.
+
+## 5. Input Validation (zod)
+* Every Server Action MUST validate its input with a `zod` schema before touching the database. Never trust client data, including "internal" calls.
+* Schemas live next to their feature (e.g., `./src/features/exam/schemas.ts`) and are shared between the form (client) and the action (server) — define once, use on both sides.
+* Forms use `react-hook-form` with `zodResolver`; do not hand-roll form state for standard forms.
+
+## 6. Server Actions & Caching
 * Use Server Actions for both data fetching (`get`) and data mutations (`mutate`).
 * **Caching for 'get' actions:** Implement caching for data-fetching Server Actions using Next.js caching mechanisms (such as `unstable_cache` with tags).
 * **Centralized Cache Keys:** All cache keys and tags MUST be defined in `./src/constants/cache-key.ts`. Never hardcode cache key strings inside actions. This ensures easy invalidation (e.g., via `revalidateTag`) from a single source of truth.
+* **Data leak guard:** actions that serve exam-mode data MUST NOT include `questionAnswer` or `explanation` in their return payload (see `database.md`). Use explicit Prisma `select` — never return full models by default.
 
-## 4. Environment Variables & Constants
+## 7. Environment Variables & Constants
 * **Location:** `./src/constants/index.ts`
-* NEVER access `process.env.YOUR_VARIABLE` directly inside UI components, hooks, or business logic. 
+* NEVER access `process.env.YOUR_VARIABLE` directly inside UI components, hooks, or business logic.
 * All environment variables and global constants MUST be recalled, validated, and exported from `./src/constants/index.ts`.
+* Required env vars: `DATABASE_URL`, `DIRECT_URL`, `SESSION_SECRET`, Supabase Storage credentials. Validate presence at startup (zod schema in the constants file); fail fast with a clear error if missing.
+* NEVER expose server-only secrets to the client (no `NEXT_PUBLIC_` prefix on secrets).
 
-## 5. State Management
+## 8. State Management
 * **Tool:** React Context.
 * Use React Context for shared or global state management within features or the application.
 * Isolate context providers to the lowest possible component tree level to prevent unnecessary re-renders.
+* **Exam state:** in-progress answers/flags live in a feature-level context and are persisted to `sessionStorage` (survive refresh), committed to DB only on session submit (see `project-overview.md`).
 
-## 6. Styling (Tailwind CSS v4)
+## 9. Styling (Tailwind CSS v4)
 * Use Tailwind CSS v4 standard utility classes and rely on the CSS-first configuration approach.
 * Respect the CSS variables defined by the shadcn/ui setup for theming and color consistency.
 
-## 7. Database & ORM (Prisma)
-* Ensure the Prisma Client is instantiated using a singleton pattern in a dedicated utility file to prevent exhausting database connections during development hot-reloads.
+## 10. Database & ORM (Prisma)
+* Ensure the Prisma Client is instantiated using a singleton pattern in a dedicated utility file (`./src/lib/prisma.ts`) to prevent exhausting database connections during development hot-reloads.
+* Schema rules, Japanese text markup, and query rules are defined in `database.md` — read it before writing any database code.
 
-## 8. Verification & General Guidelines
+## 11. Verification & General Guidelines
 * **TypeScript:** Use strict typing. Do not use `any`.
 * **Build Verification:** Always run `npm run build` after making structural changes or modifying server actions/caching logic to verify the build integrity and catch errors early.
