@@ -62,6 +62,18 @@ Checklist ini dikerjakan berurutan per fase (fase belakang bergantung pada fase 
 - [ ] Guard: attempt `COMPLETED` → redirect ke `/result/[attemptId]`
 - [ ] Server action submit sesi — upsert `AttemptAnswer` (unique `[attemptId, questionId]`), hitung `isCorrect`, set `Attempt.status = COMPLETED` + `finishedAt` jika sesi terakhir
 
+## Fase 5.1 — Demo Seed API (untuk bantu testing Fase 5–7)
+
+Bukan bagian dari bank soal produksi (itu tetap di Fase 8) — ini cuma jalan pintas dev-only supaya ada data `Attempt`-able saat testing Exam Flow, Result, dan Analytics, tanpa nunggu tooling import asli selesai.
+
+- [ ] `src/app/api/seed/demo-test-package/route.ts` — Route Handler `GET`, **tanpa proteksi sesi/password dan tanpa query param** (sesuai permintaan eksplisit)
+- [ ] Idempotent: cek dulu apakah paket demo sudah ada (mis. `TestPackage` dengan `name` unik penanda seperti `"DEMO - Seed Testing"`) via `count`/`findFirst` — kalau sudah ada, skip seeding dan return status `"skipped"`; kalau belum, baru seed dan return `"seeded"`
+- [ ] Seed seminimal mungkin tapi tetap ngikutin `database.md`: 1 `TestPackage`, beberapa `TestPackageItem` (minimal lintas section MOJI_GOI/BUNPOU/DOKKAI — CHOUKAI opsional karena butuh asset audio), tiap item 2–3 `Question` + 4 `QuestionChoice`, `questionAnswer` terisi benar sesuai `codeAnswer`
+- [ ] Minimal 1 soal pakai markup furigana `{漢字|かんじ}` dan 1 soal pakai underline `__teks__`, supaya rendering markup ikut ketes
+- [ ] Minimal 1 `QuestionContext` (bacaan dipakai >1 soal) supaya alur dokkai/context ikut ketes
+- [ ] Response JSON ringkas: `{ status: "seeded" | "skipped", testPackageId }`
+- [ ] Dipanggil manual (browser/curl) saat butuh data testing, bukan bagian dari build/deploy pipeline
+
 ## Fase 6 — Hasil & Review
 
 - [ ] Server action `get` summary attempt (nilai, total benar/salah/tidak dijawab/flag)
@@ -77,8 +89,9 @@ Checklist ini dikerjakan berurutan per fase (fase belakang bergantung pada fase 
 
 ## Fase 8 — Bank Soal (Data)
 
-- [ ] Tooling/script import soal (manual atau AI-assisted extraction), tangani pelanggaran unique constraint sebagai sinyal error ekstraksi (jangan silent skip)
-- [ ] Seed minimal 1 paket lengkap untuk development/testing end-to-end
+Bank soal asli/produksi (bukan data dummy testing — itu di [Fase 5.1](#fase-51--demo-seed-api-untuk-bantu-testing-fase-57)).
+
+- [ ] Tooling/script import soal (manual atau AI-assisted extraction) dari paket JLPT asli, tangani pelanggaran unique constraint sebagai sinyal error ekstraksi (jangan silent skip)
 
 ## Fase 9 — Verifikasi & Polish
 
