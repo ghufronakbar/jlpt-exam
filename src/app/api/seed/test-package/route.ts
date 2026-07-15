@@ -1,21 +1,56 @@
+import fs from "node:fs/promises";
+import path from "node:path";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { env } from "@/constants";
-import rawSeedData from "./data.json";
-import type { SeedData } from "./types";
+import type { SeedTestPackage } from "./types";
 
-// Import route for real bank-soal data scraped by another tool, written to
-// ./data.json (shape documented in docs/seed.md). Unlike the Fase 5.1 demo
-// seed route, this one handles real (larger, less trusted) data: protected by
-// a shared-secret query param, and each Question is its own transaction so a
-// single malformed record doesn't roll back everything already imported.
+// Import route for real bank-soal data scraped by another tool. Each JSON
+// file in src/test-package-data/ is one SeedTestPackage (shape documented in
+// docs/seed.md) — one file per package because a single paket's JSON can get
+// very large. Unlike the Fase 5.1 demo seed route, this handles real (larger,
+// less trusted) data: protected by a shared-secret query param, and each
+// Question is its own transaction so a single malformed record doesn't roll
+// back everything already imported.
 export const dynamic = "force-dynamic";
 
-const seedData = rawSeedData as SeedData;
+const SEED_DATA_DIR = path.join(process.cwd(), "src/test-package-data");
 
 function log(message: string) {
   console.log(`[seed:test-package] ${message}`);
+}
+
+async function loadSeedFiles(): Promise<{ file: string; pkg: SeedTestPackage }[]> {
+  let entries: string[];
+  try {
+    entries = await fs.readdir(SEED_DATA_DIR);
+  } catch {
+    log(`ERROR — folder tidak ditemukan: ${SEED_DATA_DIR}`);
+    return [];
+  }
+
+  const jsonFiles = entries.filter((name) => name.endsWith(".json")).sort();
+  const results: { file: string; pkg: SeedTestPackage }[] = [];
+
+  for (const file of jsonFiles) {
+    const raw = await fs.readFile(path.join(SEED_DATA_DIR, file), "utf-8");
+
+    if (!raw.trim()) {
+      log(`SKIP file "${file}" — kosong`);
+      continue;
+    }
+
+    try {
+      const pkg = JSON.parse(raw) as SeedTestPackage;
+      results.push({ file, pkg });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      log(`ERROR file "${file}" — JSON tidak valid: ${message}`);
+    }
+  }
+
+  return results;
 }
 
 export async function GET(request: NextRequest) {
@@ -28,32 +63,42 @@ export async function GET(request: NextRequest) {
   const summary = {
     packagesSeeded: [] as string[],
     packagesSkipped: [] as string[],
+    filesWithErrors: [] as string[],
     questionsSeeded: 0,
     errors: [] as { context: string; message: string }[],
   };
 
-  log(`START — ${seedData.testPackages.length} package(s) in data.json`);
+  const seedFiles = await loadSeedFiles();
+  log(`START — ${seedFiles.length} file(s) di ${SEED_DATA_DIR}`);
 
-  for (const pkg of seedData.testPackages) {
+  for (const { file, pkg } of seedFiles) {
+    if (!pkg.name || !pkg.jlptLevel || !Array.isArray(pkg.testPackageItems)) {
+      const message = `file "${file}" tidak sesuai schema SeedTestPackage (name/jlptLevel/testPackageItems hilang)`;
+      log(`ERROR ${message}`);
+      summary.filesWithErrors.push(file);
+      summary.errors.push({ context: file, message });
+      continue;
+    }
+
     const existing = await prisma.testPackage.findFirst({
       where: { name: pkg.name },
       select: { id: true },
     });
 
     if (existing) {
-      log(`SKIP package "${pkg.name}" — sudah ada (id=${existing.id})`);
+      log(`SKIP package "${pkg.name}" (${file}) — sudah ada (id=${existing.id})`);
       summary.packagesSkipped.push(pkg.name);
       continue;
     }
 
-    log(`CREATE package "${pkg.name}" (${pkg.jlptLevel})`);
+    log(`CREATE package "${pkg.name}" (${file}, ${pkg.jlptLevel})`);
     const testPackage = await prisma.testPackage.create({
       data: { name: pkg.name, jlptLevel: pkg.jlptLevel },
       select: { id: true },
     });
 
-    // Local ref id (from data.json) -> real DB id, so questions can point at
-    // the right shared QuestionContext.
+    // Local ref id (from the JSON file) -> real DB id, so questions can point
+    // at the right shared QuestionContext.
     const contextIdMap = new Map<string, number>();
 
     for (const ctx of pkg.questionContexts ?? []) {

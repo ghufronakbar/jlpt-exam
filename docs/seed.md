@@ -3,10 +3,27 @@
 Dokumen ini adalah kontrak data untuk tool/AI eksternal yang melakukan scraping soal JLPT
 asli, supaya hasilnya bisa langsung diimpor ke database lewat endpoint seed di bawah.
 
-Kalau kamu (AI/tool lain) yang membaca dokumen ini: tugasmu adalah menghasilkan file
-`src/app/api/seed/test-package/data.json` yang valid sesuai schema di dokumen ini. Setelah
-`data.json` ditulis, panggil endpoint importnya — jangan mengubah `route.ts` atau `types.ts`
+Kalau kamu (AI/tool lain) yang membaca dokumen ini: tugasmu adalah menulis file JSON baru di
+folder `src/test-package-data/` (satu file = satu paket tes) yang valid sesuai schema di
+dokumen ini, lalu panggil endpoint importnya. Jangan mengubah `route.ts` atau `types.ts`
 kecuali memang diminta.
+
+## Satu File = Satu Paket Tes
+
+Setiap paket tes JLPT ditulis sebagai **satu file JSON terpisah** di folder
+`src/test-package-data/`, bukan digabung jadi satu file besar — mengingat isi satu paket
+(puluhan soal, semua text/markup/gambar/audio) bisa sangat panjang.
+
+- Lokasi: `src/test-package-data/<nama-file>.json`
+- Konvensi nama file: `<level-lowercase>-<tahun>-<bulan 2 digit>.json`, mis.
+  `n2-2019-12.json` untuk paket JLPT N2 bulan Desember 2019. Nama file bebas asal deskriptif
+  dan tidak bentrok — yang jadi kunci deduplikasi sebenarnya adalah field `name` di **dalam**
+  isi JSON-nya (lihat di bawah), bukan nama filenya.
+- Root tiap file **langsung berupa satu object `SeedTestPackage`** (lihat schema di bawah) —
+  TIDAK dibungkus array/`testPackages`.
+- File kosong (0 byte) otomatis di-skip dengan aman (tidak error) — jadi boleh nyicil, bikin
+  file placeholder kosong dulu lalu isi belakangan.
+- Endpoint import otomatis scan **semua** file `*.json` di folder ini setiap kali dipanggil.
 
 ## Cara Import
 
@@ -16,25 +33,21 @@ GET /api/seed/test-package?auth=<SESSION_SECRET>
 
 - `SESSION_SECRET` = nilai env var `SESSION_SECRET` di `.env` project ini (bukan password user).
 - Endpoint ini sengaja **tidak** pakai session login — proteksinya cuma query param `auth` ini.
-- Import bersifat **idempotent per `TestPackage.name`**: kalau paket dengan `name` yang sama
-  sudah ada di database, seluruh paket itu di-skip (tidak dobel, tidak di-update). Jalankan
-  ulang endpoint ini kapan saja aman — paket yang sudah ada tidak akan diproses ulang.
+- Import bersifat **idempotent per `TestPackage.name`** (field `name` di dalam JSON, bukan nama
+  file): kalau paket dengan `name` yang sama sudah ada di database, seluruh paket itu di-skip
+  (tidak dobel, tidak di-update). Jalankan ulang endpoint ini kapan saja aman — file/paket yang
+  sudah ada tidak akan diproses ulang, jadi bisa tambah file baru ke folder lalu panggil ulang
+  endpoint yang sama tanpa takut dobel.
 - Tiap `Question` diimpor dalam transaksi masing-masing. Kalau satu soal gagal (mis. rusak,
   referensi context tidak ketemu), soal itu dicatat di response sebagai error dan proses
-  **lanjut** ke soal berikutnya — bukan membatalkan seluruh paket.
-- Response JSON: `{ packagesSeeded, packagesSkipped, questionsSeeded, errors }`. Log detail
-  per langkah (`CREATE`/`SKIP`/`ERROR`/`DONE`) tercetak di stdout server dengan prefix
-  `[seed:test-package]` — cek log server kalau butuh detail lebih dari ringkasan response.
+  **lanjut** ke soal berikutnya — bukan membatalkan seluruh paket. Kalau satu FILE gagal
+  di-parse (JSON tidak valid) atau tidak sesuai schema, file itu dicatat di `filesWithErrors`
+  dan proses lanjut ke file berikutnya.
+- Response JSON: `{ packagesSeeded, packagesSkipped, filesWithErrors, questionsSeeded, errors }`.
+  Log detail per langkah (`CREATE`/`SKIP`/`ERROR`/`DONE`) tercetak di stdout server dengan
+  prefix `[seed:test-package]` — cek log server kalau butuh detail lebih dari ringkasan response.
 
-## Struktur File `data.json`
-
-Root object:
-
-```ts
-type SeedData = {
-  testPackages: SeedTestPackage[];
-};
-```
+## Struktur Isi Tiap File
 
 ### `SeedTestPackage`
 
@@ -53,6 +66,16 @@ type SeedTestPackage = {
 Bacaan panjang, gambar brosur, atau audio yang dipakai bersama oleh beberapa soal (mis. dokkai
 文章, choukai 統合理解). Kalau konten cuma dipakai 1 soal, JANGAN buat context — taruh langsung
 di `questionImage`/`questionAudio` milik `SeedQuestion`.
+
+**Pengecualian khusus CHOUKAI**: SEMUA mondai choukai (`CHOUKAI_TASK_BASED`,
+`CHOUKAI_MAIN_POINT`, `CHOUKAI_OUTLINE`, `CHOUKAI_QUICK_RESPONSE`, `CHOUKAI_INTEGRATED`) pakai
+**satu `SeedQuestionContext` per mondai** (per `SeedTestPackageItem`) untuk `storyAudio`, dipakai
+bareng oleh SEMUA soal di mondai itu — walaupun tiap soal isinya independen (dialog/skenario
+beda-beda). Ini bukan pengecualian dari "1 soal = jangan buat context", tapi memang konvensi
+khusus choukai: audio JLPT diputar tanpa jeda per mondai (tidak bisa diulang di ujian asli), dan
+biasanya file audio yang tersedia memang sudah dipotong per mondai, bukan per butir soal. Jangan
+isi `questionAudio` individual per soal choukai kecuali memang ada file terpisah per soal.
+`questionImage` tetap per soal seperti biasa (mis. soal visual-matching di 課題理解).
 
 ```ts
 type SeedQuestionContext = {
@@ -200,61 +223,94 @@ dihilangkan dari data.
 
 ## Contoh Lengkap
 
+Isi file `src/test-package-data/n5-2024-07.json` (root langsung `SeedTestPackage`, tanpa
+pembungkus `testPackages`):
+
 ```json
 {
-  "testPackages": [
+  "name": "JLPT N5 - Contoh Paket",
+  "jlptLevel": "N5",
+  "questionContexts": [
     {
-      "name": "JLPT N5 - Contoh Paket",
-      "jlptLevel": "N5",
-      "questionContexts": [
+      "id": "ctx-1",
+      "storyText": "わたしは まいにち 7じに おきます。あさごはんを たべてから、がっこうに いきます。"
+    }
+  ],
+  "testPackageItems": [
+    {
+      "mondaiType": "MOJI_GOI_READ_KANJI",
+      "section": "MOJI_GOI",
+      "session": 1,
+      "order": 1,
+      "instruction": "＿＿の言葉の読み方として最もよいものを、1・2・3・4から一つえらびなさい。",
+      "questions": [
         {
-          "id": "ctx-1",
-          "storyText": "わたしは まいにち 7じに おきます。あさごはんを たべてから、がっこうに いきます。"
-        }
-      ],
-      "testPackageItems": [
-        {
-          "mondaiType": "MOJI_GOI_READ_KANJI",
-          "section": "MOJI_GOI",
-          "session": 1,
           "order": 1,
-          "instruction": "＿＿の言葉の読み方として最もよいものを、1・2・3・4から一つえらびなさい。",
-          "questions": [
-            {
-              "order": 1,
-              "questionText": "明日、__{学校|がっこう}__に 行きます。",
-              "questionAnswer": 1,
-              "explanation": "「学校」は「がっこう」と読みます。",
-              "questionChoices": [
-                { "codeAnswer": 1, "answerText": "がっこう" },
-                { "codeAnswer": 2, "answerText": "がこう" },
-                { "codeAnswer": 3, "answerText": "がっこ" },
-                { "codeAnswer": 4, "answerText": "がいこう" }
-              ]
-            }
-          ]
-        },
-        {
-          "mondaiType": "DOKKAI_SHORT_TEXT",
-          "section": "DOKKAI",
-          "session": 2,
-          "order": 1,
-          "instruction": "つぎの文章を読んで、質問に答えてください。",
-          "questions": [
-            {
-              "order": 1,
-              "questionText": "「わたし」は 何時に おきますか。",
-              "questionAnswer": 1,
-              "questionContextRef": "ctx-1",
-              "questionChoices": [
-                { "codeAnswer": 1, "answerText": "7じ" },
-                { "codeAnswer": 2, "answerText": "8じ" },
-                { "codeAnswer": 3, "answerText": "8じはん" },
-                { "codeAnswer": 4, "answerText": "15ふん" }
-              ]
-            }
+          "questionText": "明日、__{学校|がっこう}__に 行きます。",
+          "questionAnswer": 1,
+          "explanation": "「学校」は「がっこう」と読みます。",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "がっこう" },
+            { "codeAnswer": 2, "answerText": "がこう" },
+            { "codeAnswer": 3, "answerText": "がっこ" },
+            { "codeAnswer": 4, "answerText": "がいこう" }
           ]
         }
+      ]
+    },
+    {
+      "mondaiType": "DOKKAI_SHORT_TEXT",
+      "section": "DOKKAI",
+      "session": 2,
+      "order": 1,
+      "instruction": "つぎの文章を読んで、質問に答えてください。",
+      "questions": [
+        {
+          "order": 1,
+          "questionText": "「わたし」は 何時に おきますか。",
+          "questionAnswer": 1,
+          "questionContextRef": "ctx-1",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "7じ" },
+            { "codeAnswer": 2, "answerText": "8じ" },
+            { "codeAnswer": 3, "answerText": "8じはん" },
+            { "codeAnswer": 4, "answerText": "15ふん" }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+Contoh mondai CHOUKAI (satu context di-share seluruh soal dalam mondai, lihat pengecualian di
+atas):
+
+```json
+{
+  "id": "ctx-choukai-task-based",
+  "storyAudio": "https://res.cloudinary.com/.../choukai-mondai1.mp3"
+}
+```
+
+```json
+{
+  "mondaiType": "CHOUKAI_TASK_BASED",
+  "section": "CHOUKAI",
+  "session": 2,
+  "order": 1,
+  "instruction": "問題1 では、まず質問を聞いてください。それから話を聞いて、問題用紙の1から4の中から、最もよいものを一つ選んでください。",
+  "questions": [
+    {
+      "order": 1,
+      "questionText": "女の人は壊れたパソコンをどうしますか?",
+      "questionAnswer": 2,
+      "questionContextRef": "ctx-choukai-task-based",
+      "questionChoices": [
+        { "codeAnswer": 1, "answerText": "アパートの指定場所に出す。" },
+        { "codeAnswer": 2, "answerText": "メーカーに送る。" },
+        { "codeAnswer": 3, "answerText": "買った店に持っていく。" },
+        { "codeAnswer": 4, "answerText": "市の回収箱に入れる。" }
       ]
     }
   ]

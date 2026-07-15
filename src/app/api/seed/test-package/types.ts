@@ -36,6 +36,9 @@ export type SeedQuestionContext = {
   storyAudio?: string | null;
 };
 
+// Satu file JSON di `src/test-package-data/*.json` = satu SeedTestPackage,
+// bukan dibungkus array — satu paket soal JLPT bisa sangat panjang, jadi
+// dipisah per file (satu file per paket) alih-alih satu data.json raksasa.
 export type SeedTestPackage = {
   // HARUS unik — dipakai sebagai kunci deteksi duplikat antar run seed.
   // Kalau sudah ada TestPackage dengan `name` yang sama, seluruh paket ini di-skip.
@@ -43,8 +46,4 @@ export type SeedTestPackage = {
   jlptLevel: JlptLevel;
   questionContexts?: SeedQuestionContext[];
   testPackageItems: SeedTestPackageItem[];
-};
-
-export type SeedData = {
-  testPackages: SeedTestPackage[];
 };

@@ -27,6 +27,7 @@ Attempt (1 sesi pengerjaan) └── AttemptAnswer (jawaban per soal)
 
 - `Question.questionText` HANYA berisi stem soal (mis. 「筆者の考えに合うものはどれか」). JANGAN menaruh bacaan panjang di sini.
 - Bacaan/audio/gambar yang dipakai lebih dari satu soal → `QuestionContext`. Konten yang hanya untuk satu soal → kolom di `Question` (`questionImage`, `questionAudio`).
+- **Khusus audio CHOUKAI**: default-nya SATU `QuestionContext.storyAudio` per `TestPackageItem` (mondai), dipakai bersama oleh SEMUA soal dalam mondai itu — walaupun tiap soal secara narasi independen (mis. 課題理解 yang isinya 5 dialog terpisah). Ini karena audio JLPT diputar tanpa jeda per mondai (tidak bisa diulang), dan sumber file audio biasanya memang dipotong per mondai (問題1.mp3, 問題2.mp3, dst.), bukan per butir soal. Jangan pakai `Question.questionAudio` individual untuk choukai kecuali memang ada file terpisah per soal. Gambar (`questionImage`) tetap per soal seperti biasa kalau memang cuma 1 soal yang butuh gambar (mis. 発話表現, atau soal visual-matching di 課題理解).
 - `QuestionContext` harus terikat ke `TestPackage` yang sama dengan soal yang memakainya. Jangan membuat context lintas paket.
 - `questionText` dan `answerText` boleh string kosong (bukan null) untuk soal/pilihan yang hanya berupa audio (mis. 即時応答).
 - `Question.explanation` = penjelasan "resmi" (hasil AI, dikurasi). `QuestionComment` = catatan belajar pribadi user. Jangan mencampur keduanya.
