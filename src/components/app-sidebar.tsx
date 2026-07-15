@@ -6,6 +6,7 @@ import { useTransition } from "react";
 import {
   BookOpen,
   ChartNoAxesCombined,
+  History,
   LayoutDashboard,
   LogOut,
   UserRound,
@@ -27,6 +28,7 @@ import { logoutAction } from "@/features/auth/actions";
 const NAV_ITEMS = [
   { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { title: "Test Package", href: "/test-package", icon: BookOpen },
+  { title: "History", href: "/history", icon: History },
   { title: "Analytics", href: "/analytics", icon: ChartNoAxesCombined },
 ];
 

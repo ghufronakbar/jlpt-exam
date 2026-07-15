@@ -94,6 +94,19 @@ Bukan bagian dari bank soal produksi (itu tetap di Fase 8) — ini cuma jalan pi
 - [x] `/analytics` — chart pakai `recharts` (dibungkus `components/ui/chart.tsx`): line chart tren skor, bar chart horizontal kelemahan per mondai & per section. **Cek dulu skill dataviz** sebelum nulis chart — ternyata tema project ini monokrom murni (`--chart-1..5` semua abu-abu, cuma `--destructive` berwarna), jadi dipakai satu hue netral untuk magnitude (bukan palet kategorikal baru → validator palet tidak perlu dijalankan), dan `--destructive` dipakai spesifik sebagai status-flag bar di bawah 60% akurasi (bukan identitas seri)
 - [x] Verifikasi: `npm run build` sukses (`/analytics` = `ƒ`), `npm run lint` bersih, guard tanpa cookie redirect ke `/login`
 
+## Fase 7.1 — Sidebar untuk Exam/Result + Halaman History
+
+Perubahan dari feedback user setelah testing: `/exam` dan `/result` awalnya sengaja tanpa sidebar (mode fokus), tapi user ingin tetap ada sidebar di situ. Juga belum ada entry point untuk lihat attempt lama selain lewat halaman per-paket — perlu halaman `/history` lintas paket.
+
+- [x] Pindahkan `/exam/[attemptId]/[session]` ke dalam route group `(dashboard)` supaya dapat sidebar & guard dari layout situ — hapus `src/app/exam/layout.tsx` (guard terpisah jadi redundan)
+- [x] Pindahkan `/result/[attemptId]` & `/result/[attemptId]/detail` ke dalam route group `(dashboard)` — ganti `src/app/result/layout.tsx` jadi nested layout ringan (cuma wrapper max-width, sidebar & guard sudah dari parent)
+- [x] Hilangkan padding dobel di `ExamRunner` (parent layout `(dashboard)` sekarang sudah kasih `p-4`)
+- [x] `src/features/history/actions.ts` — `getAttemptHistory()`: semua attempt milik user lintas paket, terbaru dulu
+- [x] `/history` — daftar semua attempt (nama paket, level, mode mock/seksi, status, tanggal), tombol "Lihat Hasil"/"Review" ke `/result/[attemptId]` & `/result/[attemptId]/detail` untuk yang `COMPLETED`
+- [x] Tambah menu "History" di `AppSidebar`
+- [x] Update `docs/project-overview.md` — route table: `/exam` & `/result` dicatat sebagai bagian dari group `(dashboard)`, tambah baris `/history`
+- [x] Verifikasi: `npm run build` sukses (semua route lama tetap resolve ke URL yang sama, `/history` baru muncul), `npm run lint` bersih
+
 ## Fase 8 — Bank Soal (Data)
 
 Bank soal asli/produksi (bukan data dummy testing — itu di [Fase 5.1](#fase-51--demo-seed-api-untuk-bantu-testing-fase-57)).

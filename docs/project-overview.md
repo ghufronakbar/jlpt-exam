@@ -24,6 +24,8 @@ Rules terkait: `database.md` (schema, markup teks, aturan query).
 
 ### Route group `(dashboard)` — layout dashboard dengan sidebar
 
+Mencakup juga `/exam` dan `/result` (awalnya direncanakan tanpa sidebar untuk mode fokus, tapi diubah supaya user tetap bisa navigasi lewat sidebar saat mengerjakan/review).
+
 | Route | Deskripsi |
 |---|---|
 | `/dashboard` | Ringkasan singkat (attempt terakhir, statistik ringkas) dan CTA ke test package. |
@@ -31,6 +33,7 @@ Rules terkait: `database.md` (schema, markup teks, aturan query).
 | `/test-package` | Daftar paket tes, dikelompokkan per level: N1 [paket-paket N1], N2 [paket-paket N2], dst. |
 | `/test-package/[id]` | Overview satu paket: berapa kali dikerjakan + hasilnya, informasi waktu resmi per sesi JLPT (acuan timer manual), tombol mulai **mock test** (full) atau **latihan per seksi** (pilih section, mis. choukai/dokkai saja). Menekan tombol = membuat `Attempt` baru lalu redirect ke `/exam/...`. |
 | `/test-package/[id]/questions` | Mode baca: melihat semua soal paket secara langsung, furigana tampil, comment tampil. Bukan mode pengerjaan. |
+| `/history` | Daftar semua attempt milik user lintas paket (bukan cuma satu paket seperti di `/test-package/[id]`), dengan link ke `/result/[attemptId]` & `/result/[attemptId]/detail` untuk yang `COMPLETED`. Entry point utama untuk lihat attempt lama. |
 
 ### Pengerjaan
 
@@ -54,6 +57,6 @@ Aturan halaman exam:
 
 ## Catatan Teknis
 
-- Semua route `(dashboard)`, `/exam`, dan `/result` memerlukan session; tanpa session redirect ke `/login`.
+- Semua route `(dashboard)` (termasuk `/exam` dan `/result`, yang sekarang bagian dari group ini) memerlukan session; tanpa session redirect ke `/login`.
 - Global state jawaban exam sebaiknya di-persist (mis. sessionStorage/localStorage) agar refresh halaman tidak menghilangkan jawaban yang belum disubmit.
 - Submit sesi bersifat final untuk sesi tersebut — setelah submit, sesi tidak bisa dikerjakan ulang di attempt yang sama. Attempt menjadi `COMPLETED` setelah sesi terakhir disubmit.
