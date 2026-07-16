@@ -317,6 +317,10 @@ atas):
 }
 ```
 
+## Note
+
+Untuk soal yang ada image maupun audio, tetap tuliskan keynya, namun untuk valuenya isi dengan `"TODO: url audio xxx"` agar memudahkan.
+
 ## Referensi Lain
 
 - `src/app/api/seed/test-package/types.ts` — source of truth TypeScript untuk schema di atas.

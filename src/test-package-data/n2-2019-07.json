@@ -1,0 +1,1530 @@
+{
+  "name": "JLPT N2 - 2019年07月",
+  "jlptLevel": "N2",
+  "questionContexts": [
+    {
+      "id": "ctx-dokkai-10-1",
+      "storyText": "一般的に、表とグラフでは、グラフのほうがすぐに特徴をみつけやすいといえます。だからといって、そうしてみつけた特徴が本当に意味がある特徴かどうか。単なる錯覚(注1)ではないのが、グラフをみたことで先入観(注2)をもってしまったあとでは、検証(注3)がむずかしいでしょう。\nだからこそ、まずは、特徴を見つけにくい表をながめてデータ分析をすることが、データ読解力を高めるうえでは大切です。そうして表のデータを読む力を磨くことで、やがてグラフでの錯覚を避ける能力も高まります。\n(注1)錯覚: ここでは、勘違い\n(注2)先入観: 思い込み\n(注3)検証:調べて、証明すること"
+    },
+    {
+      "id": "ctx-dokkai-10-2",
+      "storyText": "以下は、ある市のホームページに掲載されたお知らせである。\n\n今村市 > 文化芸術施設 > お知らせ\n文化施設共通利用券および「特別展セット」販売のお知らせ\n2019年5月29日\n\n文化施設共通利用券を販売いたします。この券は、市内五つの博物館や美術館などの文化施設にそれぞれ1回ご入場できるチケットです。\nまた、文化施設共通利用券に特別展割引チケットを付けた「特別展セット」も販売いたします。特別展のご入場には通常1回1,000円かかりますが、「特別展セット」では各施設の特別展の中から一つに限り割引価額で1回ご入場できます。\n販売場所:各施設のチケット売り場\n販売価格:文化施設共通利用券2,000円、「特別展セット」 2,800円\n販売期間:2019年7月1日~2019年10月31日\n有効期間:2019年7月1日~2019年12月27日\nどちらも大変お得になっております。この機会にぜひご利用ください。"
+    },
+    {
+      "id": "ctx-dokkai-10-3",
+      "storyText": "論文というものは言葉で書くものである。あたりまえのことだが、これは肝心な(注1)ことである。ということは、よい論文を書くためには言葉に敏感でなければならないということである。しかし、それはかならずしも、なにか特別なもっともらしい(注2)言葉をうまく操れなければいけないということではない。むしろ、自分の身についた、ふだんはなにげなく(注3)使っているにすぎないような言葉を、いちいち、しっかりととらえなおし、その意味を自分にとってたしかな手応えのある(注4)ものにしてゆくということである。\n(注1)肝心な:とても大切な\n(注2)もっともらしい: いかにも本物らしい\n(注3)なにげなく: 意識しないで\n(注4)たしかな手応えのある: ここでは、確信の持てる"
+    },
+    {
+      "id": "ctx-dokkai-10-4",
+      "storyText": "以下は、ある会社が製品を注文してきた相手に出したメールである。\n\nあて先: seiji_omore@matsufuku-shokai.co.jp\n件名: スピーカー 「8QPSI」のご注文につきまして\n日時:2019年6月5日 10:30\n\nマツフク商会\n営業部 大村成次様\nお世話になっております。\nこのたびは、スピーカー 「8QPSI」20台をご注文いただきありがとうございました。同機は4月の発売以来、予想以上の売れ行きが続き、製造が追いついておりません。現在、海外の工場でも対応しておりますがご指定の期日(6月28日)での納品は難しい状況です。納品可能時期は今月中旬に改めてお知らせいたします。たいへん申し訳ございませんが、ご理解くださいますようお願いいたします。\nオーシーサウンド 販売部 川藤直広"
+    },
+    {
+      "id": "ctx-dokkai-10-5",
+      "storyText": "試合に出してももらえない。監督やコーチと相性が悪い、他の選手のほうが贔屓(注1)されている･･････。自分がうまくできない、試合で活躍できないのは、環境が悪いからだ。監督のせいだ。他の選手とプレーがかみ合わない(注2)……………。\n自分がある程度頑張っているつもりの選手は、つい、こう考えてしまうものです。\nうまくなるためには自分自身と向き合っているとすれば、そこに周りは一切(注3)関係ありません。人のせい、物のせいにするのはラク(注4)、私から言わせれば、人のせい、物のせいにするのは、逃げていることと同じです。\n(注1)贔屓する: ここでは、気に入って特別に扱う\n(注2)かみ合う: うまく合う\n(注3)一切:全く\n(注4)ラク:「楽」とも書く"
+    },
+    {
+      "id": "ctx-dokkai-11-1",
+      "storyText": "本を読むことは、かつて生きた優れた人の言葉を聞くということ、読むとは、基本的に人の話を聞くことです。学ぶことの基本行為も「聞くこと」です。\nしかも、本を読むことが生きている人類から話を聞くことと同じとらえられれば、その読みは一層リアル(注1)になるはずです。例えば、本居宣長を読むのでもゲーテを読むのでも、僕らが生きているかのようにして読める人の方が、生の声として聞こえてくるからより一層リアルです。\nですから、「聞く構え(注2)」ができている人は、より良く学べることにもなります。\n逆に、聞く構えがないと、相手から成長がない人と見られてしまいます。言い換えれば、「聞く気がない」と受け取られてしまうと、会社でも学校でも「この人は見込み(注3)がない」と思われてしまうのです。\nこんなふうに、学ぶ姿勢は現実の生活において、私たちの根本的な評価に関わってきます。\n学ぶことは、優れた人の話を聞いて自分を修正していくこと、あるいは、その人に憧れを持ち、その人によって自分の新たな目標が見え、歩むべき方向性が決まることです。そして、本や人の話の中から具体的なアドバイスを得て、自分の生活の中にある種の学びの習慣をつくっていく。だからこそ、読書を学びの基本にするとよいのです。\n本を読まないということは、いわば膨大な数の賢者(注4)たちから、あらかじめ見放されて(注5)しまっているということです。\n(注1)リアル: 現実的\n(注2)構え:姿勢\n(注3)見込み:可能性\n(注4)賢者:優れた人\n(注5)見放される: ここでは、無視される"
+    },
+    {
+      "id": "ctx-dokkai-11-2",
+      "storyText": "紙は私たちの身の回りにあふれているが、日本には一般的に使われている「洋紙」のほかに、古くから使われている「和紙」がある。\n洋紙は、安い価格で多量に手に入る針葉樹や広葉樹の、皮を取り除いた幹(注1)の部分を原料とする。一方和紙は、主に楮、三椏、雁皮という木の、皮の部分を使用する。また、洋紙は表面に凹凸が少なく印刷に適しているが、和紙は表面が滑らかでなく印刷には向かないという違いがある。しかし、和紙には丈夫で強く、さらに劣化し(注2)にくいので長期間保存ができるという利点もある。\n日本では六世紀ごろか和紙が使用されていたが、明治時代になり洋紙が輸入され始めると洋紙が一気に広まった。手作業で製造されていた和紙に対し、洋紙は早くから製造過程が機械化され、大量生産による安価で安定した供給が可能であったためである。その結果、和紙は洋紙に対抗できなくなり、和紙産業は衰えた。しかし、これをきっかけに和紙の製造過程も機械化が進められた。\n現在日本国内で広く用いられているのは洋紙だが、和紙は和紙でなければならない分野で活用されている。書道や絵画だけでなく、その美しさが評価されて壁紙や便箋、封筒などにも利用されており、海外でもその価値が認められている。また、丈夫で傷みにくいという利点を生かして美術作品などの修理・保存にも使われている。今後も残していきたい伝統文化である。\n(注1)幹:木の、根から上のほうに伸びて、枝・葉を出す部分\n(注2)劣化する: 品質が低下する"
+    },
+    {
+      "id": "ctx-dokkai-11-3",
+      "storyText": "現代の若者は、「温かさ」まで人から与えてもらえるものだと期待している。なにもかも、自分に向かって訪れるものだと信じている。だから、そういうものが自分にやってこないと、相手が悪い、周囲が悪い、社会が悪い、国が悪い、経済が悪い、運が悪い、時代が悪いということになってしまう。①そのような分析もけっこうだが、たとえそれらしい原因を見つけても、解決の方法を見出す(注1)ことはできないだろう。自分のことならなんとかなるが、相手や周囲や社会や国や経済や運や時代は、自分の努力では変えらないからだ。\nそれなのに、解決策がどこかにないだろうか、と②「検索」する。検索で解決するようなものだったら、「問題」とはいえないことにも気づいていない。\n情報化社会において人は、自分の思うとおりにならないのは、なんらかの情報を自分が「知らない」せいだ、と解釈してしまう。必死になってネット(注2)を検索するのも、また、友達の話や、たまたま耳にしたことを簡単に信じてしまうのも、「知る」ことで問題が解決できると信じているせいだ。\n検索できるものは、過去に存在した情報だけだ。知ることができるのも、既に存在している知見(注3)だけである。しかし、自分の問題を解決する方法は、自分で考え、模索し(注4)、新たに編み出さなければならない(注5)ものなのである。\n自分の生き方に関する問題は、どこかに解決策が書かれているはずがない。検索しても見つかるはずがない。どんなに同じような道に見えても、先輩の言葉が全面的に通用するわけでもない。自分で生きながら、見つけるしかないのである。\n(注1)見出す: 見つける\n(注2)ネット: インターネット\n(注3)知見: ここでは、見方や考え方\n(注4)模索する: 探し求める\n(注5)編み出す: 生み出す"
+    },
+    {
+      "id": "ctx-dokkai-12",
+      "storyText": "【A】\n旅は準備をする時から始まります。目的地の気候歴史、文化などについて調べどんなことをするか計画を立て、必要なものを準備します。さらに、旅行中に多くのことができるように、無駄のない予定を組み、電車やバスや宿泊場所を予約しておきます。そうすれば、余計なことに時間をとらえないで旅を楽しむことができます。\n旅の楽しみは、その土地の名所を訪ねたり名産品を食べたりして、普段の生活とは違う経験をすることだと思います。旅先では予想外の出来事にあうこともありますが、しっかり準備をしておけば、時間やお金を無駄にせずに、楽しい旅ができるでしょう。\n\n【B】\n私は行きたいと思ったらすぐ旅に出るのが好きです。駅に行き最初に乗れる電車に乗り、降りたい駅で降りて、その土地の人が勧めてくれる旅館やホテルに泊まります。何を食べるか、次の日に何をするか、どこへ行くかも、土地の人に話を聞くのが一番です。そこには、出発前には知らなかった新しい発見があります。また、新しく知り合った人と気が合えば一緒に行動するのも面白いものです。旅では何が起こるか分かりませんから、状況に合わせて好きなように予定を決めればいいのです。日常では味わえない自由な時間が過ごせ、楽しい旅になります。"
+    },
+    {
+      "id": "ctx-dokkai-13",
+      "storyText": "正しい仕事の任せ方というのは、一体どのようなものだろうか。\n理想的なのは、部下の実力よりも少し上のレベルの仕事—部下が何とか自分の力で判断・実行することができ、ときには(注1)小さな失敗を招くであろうレベルの仕事を任せることだ。\nそういう仕事を、段階的にレベルを上げながら与えていくことで、部下は着実には仕事力を磨いていくのだ。ところが、そのような仕事を部下に与えたとしても、日本の会社では、「ホウ・レン・ソウ」 (報告・連絡・相談)などといって、上司がいちいち部下の仕事に干渉し(注2)がちだ。そして結局は、部下に自分の力でハードル(注3)を乗り超えさせないことが多い。\nたとえば、あるプレゼン資料を部下につくらせるとする。日本の会社の多くの上司は、全体像を示さず、ただ「こういうものをつくれ」と部下に曖昧に命じ、持ってこさせる。\nそして「ここをこう直せ」と要求し、部下はその意図がわからないまま上司の指示通りに修正をする。そんなことを何度も繰り返す。その結果、部下に身につくのは、エクセルやらパワーポイント(注4)の操作法だけ、ということになる。これでは、レベルの高いプレゼン資料を自分で考え、つくり上げる力はつかないだろう。\nそうではなく、「この資料は、こういう目的で、こういう相手に対して、このように説得するために使用するものだ」という全体像を事前に明確に説明すべきだ。\nその上で、見本を見せて、あとは部下の創意工夫(注5)に任せ、部下に最善だと思う資料ができるまで口出しはしない(注6)ことだ。\n結果的に出来上がるものが、上司の想定するものと違うこともあるだろう。しかし、その資料をつくる意図、全体像がつかめていれば、なぜいけないのか、どこが悪いのか、どう修正すればよくなるのかがわかるし、上司からの修正指示に納得もできるし、学ぶこともできる。\n部下は、「いや、そういう目的なら、自分だったらこうするけどな･･････」と思うかもしれない。それならそれでいいのだ。そういうことを積み重ねながら、最終的には、部下は自分なりの仕事のやり方を確立(注7)していくはずだ。上司では考えられなかったようなレベルの高い資料を作ることも、いずれはあるかもしれない。\n繰り返すが「部下を教育するのが上司の役目」というのは間違っている。部下を育てるのは「仕事」そのものであり、その仕事をするための「場を与える」のが上司の役目なのである。\n(注1)ときには: 場合によっては\n(注2)干渉する:ここでは、必要以上に関わる\n(注3)ハードル: 障害\n(注4)エクセルやらパワーポイント: コンピュータのソフト\n(注5)創意工夫: 新しいアイデアや工夫\n(注6)口出しはしない: ここでは、何も言わない\n(注7)確立する: ここでは、しっかり身につける"
+    },
+    {
+      "id": "ctx-dokkai-14",
+      "storyText": "2020年度竹本駅周辺駐輪場(自転車)の定期利用のご案内\n2020年4月から2021年3月まで竹本駅周辺駐輪場の定期利用の申請を受け付けます。\n\n| 駐輪場 | 市民の方 (一般 / 高校生以下) | 市民*以外の方 (一般 / 高校生以下) | 設備 |\n|---|---|---|---|\n| A 竹本駅東駐輪場 | 6000円 / 4000円 | 8000円 / 5000円 | 屋根あり管理人なし |\n| B 竹本駅西駐輪場 | 5500円 / 3500円 | 7500円 / 4500円 | 屋根あり管理人なし |\n| C 谷山通り駐輪場 | 7000円 / 5000円 | 9000円 / 6000円 | 屋根あり管理人あり |\n| D 東町駐輪場 | 7000円 / 5000円 | 9000円 / 6000円 | 屋根あり管理人あり |\n| E 池中駐輪場 | 5500円 / 3500円 | 7500円 / 4500円 | 屋根なし管理人あり |\n\n*市民は以下の①~③のいずれかに当てはまる方です。\n① 竹本市にお住まいの方 ② 竹本市に通勤されている方 ③ 竹本市に通学されている方\n\n【申し込み期間】\n継続して利用される方:2020年1月6日から1月31日まで\n初めて利用される方:2020年2月3日から2月28日まで\n\n【申し込み窓口】\nA、B: 駐輪場センター 「竹本駅前](受付:午前8時~午後6時)\nC~E:各駐輪場の管理人室(受付:午前7時~午後9時)\n\n【申し込み方法】\n●指定の申し込み窓口で申請書をご提出ください。ご提出の際には、身分証明証(高校生以下の方は学生証)をご提示ください。\n●現在、定期利用中で来年度も継続して申請をされる方は、登録証を更新しますので現在利用中の登録証をお持ちください。\n\n【支払い】\n3月13日までに指定の金融機関で利用料金をお支払いください。"
+    },
+    {
+      "id": "ctx-choukai-1",
+      "storyAudio": "TODO: url audio choukai mondai 1"
+    },
+    {
+      "id": "ctx-choukai-2",
+      "storyAudio": "TODO: url audio choukai mondai 2"
+    },
+    {
+      "id": "ctx-choukai-3",
+      "storyAudio": "TODO: url audio choukai mondai 3"
+    },
+    {
+      "id": "ctx-choukai-4",
+      "storyAudio": "TODO: url audio choukai mondai 4"
+    },
+    {
+      "id": "ctx-choukai-5",
+      "storyAudio": "TODO: url audio choukai mondai 5"
+    }
+  ],
+  "testPackageItems": [
+    {
+      "mondaiType": "MOJI_GOI_READ_KANJI",
+      "section": "MOJI_GOI",
+      "session": 1,
+      "order": 1,
+      "instruction": "＿＿の言葉の読み方として最もよいものを、1・2・3・4から一つ選びなさい。",
+      "questions": [
+        {
+          "order": 1,
+          "questionText": "誰も__{憎んで|にくんで}__なんていませんから、心配しないでください。",
+          "questionAnswer": 4,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "なやんで" },
+            { "codeAnswer": 2, "answerText": "くやんで" },
+            { "codeAnswer": 3, "answerText": "うらんで" },
+            { "codeAnswer": 4, "answerText": "にくんで" }
+          ]
+        },
+        {
+          "order": 2,
+          "questionText": "__{偶然|ぐうぜん}__、駅で友達に会った。",
+          "questionAnswer": 2,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "とつぜん" },
+            { "codeAnswer": 2, "answerText": "ぐうぜん" },
+            { "codeAnswer": 3, "answerText": "ぐぜん" },
+            { "codeAnswer": 4, "answerText": "とぜん" }
+          ]
+        },
+        {
+          "order": 3,
+          "questionText": "大学のゼミではいろいろな__{刺激|しげき}__を受けた。",
+          "questionAnswer": 3,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "さてき" },
+            { "codeAnswer": 2, "answerText": "さげき" },
+            { "codeAnswer": 3, "answerText": "しげき" },
+            { "codeAnswer": 4, "answerText": "してき" }
+          ]
+        },
+        {
+          "order": 4,
+          "questionText": "失敗して__{恥|はじ}__をかいたが、先輩の優しい一言に慰められた。",
+          "questionAnswer": 2,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "はし" },
+            { "codeAnswer": 2, "answerText": "はじ" },
+            { "codeAnswer": 3, "answerText": "はず" },
+            { "codeAnswer": 4, "answerText": "はす" }
+          ]
+        },
+        {
+          "order": 5,
+          "questionText": "彼の強さは__{圧倒的|あっとうてき}__だ。",
+          "questionAnswer": 1,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "あっとうてき" },
+            { "codeAnswer": 2, "answerText": "おっとうてき" },
+            { "codeAnswer": 3, "answerText": "あつどうてき" },
+            { "codeAnswer": 4, "answerText": "おつどうてき" }
+          ]
+        }
+      ]
+    },
+    {
+      "mondaiType": "MOJI_GOI_WRITE_KANJI",
+      "section": "MOJI_GOI",
+      "session": 1,
+      "order": 2,
+      "instruction": "＿＿の言葉を漢字で書くとき、最もよいものを1・2・3・4から一つ選びなさい。",
+      "questions": [
+        {
+          "order": 1,
+          "questionText": "私の__しゅみ__はピアノをひくことだ。",
+          "questionAnswer": 1,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "趣味" },
+            { "codeAnswer": 2, "answerText": "興味" },
+            { "codeAnswer": 3, "answerText": "好味" },
+            { "codeAnswer": 4, "answerText": "習味" }
+          ]
+        },
+        {
+          "order": 2,
+          "questionText": "もう少し__こい__鉛筆がほしい。",
+          "questionAnswer": 4,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "軟い" },
+            { "codeAnswer": 2, "answerText": "薄い" },
+            { "codeAnswer": 3, "answerText": "硬い" },
+            { "codeAnswer": 4, "answerText": "濃い" }
+          ]
+        },
+        {
+          "order": 3,
+          "questionText": "この皿は、真っ白ではなく、少し青が__まじった__ような色をしている。",
+          "questionAnswer": 3,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "組じった" },
+            { "codeAnswer": 2, "answerText": "含じった" },
+            { "codeAnswer": 3, "answerText": "混じった" },
+            { "codeAnswer": 4, "answerText": "加じった" }
+          ]
+        },
+        {
+          "order": 4,
+          "questionText": "彼はいつも__そん__になることばかりしている。",
+          "questionAnswer": 3,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "罪" },
+            { "codeAnswer": 2, "answerText": "害" },
+            { "codeAnswer": 3, "answerText": "損" },
+            { "codeAnswer": 4, "answerText": "毒" }
+          ]
+        },
+        {
+          "order": 5,
+          "questionText": "素晴らしい__えんぎ__に感動した。",
+          "questionAnswer": 2,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "演劇" },
+            { "codeAnswer": 2, "answerText": "演技" },
+            { "codeAnswer": 3, "answerText": "園技" },
+            { "codeAnswer": 4, "answerText": "園劇" }
+          ]
+        }
+      ]
+    },
+    {
+      "mondaiType": "MOJI_GOI_WORD_FORMATION",
+      "section": "MOJI_GOI",
+      "session": 1,
+      "order": 3,
+      "instruction": "( )に入れるのに最もよいものを、1・2・3・4から一つ選びなさい。",
+      "questions": [
+        {
+          "order": 1,
+          "questionText": "ゲームのしすぎは目に( )影響を与える。",
+          "questionAnswer": 1,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "悪" },
+            { "codeAnswer": 2, "answerText": "重" },
+            { "codeAnswer": 3, "answerText": "高" },
+            { "codeAnswer": 4, "answerText": "大" }
+          ]
+        },
+        {
+          "order": 2,
+          "questionText": "彼はアメリカ( )のビジネスで成功した。",
+          "questionAnswer": 4,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "形" },
+            { "codeAnswer": 2, "answerText": "質" },
+            { "codeAnswer": 3, "answerText": "性" },
+            { "codeAnswer": 4, "answerText": "流" }
+          ]
+        },
+        {
+          "order": 3,
+          "questionText": "別れ( )に、彼女は私に何か言ったが、聞こえなかった。",
+          "questionAnswer": 2,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "刻" },
+            { "codeAnswer": 2, "answerText": "際" },
+            { "codeAnswer": 3, "answerText": "間" },
+            { "codeAnswer": 4, "answerText": "期" }
+          ]
+        }
+      ]
+    },
+    {
+      "mondaiType": "MOJI_GOI_CONTEXT",
+      "section": "MOJI_GOI",
+      "session": 1,
+      "order": 4,
+      "instruction": "( )に入れるのに最もよいものを、1・2・3・4から一つ選びなさい。",
+      "questions": [
+        {
+          "order": 1,
+          "questionText": "予算もスタッフも希望通りにしたんだから成果を期待しているよと、上司に( )をかけられた。",
+          "questionAnswer": 2,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "ショック" },
+            { "codeAnswer": 2, "answerText": "プレッシャー" },
+            { "codeAnswer": 3, "answerText": "ダメージ" },
+            { "codeAnswer": 4, "answerText": "コンプレックス" }
+          ]
+        },
+        {
+          "order": 2,
+          "questionText": "アルバイトの仕事は勤務が多い月と少ない月があって、毎月の収入が( )だ。",
+          "questionAnswer": 1,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "不安定" },
+            { "codeAnswer": 2, "answerText": "不自由" },
+            { "codeAnswer": 3, "answerText": "不都合" },
+            { "codeAnswer": 4, "answerText": "不公平" }
+          ]
+        },
+        {
+          "order": 3,
+          "questionText": "彼は( )返事をしていたから、パーティーに来るかどうかわからない。",
+          "questionAnswer": 3,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "地味な" },
+            { "codeAnswer": 2, "answerText": "かすかな" },
+            { "codeAnswer": 3, "answerText": "あいまいな" },
+            { "codeAnswer": 4, "answerText": "鈍感な" }
+          ]
+        },
+        {
+          "order": 4,
+          "questionText": "新しいことがなかなか覚えられないのは記憶力が( )からだろうか。",
+          "questionAnswer": 4,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "傷んだ" },
+            { "codeAnswer": 2, "answerText": "散った" },
+            { "codeAnswer": 3, "answerText": "かれた" },
+            { "codeAnswer": 4, "answerText": "おとろえた" }
+          ]
+        },
+        {
+          "order": 5,
+          "questionText": "相手が弱いと思って( )したら、負けてしまった。",
+          "questionAnswer": 2,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "納得" },
+            { "codeAnswer": 2, "answerText": "油断" },
+            { "codeAnswer": 3, "answerText": "失望" },
+            { "codeAnswer": 4, "answerText": "覚悟" }
+          ]
+        },
+        {
+          "order": 6,
+          "questionText": "二人とも働いているので、家事や育児は夫婦で( )している。",
+          "questionAnswer": 4,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "分別" },
+            { "codeAnswer": 2, "answerText": "区別" },
+            { "codeAnswer": 3, "answerText": "区分" },
+            { "codeAnswer": 4, "answerText": "分担" }
+          ]
+        },
+        {
+          "order": 7,
+          "questionText": "次の社長に最も( )人は、経験豊富な鈴木さんでしょう。",
+          "questionAnswer": 1,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "ふさわしい" },
+            { "codeAnswer": 2, "answerText": "等しい" },
+            { "codeAnswer": 3, "answerText": "ありがちな" },
+            { "codeAnswer": 4, "answerText": "当たり前な" }
+          ]
+        }
+      ]
+    },
+    {
+      "mondaiType": "MOJI_GOI_SYNONYM",
+      "section": "MOJI_GOI",
+      "session": 1,
+      "order": 5,
+      "instruction": "＿＿の言葉に意味が最も近いものを、1・2・3・4から一つ選びなさい。",
+      "questions": [
+        {
+          "order": 1,
+          "questionText": "この辺りも__物騒になってきた__気がする。",
+          "questionAnswer": 3,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "きれいじゃなくなってきた" },
+            { "codeAnswer": 2, "answerText": "うるさくなってきた" },
+            { "codeAnswer": 3, "answerText": "安全じゃなくなってきた" },
+            { "codeAnswer": 4, "answerText": "さびしくなってきた" }
+          ]
+        },
+        {
+          "order": 2,
+          "questionText": "その話を聞いて__落ち込んだ__。",
+          "questionAnswer": 3,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "緊張した" },
+            { "codeAnswer": 2, "answerText": "びっくりした" },
+            { "codeAnswer": 3, "answerText": "がっかりした" },
+            { "codeAnswer": 4, "answerText": "心配した" }
+          ]
+        },
+        {
+          "order": 3,
+          "questionText": "__精いっぱい__やったのに、あまり評価されなかった。",
+          "questionAnswer": 2,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "せっかく" },
+            { "codeAnswer": 2, "answerText": "一生懸命" },
+            { "codeAnswer": 3, "answerText": "いろいろ" },
+            { "codeAnswer": 4, "answerText": "何回も" }
+          ]
+        },
+        {
+          "order": 4,
+          "questionText": "その話を聞いて、みんな__同情した__。",
+          "questionAnswer": 4,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "しかたないと思った" },
+            { "codeAnswer": 2, "answerText": "うらやましいと思った" },
+            { "codeAnswer": 3, "answerText": "なつかしいと思った" },
+            { "codeAnswer": 4, "answerText": "かわいそうだと思った" }
+          ]
+        },
+        {
+          "order": 5,
+          "questionText": "条件を__定める__必要がある。",
+          "questionAnswer": 1,
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "決める" },
+            { "codeAnswer": 2, "answerText": "伝える" },
+            { "codeAnswer": 3, "answerText": "調べる" },
+            { "codeAnswer": 4, "answerText": "合わせる" }
+          ]
+        }
+      ]
+    },
+    {
+      "mondaiType": "MOJI_GOI_WORD_USAGE",
+      "section": "MOJI_GOI",
+      "session": 1,
+      "order": 6,
+      "instruction": "次の言葉の使い方として最もよいものを、1・2・3・4から一つ選びなさい。",
+      "questions": [
+        {
+          "order": 1,
+          "questionText": "廃止",
+          "questionAnswer": 4,
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "予想以上のコストがかかることがわかり、新製品の開発を廃止した。"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "石川さんは毎日ジョギングすることを廃止したらしい。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "ほかの人に話すことで、不安を廃止できることもある。"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "あの銀行はATM手数料無料のサービスを廃止するそうだ。"
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "questionText": "初歩",
+          "questionAnswer": 1,
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "3年前に英語を初歩から始め、今では自由に話せるようになった。"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "バスケットボールの試合で、初歩から大量の点を取られた。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "今日の暑さはまだほんの初歩で、これからますます暑くなっていくだろう。"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "兄とのけんかの初歩は、くだらないことだった。"
+            }
+          ]
+        },
+        {
+          "order": 3,
+          "questionText": "だらしない",
+          "questionAnswer": 4,
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "昨日作ったスープは塩がたりなかったのか、とてもだらしない味だった。"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "この公園は管理する人がいないので、あちこちに草だらしなく生えている。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "知識がだらしなかったせいで、間違ったことを人に教えてしまった。"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "先月までは、仕事もしないで遊んでばかりのだらしない生活をしていた。"
+            }
+          ]
+        },
+        {
+          "order": 4,
+          "questionText": "即座に",
+          "questionAnswer": 3,
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "私が駅に着くと即座に友人たちも来た。"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "さっきまで晴れていたのに、即座に雲が出てきた。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "先生は学生からの質問に即座に答えた。"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "一月になってから即座に仕事が忙しくなった。"
+            }
+          ]
+        },
+        {
+          "order": 5,
+          "questionText": "尽きる",
+          "questionAnswer": 2,
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "あしたで定期券の期限が尽きるので、新しいのを買いに行った。"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "森さんと会うのは久しぶりだったので、いくら話しても話が尽きなかった。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "木村選手は、けがのせいで連続出場の記録が尽きてしまった。"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "この作家の絵が好きなので、展示会が尽きないうちにもう一度見に来たい。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mondaiType": "DOKKAI_SHORT_TEXT",
+      "section": "DOKKAI",
+      "session": 1,
+      "order": 10,
+      "instruction": "次の (1) から (5) の文章を読んで、後の問いに対する答えとして最もよいものを、1・2・3・4から一つ選びなさい。",
+      "questions": [
+        {
+          "order": 1,
+          "questionText": "(53) 筆者によると、データ分析の力をつけるにはどうすればいいか。",
+          "questionAnswer": 2,
+          "questionContextRef": "ctx-dokkai-10-1",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "特徴がみつけやすいので、先に表をみるようにしたほうがいい。"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "思い込みが避けられるので、先に表をみるようにしたほうがいい。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "思い込みに気づきやすいので、先にグラフをみるようにしたほうがいい。"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "意味のある特徴がみつけられるので、先にグラフをみるようにしたほうがいい。"
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "questionText": "(54) 「特別展セット」を買うと何ができるか。",
+          "questionAnswer": 2,
+          "questionContextRef": "ctx-dokkai-10-2",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "各施設に1回ずつ入場でき、さらに割引価額で特別展に1回ずつ入場できる。"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "各施設に1回ずつ入場でき、さらに割引価額で特別展のうち一つに1回入場できる。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "各施設に何回でも入場でき、さらに割引価額で特別展に1回ずつ入場できる。"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "各施設に何回でも入場でき、さらに割引価額で特別展のうち一つに1回入場できる。"
+            }
+          ]
+        },
+        {
+          "order": 3,
+          "questionText": "(55) 筆者は、論文を書くのに大切なことは何だと考えているか。",
+          "questionAnswer": 4,
+          "questionContextRef": "ctx-dokkai-10-3",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "多くの言葉を正確に使えるようにすること"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "特別な言葉を日常的に使えるようにすること"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "新しい言葉の意味をしっかりととらえること"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "日常使っている言葉の意味をたしかめながら使うこと"
+            }
+          ]
+        },
+        {
+          "order": 4,
+          "questionText": "(56) このメールで最も伝えたいことは何か。",
+          "questionAnswer": 3,
+          "questionContextRef": "ctx-dokkai-10-4",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "「8QPSI」の納品日が今月中旬になること"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "「8QPSI」の納品が可能かどうかを今月中旬に知らせること"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "「8QPSI」を指定の納品日に納品できないこと"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "「8QPSI」が予想以上に売れていて、注文を受けられないこと"
+            }
+          ]
+        },
+        {
+          "order": 5,
+          "questionText": "(57) 筆者の考えに合うのはどれか。",
+          "questionAnswer": 1,
+          "questionContextRef": "ctx-dokkai-10-5",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "うまくなるためには、周りのせいにしてはいけない。"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "うまくなりたいなら、周りに合わせてはいけない。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "周りから悪い評価を受けたら、認めなければならない。"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "頑張っていても、周りから認められないことがある。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mondaiType": "DOKKAI_MEDIUM_TEXT",
+      "section": "DOKKAI",
+      "session": 1,
+      "order": 11,
+      "instruction": "次の (1) から (3) の文章を読んで、後の問いに対する答えとして最もよいものを、1・2・3・4から一つ選びなさい。",
+      "questions": [
+        {
+          "order": 1,
+          "questionText": "(58) 筆者によると、本はどのように読むといいか。",
+          "questionAnswer": 4,
+          "questionContextRef": "ctx-dokkai-11-1",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "書かれていることを、現実の話として読む。"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "書かれていることを、作者と同じ気持ちになって読む。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "書かれていることを、前に聞いた話と比べながら読む。"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "書かれていることを、話を聞いているような気持ちで読む。"
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "questionText": "(59) 「聞く構え」ができていない人について、筆者はどのように述べているか。",
+          "questionAnswer": 2,
+          "questionContextRef": "ctx-dokkai-11-1",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "人の話を聞いてもすぐに忘れてしまう人だと思われる。"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "人の話を聞いて学ぼうという気がない人だと思われる。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "会社や学校での評価を気にしない人だと思われる。"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "聞いたことを間違って理解する人だと思われる。"
+            }
+          ]
+        },
+        {
+          "order": 3,
+          "questionText": "(60) 読書について、筆者の考えに合うのはどれか。",
+          "questionAnswer": 1,
+          "questionContextRef": "ctx-dokkai-11-1",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "読書によって、学びの習慣を身につけていくことが大切だ。"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "優れた人の本を読むことで、その人に近づくことができる。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "新たな目標が見つかったら、その目標に合った本を読むのがいい。"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "歩むべき方向性を決めるには、具体的なアドバイスの本を読むのがいい。"
+            }
+          ]
+        },
+        {
+          "order": 4,
+          "questionText": "(61) 和紙の特徴として、筆者が述べているのはどれか。",
+          "questionAnswer": 4,
+          "questionContextRef": "ctx-dokkai-11-2",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "木の皮を取り除いた幹の部分を原料とし、丈夫で破れにくい。"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "木の皮を取り除いた幹の部分を原料とし、価格が高い。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "木の皮の部分を原料とし、印刷に適している。"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "木の皮の部分を原料とし、長く保存できる。"
+            }
+          ]
+        },
+        {
+          "order": 5,
+          "questionText": "(62) 和紙は洋紙に対抗できなくなりとあるが、なぜか。",
+          "questionAnswer": 1,
+          "questionContextRef": "ctx-dokkai-11-2",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "和紙は大量に生産することができなかったから"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "和紙は日本国内であまり利用されていなかったから"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "和紙より洋紙のほうが品質がよかったから"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "和紙より洋紙のほうが珍しくて人気があったから"
+            }
+          ]
+        },
+        {
+          "order": 6,
+          "questionText": "(63) 和紙について、筆者はどのように考えているか。",
+          "questionAnswer": 4,
+          "questionContextRef": "ctx-dokkai-11-2",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "和紙の特徴を生かせるような、新しい利用方法を考えていきたい。"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "海外でも、和紙の価値が認められるようにしていきたい。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "洋紙のよさを取り入れて、和紙をよりよいものにしたい。"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "洋紙にはない和紙のよさがあるから、守っていきたい。"
+            }
+          ]
+        },
+        {
+          "order": 7,
+          "questionText": "(64) ① そのような分析とはどのような分析か。",
+          "questionAnswer": 1,
+          "questionContextRef": "ctx-dokkai-11-3",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "自分の期待どおりにならないのは自分以外が原因だと考える。"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "自分の努力では周囲を変えることはできないと考える。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "自分が持っていないものは人から与えてもらえると考える。"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "周囲や社会で悪いことが起こっても自分とは関係ないと考える。"
+            }
+          ]
+        },
+        {
+          "order": 8,
+          "questionText": "(65) ②「検索」するのはなぜか。",
+          "questionAnswer": 3,
+          "questionContextRef": "ctx-dokkai-11-3",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "自分で考えた解決策が正しいか確認できると思っているから"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "さまざまな情報を使って解決策を生み出すことができるから"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "情報を知れば、問題が解決できると思っているから"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "友達の話より信頼できる情報が得られるから"
+            }
+          ]
+        },
+        {
+          "order": 9,
+          "questionText": "(66) 筆者が言いたいことは何か。",
+          "questionAnswer": 3,
+          "questionContextRef": "ctx-dokkai-11-3",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "検索した情報に頼らずに人とは違う生き方を見つけるべきだ。"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "周りの人の言葉や情報を生かして自分の問題を解決すべきだ。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "自分の問題を解決する方法は自分で考え出すべきだ。"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "自分に必要な情報を探して問題を解決すべきだ。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mondaiType": "DOKKAI_INTEGRATED",
+      "section": "DOKKAI",
+      "session": 1,
+      "order": 12,
+      "instruction": "次のAとBの文章を読んで、後ろの問に対する答えとして最もよいものを、1・2・3・4から一つ選びなさい。",
+      "questions": [
+        {
+          "order": 1,
+          "questionText": "(67) 旅について、AとBはどのように述べているか。",
+          "questionAnswer": 3,
+          "questionContextRef": "ctx-dokkai-12",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "AもBも、しっかり準備をすることが大切だと述べている。"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "AもBも、準備をしたうえで、状況に合わせて予定を変えるのがいいと述べている。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "Aは十分に準備をしたほうがいいと述べ、Bは準備をしなくてもいいと述べている。"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "Aは準備した計画は変えない方がいいと述べ、Bは準備をする必要はないと述べている。"
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "questionText": "(68) 旅の楽しみについて、AとBはどのように述べているか。",
+          "questionAnswer": 2,
+          "questionContextRef": "ctx-dokkai-12",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "AもBも、その土地の人から話を聞くことだと述べている。"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "AもBも、日々の生活ではできない経験をすることだと述べている。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "Aは無駄のない時間を過ごすことだと述べ、Bは気分転換をすることだと述べている。"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "Aはその土地でしかできない経験をすることだと述べ、Bは新しい友人を作ることだと述べている。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mondaiType": "DOKKAI_LONG_TEXT",
+      "section": "DOKKAI",
+      "session": 1,
+      "order": 13,
+      "instruction": "次の文章を読んで、後の問いに対する答えとして最もよいものを、1・2・3・4から一つ選びなさい。",
+      "questions": [
+        {
+          "order": 1,
+          "questionText": "(69) そういう仕事とはどのような仕事か。",
+          "questionAnswer": 4,
+          "questionContextRef": "ctx-dokkai-13",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "上司の助けがあれば、大きな失敗をしないような仕事"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "部下が自身の力で問題なくできるような仕事"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "失敗する可能性があっても、部下自身がしたいと思うような仕事"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "実力を超えているが、部下自身で最後までできるような仕事"
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "questionText": "(70) 筆者によると、上司が部下にプレゼン資料を作成させるときに大切なことは何か。",
+          "questionAnswer": 2,
+          "questionContextRef": "ctx-dokkai-13",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "事前に見本を見せて、部下のわからない部分を教えること"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "事前に全体像を示したら、あとは部下に任せること"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "部下のアイデアを取り入れた上で、最善の方法を指示すること"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "最初から完成まで何も言わず、自分のやり方でさせること"
+            }
+          ]
+        },
+        {
+          "order": 3,
+          "questionText": "(71) 筆者によると、上司としてするべきことは何か。",
+          "questionAnswer": 1,
+          "questionContextRef": "ctx-dokkai-13",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "部下が仕事を通して成長できるような状況をつくること"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "部下が最終的に自分の力で仕事ができるように教育すること"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "部下が上司を追い越せるようなレベルになるまで育てること"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "部下が上司の仕事のやり方を学べるような環境を整えること"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mondaiType": "DOKKAI_INFORMATION_RETRIEVAL",
+      "section": "DOKKAI",
+      "session": 1,
+      "order": 14,
+      "instruction": "右のページは、ある市の駐輪場の利用案内である。下の問いに対する答えとして最もよいものを、1・2・3・4から一つ選びなさい。",
+      "questions": [
+        {
+          "order": 1,
+          "questionText": "(74) 竹本市にある会社に勤めているヨランダさんは、駐輪場の定期利用を申請したいと思っている。屋根があって、管理人がいる駐輪場がいい。ヨランダさんの希望に合う駐輪場はどれで、払うことになる料金はいくらか。",
+          "questionAnswer": 2,
+          "questionContextRef": "ctx-dokkai-14",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "Bの5500円か、CかDの7000円" },
+            { "codeAnswer": 2, "answerText": "CかDの7000円" },
+            { "codeAnswer": 3, "answerText": "CかDの9000円" },
+            { "codeAnswer": 4, "answerText": "CかDの9000円か、Eの7500円" }
+          ]
+        },
+        {
+          "order": 2,
+          "questionText": "(75) タンさんは、現在、「竹本駅東駐輪場」を定期利用している。2020年4月から、継続して利用したい場合は、どのように申し込まなければならないか。",
+          "questionAnswer": 3,
+          "questionContextRef": "ctx-dokkai-14",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "1月6日から1月31日の間に竹本駅東駐輪場の管理人室に行き、申請書を提出し、身分証明証を提示する。"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "1月6日から1月31日の間に竹本駅東駐輪場の管理人室に行き、申請書、登録証を提出し、身分証明証を提示する。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "1月6日から1月31日の間に駐輪場センターに行き、申請書、登録証を提出し、身分証明証を提示する。"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "2月3日から2月28日の間に駐輪場センターに行き、申請書、登録証を提出し、身分証明証を提示する。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mondaiType": "CHOUKAI_TASK_BASED",
+      "section": "CHOUKAI",
+      "session": 2,
+      "order": 1,
+      "instruction": "問題1では、まず質問を聞いてください。それから話を聞いて、問題用紙の1から4の中から、最もよいものを一つ選んでください。",
+      "questions": [
+        {
+          "order": 1,
+          "questionText": "男の人はこの後何をしますか?",
+          "questionAnswer": 4,
+          "questionContextRef": "ctx-choukai-1",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "冷蔵庫を友達にあげる" },
+            { "codeAnswer": 2, "answerText": "冷蔵庫を粗大ごみとして出す" },
+            { "codeAnswer": 3, "answerText": "市役所で手続きをする" },
+            { "codeAnswer": 4, "answerText": "ひっこし会社に問い合わせる" }
+          ]
+        },
+        {
+          "order": 2,
+          "questionText": "学生はこの後スピーチの現稿をどうしますか?",
+          "questionAnswer": 3,
+          "questionContextRef": "ctx-choukai-1",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "自己紹介を入れる" },
+            { "codeAnswer": 2, "answerText": "難しい言葉に説明を加える" },
+            { "codeAnswer": 3, "answerText": "文をつなぐ言葉を追加する" },
+            { "codeAnswer": 4, "answerText": "全体的に短くする" }
+          ]
+        },
+        {
+          "order": 3,
+          "questionText": "店の人はズボンの裾をどのように仕上げますか?",
+          "questionAnswer": 4,
+          "questionContextRef": "ctx-choukai-1",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "内側に折り、ボタンで留める" },
+            { "codeAnswer": 2, "answerText": "内側に折り、糸で留める" },
+            { "codeAnswer": 3, "answerText": "外側に折り、ボタンで留める" },
+            { "codeAnswer": 4, "answerText": "外側に折り、糸で留める" }
+          ]
+        },
+        {
+          "order": 4,
+          "questionText": "男の人はこの後まず何をしなければなりませんか?",
+          "questionAnswer": 1,
+          "questionContextRef": "ctx-choukai-1",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "社長の予定をかくにんする" },
+            { "codeAnswer": 2, "answerText": "イベントの候補日を出す" },
+            { "codeAnswer": 3, "answerText": "会場を予約する" },
+            { "codeAnswer": 4, "answerText": "招待する人の名簿を作る" }
+          ]
+        },
+        {
+          "order": 5,
+          "questionText": "女の学生は明日の朝。まず何をしなければなりませんか?",
+          "questionAnswer": 3,
+          "questionContextRef": "ctx-choukai-1",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "ペンキぬりを手伝う" },
+            { "codeAnswer": 2, "answerText": "自転車置き場の掃除をする" },
+            { "codeAnswer": 3, "answerText": "自分の自転車を駐車場に運ぶ" },
+            { "codeAnswer": 4, "answerText": "自転車のかぎを預ける" }
+          ]
+        }
+      ]
+    },
+    {
+      "mondaiType": "CHOUKAI_MAIN_POINT",
+      "section": "CHOUKAI",
+      "session": 2,
+      "order": 2,
+      "instruction": "問題2では、まず質問を聞いてください。そのあと、問題用紙のせんたくしを読んでください。読む時間があります。それから話を聞いて、問題用紙の1から4の中から、最もよいものを一つ選んでください。",
+      "questions": [
+        {
+          "order": 1,
+          "questionText": "女の人は今使っているプリンターを選んだ理由は何だと言っていますか?",
+          "questionAnswer": 4,
+          "questionContextRef": "ctx-choukai-2",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "写真がきれいに印刷できるから" },
+            { "codeAnswer": 2, "answerText": "インクの容量が大きいから" },
+            { "codeAnswer": 3, "answerText": "印刷のスピードが速いから" },
+            {
+              "codeAnswer": 4,
+              "answerText": "紙の書類を電子データにできるから"
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "questionText": "男の人は何が1番嬉しいと言っていますか?",
+          "questionAnswer": 3,
+          "questionContextRef": "ctx-choukai-2",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "企画した商品の売り上げが1位になったこと"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "上司が自由に仕事をさせてくれたこと"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "企画した商品を知人がほめてくれたこと"
+            },
+            { "codeAnswer": 4, "answerText": "次の企画への期待が高いこと" }
+          ]
+        },
+        {
+          "order": 3,
+          "questionText": "係かりの人はどんな人にボランティアに来て欲しいと言っていますか?",
+          "questionAnswer": 3,
+          "questionContextRef": "ctx-choukai-2",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "この教室でボランティアをしたことがある人"
+            },
+            { "codeAnswer": 2, "answerText": "遊びを教えるのが上手な人" },
+            { "codeAnswer": 3, "answerText": "子どもの話を聞いてあげられる人" },
+            { "codeAnswer": 4, "answerText": "勉強を教えるのが上手な人" }
+          ]
+        },
+        {
+          "order": 4,
+          "questionText": "中学生はある店で買い物をした時、店員のどんな対応が嫌だったと言っていますか?",
+          "questionAnswer": 2,
+          "questionContextRef": "ctx-choukai-2",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "店に入るとすぐ話しかけてきたこと"
+            },
+            { "codeAnswer": 2, "answerText": "買い物の間ずっとそばにいたこと" },
+            { "codeAnswer": 3, "answerText": "言葉づかいが難しかったこと" },
+            { "codeAnswer": 4, "answerText": "高い商品をすすめてきたこと" }
+          ]
+        },
+        {
+          "order": 5,
+          "questionText": "男の人は図書館へ来る人を増やすためにまずどんなことをしたらいいと言っていますか?",
+          "questionAnswer": 2,
+          "questionContextRef": "ctx-choukai-2",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "子どものための企画を増やす" },
+            { "codeAnswer": 2, "answerText": "大人向けのイベントを夜も行う" },
+            { "codeAnswer": 3, "answerText": "学習スペースの設備をよくする" },
+            { "codeAnswer": 4, "answerText": "図書館の宣伝の仕方を工夫する" }
+          ]
+        }
+      ]
+    },
+    {
+      "mondaiType": "CHOUKAI_OUTLINE",
+      "section": "CHOUKAI",
+      "session": 2,
+      "order": 3,
+      "instruction": "問題3では、問題用紙に何も印刷されていません。この問題は、全体としてどんな内容かを聞く問題です。話の前に質問はありません。まず話を聞いてください。それから、質問とせんたくしを聞いて、1から4の中から、最もよいものを一つ選んでください。",
+      "questions": [
+        {
+          "order": 1,
+          "questionText": "社員は何について話していますか?",
+          "questionAnswer": 2,
+          "questionContextRef": "ctx-choukai-3",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "この仕事の魅力" },
+            { "codeAnswer": 2, "answerText": "この仕事の大変さ" },
+            { "codeAnswer": 3, "answerText": "この仕事についた理" },
+            { "codeAnswer": 4, "answerText": "この仕事に必要な体力" }
+          ]
+        },
+        {
+          "order": 2,
+          "questionText": "男の人は買った車についてどう言っていますか?",
+          "questionAnswer": 2,
+          "questionContextRef": "ctx-choukai-3",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "値段も安かったしい車で満足だ。" },
+            {
+              "codeAnswer": 2,
+              "answerText": "値段は高かったがいい車で満足だ。"
+            },
+            { "codeAnswer": 3, "answerText": "安い車なので性能に不満がある。" },
+            { "codeAnswer": 4, "answerText": "高級な車だが性能に不満がある。" }
+          ]
+        },
+        {
+          "order": 3,
+          "questionText": "料理研究家は何について話していますか?",
+          "questionAnswer": 4,
+          "questionContextRef": "ctx-choukai-3",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "美味しい料理を作る工夫" },
+            { "codeAnswer": 2, "answerText": "子供時代の食事の思い出" },
+            { "codeAnswer": 3, "answerText": "家庭料理の味の特徴" },
+            { "codeAnswer": 4, "answerText": "味の好みを決める要素" }
+          ]
+        },
+        {
+          "order": 4,
+          "questionText": "作家が言いたいことは何ですか?",
+          "questionAnswer": 1,
+          "questionContextRef": "ctx-choukai-3",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "好きな本を繰り返し読んで欲しい。"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "なるべく多くの本を読んで欲しい。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "すぐに役に立つ本を読んで欲しい。"
+            },
+            {
+              "codeAnswer": 4,
+              "answerText": "宣伝を参考にして本を選んで欲しい。"
+            }
+          ]
+        },
+        {
+          "order": 5,
+          "questionText": "校長先生が伝えたいことはどのようなことですか?",
+          "questionAnswer": 3,
+          "questionContextRef": "ctx-choukai-3",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "目標は自分にあったものが良い。" },
+            { "codeAnswer": 2, "answerText": "目標を持ち続けることが必要だ。" },
+            {
+              "codeAnswer": 3,
+              "answerText": "目標に向かうプロセスにも意味がある。"
+            },
+            { "codeAnswer": 4, "answerText": "時々目標を見直すことが大事だ。" }
+          ]
+        }
+      ]
+    },
+    {
+      "mondaiType": "CHOUKAI_QUICK_RESPONSE",
+      "section": "CHOUKAI",
+      "session": 2,
+      "order": 4,
+      "instruction": "問題4では、問題用紙に何も印刷されていません。まず文を聞いてください。それから、それに対する返事を聞いて、1から3の中から、最もよいものを一つ選んでください。",
+      "questions": [
+        {
+          "order": 1,
+          "questionText": "ん、会議の資料をこの机の上に置いたはずなのに。",
+          "questionAnswer": 1,
+          "questionContextRef": "ctx-choukai-4",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "え、ないんですか?" },
+            {
+              "codeAnswer": 2,
+              "answerText": "助かります。ありがとうございます。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "あ、机の上に置いてはいけなかったんですね。"
+            },
+            { "codeAnswer": 4, "answerText": "" }
+          ]
+        },
+        {
+          "order": 2,
+          "questionText": "森さん進めてくれたカメラ買いましたよ。小型ながらなかなか高性能ですね。",
+          "questionAnswer": 2,
+          "questionContextRef": "ctx-choukai-4",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "もっと小さいのが良かったんですね。"
+            },
+            { "codeAnswer": 2, "answerText": "小さいのにすごいでしょう。" },
+            { "codeAnswer": 3, "answerText": "小さい方が性能がいいんですか?" },
+            { "codeAnswer": 4, "answerText": "" }
+          ]
+        },
+        {
+          "order": 3,
+          "questionText": "今日の実習のレポート明日出さなきゃいけないなんて。",
+          "questionAnswer": 2,
+          "questionContextRef": "ctx-choukai-4",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "明日までじゃなくてよかったね。" },
+            { "codeAnswer": 2, "answerText": "本当もっと時間欲しいよね。" },
+            {
+              "codeAnswer": 3,
+              "answerText": "え、レポート出さなくても良くなったの?"
+            },
+            { "codeAnswer": 4, "answerText": "" }
+          ]
+        },
+        {
+          "order": 4,
+          "questionText": "あの、佐藤さん、この椅子運んでくださると助かるんですが。",
+          "questionAnswer": 3,
+          "questionContextRef": "ctx-choukai-4",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "運んでただけるんですか?" },
+            { "codeAnswer": 2, "answerText": "え、私運んでませんよ。" },
+            {
+              "codeAnswer": 3,
+              "answerText": "あ、はい。どこへ運びましょうか?"
+            },
+            { "codeAnswer": 4, "answerText": "" }
+          ]
+        },
+        {
+          "order": 5,
+          "questionText": "鈴木さん、イベントの準備は順調?",
+          "questionAnswer": 3,
+          "questionContextRef": "ctx-choukai-4",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "では早速準備を始めます。" },
+            { "codeAnswer": 2, "answerText": "中止になるなんて残念です。" },
+            { "codeAnswer": 3, "answerText": "今のところうまくいってます。" },
+            { "codeAnswer": 4, "answerText": "" }
+          ]
+        },
+        {
+          "order": 6,
+          "questionText": "昨日愚痴を言っちゃったけど聞かなかったことにしてくれない?",
+          "questionAnswer": 1,
+          "questionContextRef": "ctx-choukai-4",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "ああ、分かった。忘れるよ。" },
+            { "codeAnswer": 2, "answerText": "え、ちゃんと聞いてたよ。" },
+            { "codeAnswer": 3, "answerText": "もちろんつでも聞くよ。" },
+            { "codeAnswer": 4, "answerText": "" }
+          ]
+        },
+        {
+          "order": 7,
+          "questionText": "今朝もう少しでいつもの電車に乗り遅れるところだったよ。",
+          "questionAnswer": 1,
+          "questionContextRef": "ctx-choukai-4",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "そっか。でも間に合ったなら良かったね。"
+            },
+            { "codeAnswer": 2, "answerText": "ああ、ものに乗れなかったんだ。" },
+            { "codeAnswer": 3, "answerText": "え、電車が遅れたんだ。" },
+            { "codeAnswer": 4, "answerText": "" }
+          ]
+        },
+        {
+          "order": 8,
+          "questionText": "伊藤さん、午後の会議の準備一緒にやることになってたけど、僕1人でできないこともないよ。",
+          "questionAnswer": 3,
+          "questionContextRef": "ctx-choukai-4",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "それなら一緒にやろうか。" },
+            { "codeAnswer": 2, "answerText": "え、1人でやったの?" },
+            { "codeAnswer": 3, "answerText": "じゃあお願いしてもいい?" },
+            { "codeAnswer": 4, "answerText": "" }
+          ]
+        },
+        {
+          "order": 9,
+          "questionText": "藤田さん、スピーチの練習付き合ってくださってありがとうございました。当日もうまくいくといいんですけど。",
+          "questionAnswer": 3,
+          "questionContextRef": "ctx-choukai-4",
+          "questionChoices": [
+            {
+              "codeAnswer": 1,
+              "answerText": "うまくいったんだ。頑張った会があったね。"
+            },
+            {
+              "codeAnswer": 2,
+              "answerText": "仕方ないよ。そんなにがっかりしないで。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "きっと練習の成果を出せると思うよ。"
+            },
+            { "codeAnswer": 4, "answerText": "" }
+          ]
+        },
+        {
+          "order": 10,
+          "questionText": "サークルの打ち合わせ教室でやるって聞いたけど教室は予約してからでないと使えないよ。",
+          "questionAnswer": 2,
+          "questionContextRef": "ctx-choukai-4",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "予約は必要ないんですね。" },
+            { "codeAnswer": 2, "answerText": "先週予約しました。" },
+            {
+              "codeAnswer": 3,
+              "answerText": "せっかく予約したのに使えないんですか?"
+            },
+            { "codeAnswer": 4, "answerText": "" }
+          ]
+        },
+        {
+          "order": 11,
+          "questionText": "森田さん。森田さんの企画書だけどデータなしじゃ検討しようがないよ。",
+          "questionAnswer": 1,
+          "questionContextRef": "ctx-choukai-4",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "すみません。すぐ用意します。" },
+            {
+              "codeAnswer": 2,
+              "answerText": "あ、検討していただけるんですね。"
+            },
+            {
+              "codeAnswer": 3,
+              "answerText": "ええ、ご理解ありがとうございます。"
+            },
+            { "codeAnswer": 4, "answerText": "" }
+          ]
+        }
+      ]
+    },
+    {
+      "mondaiType": "CHOUKAI_INTEGRATED",
+      "section": "CHOUKAI",
+      "session": 2,
+      "order": 5,
+      "instruction": "問題5 では、長めの話を聞きます。この問題には練習はありません。メモをとってもかまいません。1番、2番 問題用紙に何も印刷されていません。まず話を聞いてください。それから、質問とせんたくしを聞いて、1から4のから、最もよいものを一つ選んでください。",
+      "questions": [
+        {
+          "order": 1,
+          "questionText": "女の人はどの教室を見学したいと言っていますか?",
+          "questionAnswer": 2,
+          "questionContextRef": "ctx-choukai-5",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "ボール体操" },
+            { "codeAnswer": 2, "answerText": "柔軟体操" },
+            { "codeAnswer": 3, "answerText": "リズム運" },
+            { "codeAnswer": 4, "answerText": "筋肉トレーニング" }
+          ]
+        },
+        {
+          "order": 2,
+          "questionText": "問題解決のために何をすることにしましたか?",
+          "questionAnswer": 4,
+          "questionContextRef": "ctx-choukai-5",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "チラシの文字を大きくする。" },
+            { "codeAnswer": 2, "answerText": "配るチラシの数を増やす。" },
+            { "codeAnswer": 3, "answerText": "看板の文字を大きくする。" },
+            { "codeAnswer": 4, "answerText": "看板の高さを高くする。" }
+          ]
+        },
+        {
+          "order": 3,
+          "questionText": "質問1: 男の人はどの学校に行くつもりだと言ってますか?",
+          "questionAnswer": 2,
+          "questionContextRef": "ctx-choukai-5",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "東小学校" },
+            { "codeAnswer": 2, "answerText": "西中学校" },
+            { "codeAnswer": 3, "answerText": "南小学校" },
+            { "codeAnswer": 4, "answerText": "北中学校" }
+          ]
+        },
+        {
+          "order": 4,
+          "questionText": "質問2: 女の人はどの学校に行きたいと言っていますか?",
+          "questionAnswer": 1,
+          "questionContextRef": "ctx-choukai-5",
+          "questionChoices": [
+            { "codeAnswer": 1, "answerText": "東小学校" },
+            { "codeAnswer": 2, "answerText": "西中学校" },
+            { "codeAnswer": 3, "answerText": "南小学校" },
+            { "codeAnswer": 4, "answerText": "北中学校" }
+          ]
+        }
+      ]
+    }
+  ]
+}
