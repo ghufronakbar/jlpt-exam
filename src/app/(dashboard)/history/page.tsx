@@ -66,6 +66,7 @@ export default async function HistoryPage() {
                         <Button
                           size="sm"
                           variant="outline"
+                          nativeButton={false}
                           render={<Link href={`/result/${attempt.id}`} />}
                         >
                           Lihat Hasil
@@ -73,11 +74,21 @@ export default async function HistoryPage() {
                         <Button
                           size="sm"
                           variant="outline"
+                          nativeButton={false}
                           render={<Link href={`/result/${attempt.id}/detail`} />}
                         >
                           Review
                         </Button>
                       </>
+                    )}
+                    {attempt.status === "IN_PROGRESS" && (
+                      <Button
+                        size="sm"
+                        nativeButton={false}
+                        render={<Link href={`/exam/${attempt.id}/${attempt.resumeSession}`} />}
+                      >
+                        Lanjutkan
+                      </Button>
                     )}
                   </div>
                 </li>

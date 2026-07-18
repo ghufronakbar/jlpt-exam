@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getTestPackageQuestions } from "@/features/test-package/actions";
 import { JapaneseText } from "@/components/japanese-text";
+import { JapanesePassage } from "@/components/japanese-passage";
 import { MONDAI_TYPE_LABELS } from "@/constants/jlpt";
 import {
   Card,
@@ -65,7 +66,7 @@ export default async function TestPackageQuestionsPage({
                     {showContext && question.questionContext && (
                       <div className="rounded-lg bg-muted/50 p-3 text-sm">
                         {question.questionContext.storyText && (
-                          <JapaneseText text={question.questionContext.storyText} />
+                          <JapanesePassage text={question.questionContext.storyText} />
                         )}
                         {question.questionContext.storyImage && (
                           // eslint-disable-next-line @next/next/no-img-element

@@ -62,6 +62,7 @@ export default async function DashboardPage() {
           </CardContent>
           <CardFooter>
             <Button
+              nativeButton={false}
               render={
                 <Link
                   href={lastAttempt ? `/result/${lastAttempt.id}` : "/test-package"}
@@ -75,7 +76,7 @@ export default async function DashboardPage() {
       </div>
 
       <div>
-        <Button variant="outline" render={<Link href="/test-package" />}>
+        <Button variant="outline" nativeButton={false} render={<Link href="/test-package" />}>
           Lihat Semua Paket Tes
         </Button>
       </div>

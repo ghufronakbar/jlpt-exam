@@ -113,6 +113,7 @@ export default async function TestPackageDetailPage({
                       <Button
                         size="sm"
                         variant="outline"
+                        nativeButton={false}
                         render={<Link href={`/result/${attempt.id}`} />}
                       >
                         Lihat Hasil
@@ -129,6 +130,7 @@ export default async function TestPackageDetailPage({
       <div>
         <Button
           variant="outline"
+          nativeButton={false}
           render={<Link href={`/test-package/${testPackage.id}/questions`} />}
         >
           Lihat Semua Soal (Mode Baca)

@@ -6,6 +6,7 @@ import type { MondaiType } from "@prisma/client";
 import { useExam } from "./exam-provider";
 import { submitExamSessionAction } from "../actions";
 import { JapaneseText } from "@/components/japanese-text";
+import { JapanesePassage } from "@/components/japanese-passage";
 import { MONDAI_TYPE_LABELS } from "@/constants/jlpt";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -169,7 +170,7 @@ export function ExamRunner({
         {currentQuestion.questionContext && (
           <div className="rounded-lg bg-muted/50 p-3 text-sm">
             {currentQuestion.questionContext.storyText && (
-              <JapaneseText text={currentQuestion.questionContext.storyText} />
+              <JapanesePassage text={currentQuestion.questionContext.storyText} />
             )}
             {currentQuestion.questionContext.storyImage && (
               // eslint-disable-next-line @next/next/no-img-element

@@ -1,7 +1,14 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAttemptDetail } from "@/features/result/actions";
 import { QuestionCommentForm } from "@/features/result/components/question-comment-form";
+import { CommentItem } from "@/features/result/components/comment-item";
+import { CopyQuestionButton } from "@/features/result/components/copy-question-button";
+import { DetailSidebarNav, type NavMondaiItem } from "@/features/result/components/detail-nav";
+import { DetailMobileNav } from "@/features/result/components/detail-mobile-nav";
 import { JapaneseText } from "@/components/japanese-text";
+import { JapanesePassage } from "@/components/japanese-passage";
+import { ImageWithLightbox } from "@/components/image-with-lightbox";
 import { MONDAI_TYPE_LABELS } from "@/constants/jlpt";
 import {
   Card,
@@ -11,14 +18,18 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export default async function ResultDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ attemptId: string }>;
+  searchParams: Promise<{ mondai?: string }>;
 }) {
   const { attemptId } = await params;
+  const { mondai } = await searchParams;
   const attemptIdNum = Number(attemptId);
 
   if (!Number.isInteger(attemptIdNum)) {
@@ -27,35 +38,77 @@ export default async function ResultDetailPage({
 
   const { attempt, testPackageItems } = await getAttemptDetail(attemptIdNum);
 
+  if (testPackageItems.length === 0) {
+    return (
+      <div className="flex flex-col gap-2">
+        <p className="text-sm text-muted-foreground">{attempt.testPackage.jlptLevel}</p>
+        <h1 className="text-xl font-semibold">{attempt.testPackage.name} — Review</h1>
+        <p className="text-sm text-muted-foreground">Belum ada soal untuk attempt ini.</p>
+      </div>
+    );
+  }
+
+  const navItems: NavMondaiItem[] = testPackageItems.map((item) => ({
+    id: item.id,
+    mondaiType: item.mondaiType,
+    section: item.section,
+    correctCount: item.questions.filter((q) => q.attemptAnswers[0]?.isCorrect).length,
+    totalCount: item.questions.length,
+  }));
+
+  const requestedId = Number(mondai);
+  const selectedItem =
+    testPackageItems.find((item) => item.id === requestedId) ?? testPackageItems[0];
+  const currentIndex = testPackageItems.findIndex((item) => item.id === selectedItem.id);
+  const prevItem = currentIndex > 0 ? testPackageItems[currentIndex - 1] : null;
+  const nextItem = currentIndex < testPackageItems.length - 1 ? testPackageItems[currentIndex + 1] : null;
+
+  // Precomputed (not mutated during render) so a shared QuestionContext only
+  // shows once for a contiguous run of questions that reference it.
+  const questionRows = selectedItem.questions.reduce<{
+    rows: { question: (typeof selectedItem.questions)[number]; showContext: boolean }[];
+    lastContextId: number | null;
+  }>(
+    (acc, question) => {
+      const showContext = Boolean(
+        question.questionContext && question.questionContext.id !== acc.lastContextId,
+      );
+      return {
+        rows: [...acc.rows, { question, showContext }],
+        lastContextId: question.questionContext?.id ?? acc.lastContextId,
+      };
+    },
+    { rows: [], lastContextId: null },
+  ).rows;
+
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4">
       <div>
         <p className="text-sm text-muted-foreground">{attempt.testPackage.jlptLevel}</p>
         <h1 className="text-xl font-semibold">{attempt.testPackage.name} — Review</h1>
       </div>
 
-      {testPackageItems.map((item) => {
-        let lastContextId: number | null = null;
+      <DetailMobileNav items={navItems} activeId={selectedItem.id} attemptId={attempt.id} />
 
-        return (
-          <Card key={item.id}>
+      <div className="flex items-start gap-4">
+        <DetailSidebarNav items={navItems} activeId={selectedItem.id} attemptId={attempt.id} />
+
+        <div className="min-w-0 flex-1 space-y-4">
+          <Card>
             <CardHeader>
               <CardTitle>
-                Sesi {item.session} · {MONDAI_TYPE_LABELS[item.mondaiType]}
+                Sesi {selectedItem.session} · {MONDAI_TYPE_LABELS[selectedItem.mondaiType]}
               </CardTitle>
-              {item.instruction && (
+              {selectedItem.instruction && (
                 <CardDescription>
-                  <JapaneseText text={item.instruction} />
+                  <JapaneseText text={selectedItem.instruction} />
                 </CardDescription>
               )}
             </CardHeader>
             <CardContent className="flex flex-col gap-6">
-              {item.questions.map((question) => {
+              {questionRows.map(({ question, showContext }) => {
                 const userAnswer = question.attemptAnswers[0] ?? null;
-                const showContext =
-                  question.questionContext && question.questionContext.id !== lastContextId;
-                lastContextId = question.questionContext?.id ?? lastContextId;
-                const hideFurigana = item.mondaiType === "MOJI_GOI_READ_KANJI";
+                const hideFurigana = selectedItem.mondaiType === "MOJI_GOI_READ_KANJI";
 
                 return (
                   <div
@@ -65,13 +118,11 @@ export default async function ResultDetailPage({
                     {showContext && question.questionContext && (
                       <div className="rounded-lg bg-muted/50 p-3 text-sm">
                         {question.questionContext.storyText && (
-                          <JapaneseText text={question.questionContext.storyText} />
+                          <JapanesePassage text={question.questionContext.storyText} />
                         )}
                         {question.questionContext.storyImage && (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
+                          <ImageWithLightbox
                             src={question.questionContext.storyImage}
-                            alt=""
                             className="mt-2 max-w-full rounded-md"
                           />
                         )}
@@ -98,10 +149,8 @@ export default async function ResultDetailPage({
                             />
                           )}
                           {question.questionImage && (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img
+                            <ImageWithLightbox
                               src={question.questionImage}
-                              alt=""
                               className="max-w-full rounded-md"
                             />
                           )}
@@ -110,15 +159,23 @@ export default async function ResultDetailPage({
                           )}
                         </div>
                       </div>
-                      {userAnswer && (
-                        <Badge variant={userAnswer.isCorrect ? "default" : "destructive"}>
-                          {userAnswer.isCorrect
-                            ? "Benar"
-                            : userAnswer.selectedAnswer === null
-                              ? "Tidak Dijawab"
-                              : "Salah"}
-                        </Badge>
-                      )}
+                      <div className="flex shrink-0 items-center gap-1">
+                        <CopyQuestionButton
+                          contextText={question.questionContext?.storyText}
+                          questionOrder={question.order}
+                          questionText={question.questionText}
+                          choices={question.questionChoices}
+                        />
+                        {userAnswer && (
+                          <Badge variant={userAnswer.isCorrect ? "default" : "destructive"}>
+                            {userAnswer.isCorrect
+                              ? "Benar"
+                              : userAnswer.selectedAnswer === null
+                                ? "Tidak Dijawab"
+                                : "Salah"}
+                          </Badge>
+                        )}
+                      </div>
                     </div>
 
                     <ul className="flex flex-col gap-1 text-sm">
@@ -139,10 +196,8 @@ export default async function ResultDetailPage({
                             <span className="flex flex-col gap-1">
                               {choice.answerText && <JapaneseText text={choice.answerText} />}
                               {choice.answerImage && (
-                                // eslint-disable-next-line @next/next/no-img-element
-                                <img
+                                <ImageWithLightbox
                                   src={choice.answerImage}
-                                  alt=""
                                   className="max-w-40 rounded-md"
                                 />
                               )}
@@ -163,16 +218,14 @@ export default async function ResultDetailPage({
                       </p>
                     )}
 
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-3">
                       {question.questionComments.length > 0 && (
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-3">
                           <span className="text-xs font-medium text-muted-foreground">
                             Catatan Belajar
                           </span>
                           {question.questionComments.map((comment) => (
-                            <p key={comment.id} className="text-sm">
-                              {comment.commentText}
-                            </p>
+                            <CommentItem key={comment.id} comment={comment} />
                           ))}
                         </div>
                       )}
@@ -183,8 +236,37 @@ export default async function ResultDetailPage({
               })}
             </CardContent>
           </Card>
-        );
-      })}
+
+          <div className="flex items-center justify-between">
+            {prevItem ? (
+              <Button
+                variant="outline"
+                nativeButton={false}
+                render={<Link href={`/result/${attempt.id}/detail?mondai=${prevItem.id}`} />}
+              >
+                ← Mondai Sebelumnya
+              </Button>
+            ) : (
+              <Button variant="outline" disabled>
+                ← Mondai Sebelumnya
+              </Button>
+            )}
+            {nextItem ? (
+              <Button
+                variant="outline"
+                nativeButton={false}
+                render={<Link href={`/result/${attempt.id}/detail?mondai=${nextItem.id}`} />}
+              >
+                Mondai Selanjutnya →
+              </Button>
+            ) : (
+              <Button variant="outline" disabled>
+                Mondai Selanjutnya →
+              </Button>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

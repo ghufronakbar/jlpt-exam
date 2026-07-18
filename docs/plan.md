@@ -120,6 +120,186 @@ Bank soal asli/produksi (bukan data dummy testing — itu di [Fase 5.1](#fase-51
 - [x] Logging aktif (`[seed:test-package] CREATE/SKIP/ERROR/DONE ...`) di setiap langkah — bisa ditrack dari log server, plus ringkasan terstruktur di response JSON (`packagesSeeded`/`packagesSkipped`/`filesWithErrors`/`questionsSeeded`/`errors`)
 - [x] Verifikasi: dites 2x — (1) payload single-file lama (1 paket, 2 mondai, 1 context, 1 soal `questionContextRef` sengaja rusak): seed 2/3 soal + 1 error tercatat rapi, run kedua skip; (2) setelah pindah ke struktur folder: file kosong (`n2-2019-12.json` milik user) ke-skip aman, file baru ke-seed, run kedua idempoten. Data test dibersihkan lagi dari DB & file temp dihapus tiap kali. `npm run build` & `npm run lint` bersih
 
+## Fase 8.1 — Text Parser untuk Bacaan Panjang (Dokkai)
+
+Ditemukan saat input data real (`n2-2017-07.json` dkk): bacaan dokkai panjang (memo, 注,
+multi-paragraf, 2-teks 【A】/【B】, tabel info) tampil sebagai satu blok teks membingungkan karena
+`JapaneseText` (Fase 4) belum pernah menangani line break / struktur dokumen. Desain lengkap &
+analisis di [`docs/text-parser.md`](./text-parser.md).
+
+- [x] `src/lib/japanese-document.ts` — `parseJapaneseDocument`: pecah `storyText` jadi
+  `paragraph`/`table`/`section` block, di atas `parseJapaneseMarkup` yang sudah ada (tidak diubah)
+- [x] `src/components/japanese-passage.tsx` — `JapanesePassage`, reuse inline renderer yang
+  diekspor dari `japanese-text.tsx` (`renderInlineJapanese`) supaya tidak duplikasi logic
+- [x] Ganti pemakaian `storyText` di exam runner, mode baca, result detail dari `JapaneseText` ke
+  `JapanesePassage`. `JapaneseText` sendiri tidak berubah, tetap dipakai untuk teks 1-baris
+- [x] `docs/seed.md` ditambah checklist QA underline + catatan typo key `questionContexts`
+- [x] Bug ketemu & diperbaiki saat verifikasi: deteksi marker `【A】`/`【B】` awalnya gagal karena
+  markernya nempel di chunk yang sama dengan paragraf pertama (dipisah 1 `\n`, bukan `\n\n`) —
+  diganti ke deteksi prefix, divalidasi ulang dry-run ke data asli
+- [x] Verifikasi: `npm run build` & `npm run lint` bersih; parser dites dry-run terhadap 6 context
+  asli dari `n2-2017-07.json` (memo, 注, paragraf panjang, 2-section, tabel)
+- [ ] **Belum dicek visual di browser** oleh model — tunggu user cek langsung setelah seed data
+
+## Fase 8.2 — Bugfix Hydration + Comment CRUD, Upload Gambar, Navigasi Detail, Resume Attempt, Analytics per Attempt
+
+Feedback dari testing manual user. Beberapa item independen, dikerjakan sekaligus:
+
+### Bugfix: hydration error di `/result/[attemptId]`
+
+- [x] **Root cause ketemu** (bukan soal tanggal/locale seperti dugaan awal): base-ui `Button` punya
+  prop `nativeButton` yang default `true` — konflik kalau `render` diarahkan ke `<Link>` (jadi
+  `<a>`, bukan `<button>` asli), bikin atribut yang di-generate server vs client beda pas hidrasi.
+  Pola `<Button render={<Link .../>}>` dipakai di HAMPIR SEMUA halaman, jadi ini bug tersebar,
+  bukan cuma di `/result`.
+- [x] Ditambahkan `nativeButton={false}` di semua 10 titik: `dashboard/page.tsx` (2x),
+  `result/[attemptId]/page.tsx` (3x), `history/page.tsx` (2x), `test-package/[id]/page.tsx` (2x).
+  `app-sidebar.tsx`'s `SidebarMenuButton` dicek terpisah — itu pakai `useRender` generik (bukan
+  `useButton`), jadi tidak kena masalah yang sama, tidak diubah.
+- [x] Diverifikasi lewat log dev server user langsung (bukan dugaan) — pesan error persis
+  menyebut `at Button (... ResultSummaryPage ...)` dan warning terpisah "Base UI: A component
+  that acts as a button expected a native `<button>`..." yang mengonfirmasi akar masalahnya.
+- [ ] **Catatan buat ke depan**: pemakaian `Button` + `render={<Link .../>}` BARU wajib selalu
+  sertakan `nativeButton={false}`.
+
+### Comment: edit, hapus, tampilan mirip sosmed
+
+- [x] Schema: `EditQuestionCommentSchema`, `DeleteQuestionCommentSchema` di
+  `src/features/result/schemas.ts` (plus `AddQuestionCommentSchema` diupdate: `commentImages`
+  max 4 URL)
+- [x] Action: `updateQuestionCommentAction`, `deleteQuestionCommentAction` — verifikasi
+  kepemilikan (`comment.userId === session.userId`) sebelum edit/hapus, invalidasi cache
+  `testPackageQuestions` yang sama seperti `addQuestionCommentAction`
+- [x] `getAttemptDetail` — sertakan `user.username` + `updatedAt` di `questionComments`
+- [x] UI baru `src/features/result/components/comment-item.tsx` — avatar (inisial username,
+  `components/ui/avatar.tsx`), nama, waktu relatif (`date-fns` `formatDistanceToNow` + locale
+  `id`), label "· diedit" kalau `updatedAt !== createdAt`, tombol Edit/Hapus dengan konfirmasi
+  `AlertDialog` sebelum hapus
+- [x] Edit inline: klik Edit → form (textarea + image uploader) muncul menggantikan tampilan
+  comment, prefill data lama, tombol simpan/batal
+
+### Upload gambar comment (Cloudinary, direct upload dari client)
+
+- [x] Install package `cloudinary` (buat generate signature saja, bukan upload lewat server)
+- [x] `src/lib/cloudinary.ts` — util `createSignedUploadParams()` (server-only), pakai
+  `CLOUDINARY_*` dari `src/constants/index.ts` (sudah divalidasi di sana dari Fase 0)
+- [x] Server action `getCommentImageUploadSignatureAction` — return `{ signature, timestamp,
+  apiKey, cloudName, folder }`, TIDAK pernah expose `CLOUDINARY_API_SECRET` ke client
+- [x] `src/features/result/components/comment-image-uploader.tsx` — picker gambar (maks 4),
+  validasi tipe (image only) + ukuran (max 5MB) di client, `fetch()` langsung ke
+  `https://api.cloudinary.com/v1_1/{cloud}/image/upload` (bukan lewat server kita)
+- [x] `commentImages` ikut dikirim pas create/update comment
+- [x] **Diverifikasi end-to-end nyata** (bukan cuma baca kode): generate signature pakai
+  credential asli dari `.env`, upload gambar 1x1 px langsung ke Cloudinary via curl pakai
+  signature itu — berhasil dapat `secure_url`. File test dihapus lagi dari Cloudinary setelahnya.
+
+### Navigasi section & mondai di halaman detail
+
+- [x] Tiap Card mondai dikasih `id={`mondai-${item.id}`}` + `scroll-mt-16` (biar tidak ketutup
+  header sticky pas di-scroll via anchor) sebagai anchor
+- [x] `src/features/result/components/detail-nav.tsx` — Server Component murni (cuma
+  `<a href="#mondai-x">`, tidak perlu JS), dikelompokkan per section
+
+### `/history` — tombol lanjutkan attempt yang masih berjalan
+
+- [x] `getAttemptHistory` — untuk attempt `IN_PROGRESS`, hitung `resumeSession` (sesi pertama
+  yang belum ada `AttemptAnswer`-nya sama sekali; kalau `sectionScope` terisi, selalu sesi 1
+  virtual) — logikanya cermin dari `submitExamSessionAction` di `features/exam/actions.ts`
+- [x] Tombol "Lanjutkan" ke `/exam/[attemptId]/[resumeSession]` untuk attempt `IN_PROGRESS`
+
+### `/result/[attemptId]` — breakdown benar/salah per section & per mondai
+
+- [x] `src/lib/category-stats.ts` — `toSortedCategoryStats` diekstrak dari
+  `features/analytics/actions.ts` jadi util bersama (dipakai analytics & result, hindari
+  duplikasi)
+- [x] `getAttemptSummary` — sekarang juga return `sectionStats`/`mondaiTypeStats` khusus attempt
+  ini (bukan seluruh riwayat seperti `/analytics`), bentuk data sama biar reuse
+  `CategoryAccuracyChart` langsung
+- [x] Render 2 chart tambahan di halaman summary: breakdown per section, breakdown per mondai
+
+## Fase 8.3 — Rework UX Halaman Detail (per-mondai, bukan semua di-scroll)
+
+Feedback lanjutan: halaman detail masih susah dipakai karena semua mondai ditumpuk & harus
+di-scroll panjang. Diubah total jadi tampilan per-mondai + fitur tambahan.
+
+- [x] `src/app/(dashboard)/result/[attemptId]/detail/page.tsx` — sekarang cuma render **satu**
+  mondai sekaligus, dipilih lewat query param `?mondai=<id>` (bukan client state — cukup
+  `searchParams`, konsisten dengan pola `?questionNumber=` di exam runner). Fallback ke mondai
+  pertama kalau param kosong/tidak valid.
+- [x] Layout 2 kolom: sidebar navigasi sticky di kiri (desktop, `lg:block`, grouped per section,
+  tiap mondai tampilkan skor `benar/total`) + konten di kanan. Mobile: sidebar disembunyikan,
+  diganti tombol "Pilih Mondai" yang buka `Sheet` (drawer) isinya sama
+  (`src/features/result/components/detail-nav.tsx` untuk list+sidebar,
+  `detail-mobile-nav.tsx` untuk versi Sheet — list-nya di-share, bukan duplikasi)
+- [x] Tombol "Mondai Sebelumnya"/"Selanjutnya" di bawah konten buat navigasi cepat berurutan
+- [x] Tombol copy per soal (`copy-question-button.tsx`) — salin bacaan+soal+pilihan jadi plain
+  text (markdown-ish: furigana → `漢字(かんじ)`, underline → `**teks**`) buat ditanyakan ke AI.
+  Util baru `src/lib/japanese-plain-text.ts` (`markupToPlainText`/`documentToPlainText`, reuse
+  parser yang sudah ada dari Fase 8.1, bukan implementasi baru)
+- [x] `src/components/image-with-lightbox.tsx` — klik gambar → overlay fullscreen (via
+  `createPortal` ke `document.body`, hindari masalah stacking context), klik backdrop/tombol
+  close/Escape buat nutup, klik gambar sendiri tidak menutup (`stopPropagation`). Dipakai di
+  semua gambar halaman detail (context/soal/pilihan) + gambar comment
+- [x] **Bug lint ketemu & diperbaiki**: setelah hapus loop luar per-`testPackageItem`,
+  `let lastContextId` yang tadinya scoped di dalam `.map()` sekarang mutasi variable di scope
+  komponen — kena `react-hooks/immutability` (baru muncul karena perubahan struktur, bukan lint
+  rule baru). Diganti jadi `reduce` murni fungsional (precompute `showContext` per soal sebelum
+  render, tanpa mutasi)
+- [x] Verifikasi: `npm run build` sukses, `npm run lint` balik ke baseline (2 error lama saja,
+  tidak ada error baru)
+
+### Perbaikan lanjutan: lebar penuh, sticky nav, breakdown teks (bukan chart)
+
+- [x] `src/app/(dashboard)/result/layout.tsx` **dihapus** — satu-satunya isinya cuma wrapper
+  `max-w-3xl mx-auto`, jadi setelah constraint-nya dicabut, filenya tidak perlu ada lagi
+  (parent `(dashboard)/layout.tsx` sudah cukup)
+- [x] **Bug sticky nav diperbaiki**: `sticky` sebelumnya ditaruh di `<div>` yang bersarang di
+  dalam `<aside>` (flex item-nya sendiri tidak sticky, cuma wrapper di dalamnya) — makanya ikut
+  scroll. Dipindah jadi `sticky` langsung di elemen `<aside>` (flex item-nya sendiri), plus
+  `self-start` eksplisit
+- [x] `/result/[attemptId]` — breakdown per section/mondai diganti dari `CategoryAccuracyChart`
+  (chart) ke `src/components/category-stat-list.tsx` (list teks: label + `benar/total · persen%`,
+  merah kalau di bawah 60%) — reuse tipe `CategoryStat` yang sama, cuma beda presentasi
+- [x] Verifikasi: `npm run build` & `npm run lint` balik ke baseline (2 error lama saja)
+
+### Verifikasi
+
+- [x] `npm run build` & `npm run lint` bersih (2 error lama tidak berubah; 2 warning baru soal
+  React Compiler tidak bisa memoize `useForm().watch()` — bukan bug, memang batasan API RHF)
+
+## Fase 8.4 — Tabel Analisis per Mondai + Proyeksi Skor ala JLPT
+
+Permintaan user: ganti visual analisis jadi tabel per mondai dengan proyeksi skor meniru skala
+JLPT asli. Keputusan user (via AskUserQuestion): pemetaan **3 scoring section** seperti JLPT
+asli — 言語知識 (moji-goi + bunpou digabung) / 読解 / 聴解, masing-masing 60, total 180, seragam
+untuk semua level (aturan khusus N4/N5 yang 120+60 diabaikan demi konsistensi); ditaruh di
+**dua-duanya** (`/analytics` per level + `/result/[attemptId]` per attempt).
+
+- [x] `src/lib/jlpt-score.ts` — `MONDAI_WEIGHTS` (bobot kesulitan per mondai, mis. 漢字読み 1.0 …
+  文の組み立て★ 1.5 … 統合理解 1.6-1.7; aproksimasi karena algoritma resmi JLPT/IRT tidak
+  dipublikasikan), `scoringSectionOf()` (map 4 section app → 3 scoring section JLPT), dan
+  `computeJlptScoreProjection()` dengan rumus ternormalisasi
+  `skorSection = Σ(bobot×benar) / Σ(bobot×totalSoal) × 60` — dijamin mentok 60/180 secara
+  matematis (kolom "Skor" polos = rumus yang sama dengan semua bobot 1). Skor section dibulatkan
+  dulu baru dijumlah jadi total (meniru rapor JLPT asli yang per section-nya integer).
+  `maxScore` menyesuaikan jumlah section yang ada datanya (latihan per seksi → maks 60, bukan 180)
+- [x] `src/components/jlpt-score-table.tsx` — tabel bersama: baris per mondai (bobot, benar/total,
+  akurasi — merah <60%), baris subtotal per scoring section (+ kolom Skor /60 & Skor Berbobot /60),
+  baris total (skala /180). Kolom skor sengaja hanya terisi di subtotal/total — skor skala-60
+  memang milik scoring section, bukan milik satu mondai
+- [x] `/analytics` — dua chart kelemahan lama diganti tabel per level (dikelompokkan N1→N5, hanya
+  level yang ada datanya; agregasi answers per level via join `attempt.testPackage.jlptLevel` —
+  campur data N2+N5 dalam satu agregat memang tidak bermakna). Tren skor (line chart) tetap
+- [x] `/result/[attemptId]` — dua card list teks (per section & per mondai dari Fase 8.3) diganti
+  satu card tabel yang sama, per attempt
+- [x] Bersih-bersih: `CategoryStatList`, `CategoryAccuracyChart`, `lib/category-stats.ts` dihapus
+  (tidak ada pemakainya lagi setelah diganti tabel)
+- [x] Verifikasi: rumus di-dry-run (semua benar → tepat 60/180; benar hanya di mondai gampang →
+  skor berbobot < polos (24 vs 30); benar hanya di mondai susah → sebaliknya (36 vs 30));
+  `npm run build` & `npm run lint` di baseline
+- [x] **Fix dokumen**: heading `## Fase 9` sempat hilang tertelan edit sebelumnya (item-itemnya
+  jadi yatim) — dikembalikan
+
 ## Fase 9 — Verifikasi & Polish
 
 - [ ] `npm run build` setelah tiap perubahan struktural/server action/caching

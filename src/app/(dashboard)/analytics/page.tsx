@@ -1,6 +1,7 @@
 import { getAnalytics } from "@/features/analytics/actions";
 import { ScoreTrendChart } from "@/features/analytics/components/score-trend-chart";
-import { CategoryAccuracyChart } from "@/features/analytics/components/category-accuracy-chart";
+import { JlptScoreTable } from "@/components/jlpt-score-table";
+import { computeJlptScoreProjection } from "@/lib/jlpt-score";
 import {
   Card,
   CardContent,
@@ -10,7 +11,7 @@ import {
 } from "@/components/ui/card";
 
 export default async function AnalyticsPage() {
-  const { trend, mondaiTypeStats, sectionStats } = await getAnalytics();
+  const { trend, levelStats } = await getAnalytics();
 
   const trendData = trend.map((point) => ({
     id: point.id,
@@ -48,35 +49,32 @@ export default async function AnalyticsPage() {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Kelemahan per Tipe Mondai</CardTitle>
-          <CardDescription>
-            Diurutkan dari akurasi terendah — bar merah = di bawah 60%.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {mondaiTypeStats.length === 0 ? (
+      {levelStats.length === 0 ? (
+        <Card>
+          <CardHeader>
+            <CardTitle>Analisis per Level</CardTitle>
+          </CardHeader>
+          <CardContent>
             <p className="text-sm text-muted-foreground">Belum ada data.</p>
-          ) : (
-            <CategoryAccuracyChart data={mondaiTypeStats} />
-          )}
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Kelemahan per Section</CardTitle>
-          <CardDescription>Moji-Goi, Bunpou, Dokkai, Choukai.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          {sectionStats.length === 0 ? (
-            <p className="text-sm text-muted-foreground">Belum ada data.</p>
-          ) : (
-            <CategoryAccuracyChart data={sectionStats} />
-          )}
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      ) : (
+        levelStats.map(({ level, mondaiStats }) => (
+          <Card key={level}>
+            <CardHeader>
+              <CardTitle>{level}</CardTitle>
+              <CardDescription>
+                Akurasi per mondai (agregat semua attempt selesai) + proyeksi skor ala JLPT:
+                skala 60 per scoring section, total 180. Kolom Skor Berbobot memakai bobot
+                kesulitan per mondai (aproksimasi, bukan algoritma resmi JLPT).
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <JlptScoreTable projection={computeJlptScoreProjection(mondaiStats)} />
+            </CardContent>
+          </Card>
+        ))
+      )}
     </div>
   );
 }

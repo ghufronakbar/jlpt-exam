@@ -43,6 +43,12 @@ function renderSegments(
   });
 }
 
+// Shared with JapanesePassage (japanese-passage.tsx), which renders one line/cell at a time.
+export function renderInlineJapanese(text: string, hideFuriganaInUnderline = false): ReactNode {
+  const segments = parseJapaneseMarkup(text);
+  return renderSegments(segments, { hideFuriganaInUnderline, insideUnderline: false });
+}
+
 export function JapaneseText({
   text,
   hideFuriganaInUnderline = false,
@@ -52,10 +58,5 @@ export function JapaneseText({
   hideFuriganaInUnderline?: boolean;
   className?: string;
 }) {
-  const segments = parseJapaneseMarkup(text);
-  return (
-    <span className={className}>
-      {renderSegments(segments, { hideFuriganaInUnderline, insideUnderline: false })}
-    </span>
-  );
+  return <span className={className}>{renderInlineJapanese(text, hideFuriganaInUnderline)}</span>;
 }

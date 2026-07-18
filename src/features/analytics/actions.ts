@@ -2,39 +2,18 @@
 
 import { redirect } from "next/navigation";
 import { unstable_cache } from "next/cache";
-import type { JlptSection, MondaiType } from "@prisma/client";
+import type { JlptLevel, MondaiType } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
 import { CACHE_KEYS, CACHE_TAGS } from "@/constants/cache-key";
-import { MONDAI_TYPE_LABELS, JLPT_SECTION_LABELS } from "@/constants/jlpt";
+import { JLPT_LEVEL_ORDER } from "@/constants/jlpt";
+import type { MondaiStatInput } from "@/lib/jlpt-score";
 
-type CategoryStat = {
-  key: string;
-  label: string;
-  total: number;
-  correct: number;
-  accuracy: number;
-};
-
-function toSortedStats<K extends string>(
-  map: Map<K, { total: number; correct: number }>,
-  labels: Record<K, string>,
-): CategoryStat[] {
-  return Array.from(map.entries())
-    .map(([key, { total, correct }]) => ({
-      key,
-      label: labels[key],
-      total,
-      correct,
-      accuracy: total > 0 ? Math.round((correct / total) * 100) : 0,
-    }))
-    .sort((a, b) => a.accuracy - b.accuracy);
-}
-
-// Weakness breakdown per mondaiType/section can't be a Prisma `groupBy` since
-// those fields live on TestPackageItem, two relations away from AttemptAnswer
-// — fetch the flat rows and aggregate in JS instead (data volume is tiny for
-// a single-user app).
+// Per-mondai stats can't be a Prisma `groupBy` since mondaiType lives on
+// TestPackageItem, two relations away from AttemptAnswer — fetch the flat rows
+// and aggregate in JS instead (data volume is tiny for a single-user app).
+// Grouped per JLPT level: mixing N2 and N5 answers in one aggregate would be
+// meaningless, so each level gets its own table.
 const getCachedAnalytics = (userId: number) =>
   unstable_cache(
     async (id: number) => {
@@ -55,7 +34,10 @@ const getCachedAnalytics = (userId: number) =>
           select: {
             isCorrect: true,
             question: {
-              select: { testPackageItem: { select: { mondaiType: true, section: true } } },
+              select: { testPackageItem: { select: { mondaiType: true } } },
+            },
+            attempt: {
+              select: { testPackage: { select: { jlptLevel: true } } },
             },
           },
         }),
@@ -76,28 +58,29 @@ const getCachedAnalytics = (userId: number) =>
         };
       });
 
-      const byMondaiType = new Map<MondaiType, { total: number; correct: number }>();
-      const bySection = new Map<JlptSection, { total: number; correct: number }>();
+      const byLevel = new Map<JlptLevel, Map<MondaiType, { correct: number; total: number }>>();
 
       for (const answer of answers) {
-        const { mondaiType, section } = answer.question.testPackageItem;
+        const level = answer.attempt.testPackage.jlptLevel;
+        const mondaiType = answer.question.testPackageItem.mondaiType;
 
-        const m = byMondaiType.get(mondaiType) ?? { total: 0, correct: 0 };
-        m.total += 1;
-        if (answer.isCorrect) m.correct += 1;
-        byMondaiType.set(mondaiType, m);
-
-        const s = bySection.get(section) ?? { total: 0, correct: 0 };
-        s.total += 1;
-        if (answer.isCorrect) s.correct += 1;
-        bySection.set(section, s);
+        const levelMap = byLevel.get(level) ?? new Map();
+        const stat = levelMap.get(mondaiType) ?? { correct: 0, total: 0 };
+        stat.total += 1;
+        if (answer.isCorrect) stat.correct += 1;
+        levelMap.set(mondaiType, stat);
+        byLevel.set(level, levelMap);
       }
 
-      return {
-        trend,
-        mondaiTypeStats: toSortedStats(byMondaiType, MONDAI_TYPE_LABELS),
-        sectionStats: toSortedStats(bySection, JLPT_SECTION_LABELS),
-      };
+      const levelStats = JLPT_LEVEL_ORDER.filter((level) => byLevel.has(level)).map((level) => ({
+        level,
+        mondaiStats: Array.from(
+          byLevel.get(level)!,
+          ([mondaiType, stat]): MondaiStatInput => ({ mondaiType, ...stat }),
+        ),
+      }));
+
+      return { trend, levelStats };
     },
     CACHE_KEYS.analytics(userId),
     { tags: [CACHE_TAGS.analytics(userId)] },

@@ -220,6 +220,14 @@ dihilangkan dari data.
   `answerImage`) isi `null` kalau belum ada asetnya — jangan taruh placeholder string kosong.
 - Field opsional (`instruction`, `explanation`, `questionContextRef`, gambar/audio) boleh
   dihilangkan dari JSON sepenuhnya atau diisi `null` — dua-duanya valid.
+- Cek ejaan key top-level `questionContexts` (bukan `qustionContexts` atau typo lain) —
+  kalau key-nya salah ketik, `route.ts` cuma menganggap array itu kosong (tidak error saat
+  parse JSON, karena key yang tidak dikenal memang diabaikan begitu saja), tapi SEMUA
+  `questionContextRef` di paket itu akan gagal dengan pesan "tidak ditemukan di
+  questionContexts" — kejadian nyata pas import salah satu paket.
+- Kalau question stem menyebut `その〜`, angka bertanda (①②...), atau `下線部`, pastikan frasa
+  yang sama muncul dengan underline `__..._` di `storyText` — tanpa itu soal tetap bisa
+  dikerjakan tapi kehilangan petunjuk visual yang ada di ujian asli.
 
 ## Contoh Lengkap
 
