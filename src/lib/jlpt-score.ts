@@ -13,6 +13,14 @@ export const SCORING_SECTION_LABELS: Record<ScoringSectionKey, string> = {
   CHOUKAI: "聴解",
 };
 
+// Dipakai khusus untuk export PDF/Excel (label Indonesia-only) — lihat
+// features/progress/lib/export.ts.
+export const SCORING_SECTION_TRANSLATIONS: Record<ScoringSectionKey, string> = {
+  GENGO_CHISHIKI: "Kosakata & Tata Bahasa",
+  DOKKAI: "Membaca",
+  CHOUKAI: "Mendengar",
+};
+
 const SCORING_SECTION_ORDER: ScoringSectionKey[] = ["GENGO_CHISHIKI", "DOKKAI", "CHOUKAI"];
 
 const SECTION_MAX_SCORE = 60;

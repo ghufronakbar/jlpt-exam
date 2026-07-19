@@ -416,6 +416,37 @@ Batch permintaan user lanjutan dari Fase 8.5.
   yang sedang diimpor user), jadi bukan kasus sekali pakai. Verifikasi: `tsc --noEmit` bersih,
   `npm run lint` bersih, dicek langsung lewat curl+JWT ke `/test-package/23/questions` — 2 tag
   `<table>` muncul (sebelumnya 0), tidak ada lagi teks `|` mentah bocor ke halaman
+- [x] Export PDF `/progress` mojibake (laporan user: kolom tertulis karakter aneh, mis.
+  `æ¼¢å­èª­ã¿` — itu UTF-8 bytes dari "漢字読み" ke-decode salah sebagai Latin-1). Root cause:
+  font bawaan jsPDF (Helvetica/Times/Courier) cuma cover WinAnsi/Latin-1, kanji apa pun pasti
+  mojibake, bukan cuma hilang. Daripada embed font CJK (perlu bundle file font beberapa MB),
+  dipilih fix yang diminta user: **label export Indonesia-only**, dipakai konsisten di Excel
+  maupun PDF (bukan cuma PDF) biar dua format tetap selaras:
+  - `MONDAI_TYPE_TRANSLATIONS` (sudah ada) dipakai buat header kolom mondai
+  - `SCORING_SECTION_TRANSLATIONS` (baru, `src/lib/jlpt-score.ts`) buat header kolom section:
+    GENGO_CHISHIKI → "Kosakata & Tata Bahasa", DOKKAI → "Membaca", CHOUKAI → "Mendengar"
+  - Nama paket (mis. "JLPT N2 - 2018年12月") juga mengandung kanji ("年"/"月") — masih akan
+    mojibake di PDF walau header sudah dibenerin, jadi ditambah `toPdfSafeText()` yang strip
+    semua karakter di luar Latin-1 (\x00-\xFF) khusus buat body PDF (Excel dibiarkan Unicode
+    penuh, tidak ada masalah font). Judul PDF juga diganti em dash "—" (U+2014, di luar Latin-1)
+    jadi hyphen biasa "-"
+- [x] Bugfix scroll horizontal ganda di `/progress` masih muncul lagi untuk N2 (laporan user: fix
+  sebelumnya di Fase 8.6 belum menyelesaikan masalahnya). Root cause: fix sebelumnya cuma nutup
+  1 dari banyak titik "flex item `min-width:auto` default" — begitu tombol export ditambahkan,
+  `TabsContent` di `progress-tabs.tsx` jadi container flex baru (`flex flex-col gap-3`), dan child
+  barunya (`<LevelTable/>` yang bungkus `<Table/>`) butuh `min-w-0` juga, tapi belum dikasih —
+  regresi ini murni gara-gara task export buttons, bukan bug lama yang muncul lagi. Ditelusuri
+  pakai Chrome headless (`--headless=new --dump-dom`) jalan-in `getComputedStyle().minWidth` di
+  sepanjang rantai ancestor dari `table-container` sampai `<html>` — ternyata ada 5 titik lain
+  yang juga `min-width:auto` (bukan cuma di halaman Progress, tapi di **shell dashboard**):
+  `Card` root (`ui/card.tsx`, sebelumnya cuma `CardContent` yang dibenerin), `SidebarInset`/`main`
+  dan `sidebar-wrapper` (`ui/sidebar.tsx`), dan wrapper `{children}` di `(dashboard)/layout.tsx`.
+  Semua ditambah `min-w-0` (untuk `layout.tsx` dipakai `[&>*]:min-w-0` di wrapper-nya biar
+  otomatis kena ke root div halaman apa pun, tanpa perlu edit tiap page.tsx satu-satu). Juga
+  ditambah `min-w-0` di `ui/table.tsx` (`table-container`) sebagai default aman untuk semua
+  pemakaian `<Table>` ke depannya. Verifikasi: `document.documentElement.scrollWidth` sekarang
+  persis sama dengan `window.innerWidth` (sebelumnya lebih besar ~256px), diukur di viewport
+  1280px lewat Chrome headless dengan CSS asli hasil kompilasi (bukan estimasi)
 
 ## Fase 9 — Verifikasi & Polish
 

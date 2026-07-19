@@ -52,23 +52,23 @@
     },
     {
       "id": "ctx-choukai-1",
-      "storyAudio": "TODO: url audio choukai mondai 1"
+      "storyAudio": "https://res.cloudinary.com/dga0wmldp/video/upload/v1784453889/n2-2018-07-01_tgyymh.mp3"
     },
     {
       "id": "ctx-choukai-2",
-      "storyAudio": "TODO: url audio choukai mondai 2"
+      "storyAudio": "https://res.cloudinary.com/dga0wmldp/video/upload/v1784453895/n2-2018-07-02_uctfuo.mp3"
     },
     {
       "id": "ctx-choukai-3",
-      "storyAudio": "TODO: url audio choukai mondai 3"
+      "storyAudio": "https://res.cloudinary.com/dga0wmldp/video/upload/v1784453890/n2-2018-07-03_sj8m9x.mp3"
     },
     {
       "id": "ctx-choukai-4",
-      "storyAudio": "TODO: url audio choukai mondai 4"
+      "storyAudio": "https://res.cloudinary.com/dga0wmldp/video/upload/v1784453891/n2-2018-07-04_a1jje4.mp3"
     },
     {
       "id": "ctx-choukai-5",
-      "storyAudio": "TODO: url audio choukai mondai 5"
+      "storyAudio": "https://res.cloudinary.com/dga0wmldp/video/upload/v1784453898/n2-2018-07-05_ydt5re.mp3"
     }
   ],
   "testPackageItems": [
