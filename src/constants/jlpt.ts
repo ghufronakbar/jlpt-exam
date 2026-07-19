@@ -65,3 +65,35 @@ export const MONDAI_TYPE_LABELS: Record<MondaiType, string> = {
   CHOUKAI_QUICK_RESPONSE: "即時応答",
   CHOUKAI_INTEGRATED: "統合理解（聴解）",
 };
+
+// Terjemahan Indonesia — dipakai bareng MONDAI_TYPE_LABELS lewat
+// mondaiTypeFullLabel() di tempat yang punya ruang cukup (judul card, baris
+// tabel). Di tempat sempit (kolom tabel lebar, nav sidebar) tetap pakai
+// MONDAI_TYPE_LABELS saja + `title` attribute untuk tooltip.
+export const MONDAI_TYPE_TRANSLATIONS: Record<MondaiType, string> = {
+  MOJI_GOI_READ_KANJI: "Cara Baca Kanji",
+  MOJI_GOI_WRITE_KANJI: "Penulisan Kanji",
+  MOJI_GOI_WORD_FORMATION: "Pembentukan Kata",
+  MOJI_GOI_CONTEXT: "Kata Sesuai Konteks",
+  MOJI_GOI_SYNONYM: "Sinonim",
+  MOJI_GOI_WORD_USAGE: "Penggunaan Kata",
+  BUNPOU_GRAMMAR: "Bentuk Tata Bahasa",
+  BUNPOU_SENTENCE_COMPOSITION: "Susun Kalimat",
+  BUNPOU_TEXT_GRAMMAR: "Tata Bahasa Wacana",
+  DOKKAI_SHORT_TEXT: "Pemahaman Teks Pendek",
+  DOKKAI_MEDIUM_TEXT: "Pemahaman Teks Sedang",
+  DOKKAI_LONG_TEXT: "Pemahaman Teks Panjang",
+  DOKKAI_INTEGRATED: "Pemahaman Terpadu",
+  DOKKAI_MAIN_IDEA: "Pemahaman Opini Penulis",
+  DOKKAI_INFORMATION_RETRIEVAL: "Pencarian Informasi",
+  CHOUKAI_TASK_BASED: "Pemahaman Tugas",
+  CHOUKAI_MAIN_POINT: "Pemahaman Poin Penting",
+  CHOUKAI_OUTLINE: "Pemahaman Garis Besar",
+  CHOUKAI_EXPRESSION: "Ungkapan Situasional",
+  CHOUKAI_QUICK_RESPONSE: "Respon Cepat",
+  CHOUKAI_INTEGRATED: "Pemahaman Terpadu (Audio)",
+};
+
+export function mondaiTypeFullLabel(mondaiType: MondaiType): string {
+  return `${MONDAI_TYPE_LABELS[mondaiType]} (${MONDAI_TYPE_TRANSLATIONS[mondaiType]})`;
+}

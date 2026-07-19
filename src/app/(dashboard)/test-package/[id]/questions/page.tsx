@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { getTestPackageQuestions } from "@/features/test-package/actions";
 import { JapaneseText } from "@/components/japanese-text";
 import { JapanesePassage } from "@/components/japanese-passage";
-import { MONDAI_TYPE_LABELS } from "@/constants/jlpt";
+import { mondaiTypeFullLabel } from "@/constants/jlpt";
 import {
   Card,
   CardContent,
@@ -43,7 +43,7 @@ export default async function TestPackageQuestionsPage({
           <Card key={item.id}>
             <CardHeader>
               <CardTitle>
-                Sesi {item.session} · {MONDAI_TYPE_LABELS[item.mondaiType]}
+                Sesi {item.session} · {mondaiTypeFullLabel(item.mondaiType)}
               </CardTitle>
               {item.instruction && (
                 <CardDescription>

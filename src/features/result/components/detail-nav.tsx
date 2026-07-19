@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { JlptSection, MondaiType } from "@prisma/client";
-import { JLPT_SECTION_LABELS, MONDAI_TYPE_LABELS } from "@/constants/jlpt";
+import { JLPT_SECTION_LABELS, MONDAI_TYPE_LABELS, mondaiTypeFullLabel } from "@/constants/jlpt";
 import { cn } from "@/lib/utils";
 
 export type NavMondaiItem = {
@@ -43,6 +43,7 @@ export function DetailNavList({
                 <Link
                   key={item.id}
                   href={`/result/${attemptId}/detail?mondai=${item.id}`}
+                  title={mondaiTypeFullLabel(item.mondaiType)}
                   className={cn(
                     "flex items-center justify-between gap-2 rounded-md px-2 py-1.5 text-sm transition-colors",
                     isActive ? "bg-primary/10 font-medium text-primary" : "hover:bg-muted",

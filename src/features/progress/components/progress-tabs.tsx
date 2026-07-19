@@ -3,6 +3,8 @@
 import Link from "next/link";
 import type { JlptLevel, MondaiType } from "@prisma/client";
 import type { ScoringSectionKey } from "@/lib/jlpt-score";
+import { mondaiTypeFullLabel } from "@/constants/jlpt";
+import { ProgressExportButtons } from "./progress-export-buttons";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Table,
@@ -16,7 +18,7 @@ import { cn } from "@/lib/utils";
 
 const WEAK_THRESHOLD = 60;
 
-const SECTION_COLUMNS: { key: ScoringSectionKey; label: string }[] = [
+export const SECTION_COLUMNS: { key: ScoringSectionKey; label: string }[] = [
   { key: "GENGO_CHISHIKI", label: "言語知識" },
   { key: "DOKKAI", label: "読解" },
   { key: "CHOUKAI", label: "聴解" },
@@ -75,6 +77,7 @@ function LevelTable({ view }: { view: ProgressLevelView }) {
           {view.mondaiColumns.map((column, index) => (
             <TableHead
               key={column.mondaiType}
+              title={mondaiTypeFullLabel(column.mondaiType)}
               className={cn("text-right", index === 0 && "border-l")}
             >
               {column.label}
@@ -185,7 +188,8 @@ export function ProgressTabs({ levels }: { levels: ProgressLevelView[] }) {
         ))}
       </TabsList>
       {levels.map((view) => (
-        <TabsContent key={view.level} value={view.level}>
+        <TabsContent key={view.level} value={view.level} className="flex flex-col gap-3">
+          <ProgressExportButtons view={view} />
           <LevelTable view={view} />
         </TabsContent>
       ))}

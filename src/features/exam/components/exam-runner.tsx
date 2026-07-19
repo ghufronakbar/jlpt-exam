@@ -7,7 +7,7 @@ import { useExam } from "./exam-provider";
 import { submitExamSessionAction } from "../actions";
 import { JapaneseText } from "@/components/japanese-text";
 import { JapanesePassage } from "@/components/japanese-passage";
-import { MONDAI_TYPE_LABELS } from "@/constants/jlpt";
+import { mondaiTypeFullLabel } from "@/constants/jlpt";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils";
@@ -135,7 +135,7 @@ export function ExamRunner({
             {testPackageName} — Sesi {session}
           </p>
           <h1 className="text-lg font-semibold">
-            {MONDAI_TYPE_LABELS[currentQuestion.mondaiType]}
+            {mondaiTypeFullLabel(currentQuestion.mondaiType)}
           </h1>
         </div>
         <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>

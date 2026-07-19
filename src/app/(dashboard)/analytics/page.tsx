@@ -1,7 +1,12 @@
-import { getAnalytics } from "@/features/analytics/actions";
+import { Suspense } from "react";
+import type { JlptSection } from "@prisma/client";
+import { getAnalytics, type AnalyticsScope } from "@/features/analytics/actions";
+import { AnalyticsFilterBar } from "@/features/analytics/components/analytics-filter-bar";
+import { AnalyticsTabs } from "@/features/analytics/components/analytics-tabs";
 import { ScoreTrendChart } from "@/features/analytics/components/score-trend-chart";
-import { JlptScoreTable } from "@/components/jlpt-score-table";
 import { computeJlptScoreProjection } from "@/lib/jlpt-score";
+import { resolveDateRangePreset, isDateRangePreset } from "@/lib/date-range-preset";
+import { JLPT_SECTION_LABELS } from "@/constants/jlpt";
 import {
   Card,
   CardContent,
@@ -10,8 +15,29 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export default async function AnalyticsPage() {
-  const { trend, levelStats } = await getAnalytics();
+const VALID_SECTIONS = Object.keys(JLPT_SECTION_LABELS) as JlptSection[];
+
+function resolveScope(value: string | undefined): AnalyticsScope {
+  if (value === "MOCK") return "MOCK";
+  if (value && (VALID_SECTIONS as string[]).includes(value)) return value as JlptSection;
+  return "ALL";
+}
+
+export default async function AnalyticsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ scope?: string; range?: string; from?: string; to?: string }>;
+}) {
+  const params = await searchParams;
+  const scope = resolveScope(params.scope);
+  const rangePreset = isDateRangePreset(params.range) ? params.range : "all";
+  const { from, to } = resolveDateRangePreset(rangePreset, params.from, params.to);
+
+  const { trend, levelStats } = await getAnalytics({
+    scope,
+    fromIso: from?.toISOString(),
+    toIso: to?.toISOString(),
+  });
 
   const trendData = trend.map((point) => ({
     id: point.id,
@@ -31,17 +57,21 @@ export default async function AnalyticsPage() {
         </p>
       </div>
 
+      <Suspense>
+        <AnalyticsFilterBar />
+      </Suspense>
+
       <Card>
         <CardHeader>
           <CardTitle>Tren Skor</CardTitle>
           <CardDescription>
-            Skor tiap attempt yang sudah diselesaikan, berurutan waktu.
+            Skor tiap attempt yang sudah diselesaikan, berurutan waktu, sesuai filter di atas.
           </CardDescription>
         </CardHeader>
         <CardContent>
           {trendData.length === 0 ? (
             <p className="text-sm text-muted-foreground">
-              Belum ada attempt yang selesai. Kerjakan mock test atau latihan dulu.
+              Belum ada attempt yang cocok dengan filter ini.
             </p>
           ) : (
             <ScoreTrendChart data={trendData} />
@@ -55,25 +85,16 @@ export default async function AnalyticsPage() {
             <CardTitle>Analisis per Level</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">Belum ada data.</p>
+            <p className="text-sm text-muted-foreground">Belum ada data untuk filter ini.</p>
           </CardContent>
         </Card>
       ) : (
-        levelStats.map(({ level, mondaiStats }) => (
-          <Card key={level}>
-            <CardHeader>
-              <CardTitle>{level}</CardTitle>
-              <CardDescription>
-                Akurasi per mondai (agregat semua attempt selesai) + proyeksi skor ala JLPT:
-                skala 60 per scoring section, total 180. Kolom Skor Berbobot memakai bobot
-                kesulitan per mondai (aproksimasi, bukan algoritma resmi JLPT).
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <JlptScoreTable projection={computeJlptScoreProjection(mondaiStats)} />
-            </CardContent>
-          </Card>
-        ))
+        <AnalyticsTabs
+          levelStats={levelStats.map(({ level, mondaiStats }) => ({
+            level,
+            projection: computeJlptScoreProjection(mondaiStats),
+          }))}
+        />
       )}
     </div>
   );

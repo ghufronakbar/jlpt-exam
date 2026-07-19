@@ -9,7 +9,7 @@ import { DetailMobileNav } from "@/features/result/components/detail-mobile-nav"
 import { JapaneseText } from "@/components/japanese-text";
 import { JapanesePassage } from "@/components/japanese-passage";
 import { ImageWithLightbox } from "@/components/image-with-lightbox";
-import { MONDAI_TYPE_LABELS } from "@/constants/jlpt";
+import { mondaiTypeFullLabel } from "@/constants/jlpt";
 import {
   Card,
   CardContent,
@@ -97,7 +97,7 @@ export default async function ResultDetailPage({
           <Card>
             <CardHeader>
               <CardTitle>
-                Sesi {selectedItem.session} · {MONDAI_TYPE_LABELS[selectedItem.mondaiType]}
+                Sesi {selectedItem.session} · {mondaiTypeFullLabel(selectedItem.mondaiType)}
               </CardTitle>
               {selectedItem.instruction && (
                 <CardDescription>

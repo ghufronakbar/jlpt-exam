@@ -324,6 +324,42 @@ sidebar "Progress" (ikon TrendingUp) supaya `/analytics` tidak makin padat.
 - [x] Menu sidebar "Progress" ditambahkan antara History dan Analytics
 - [x] Verifikasi: `npm run build` sukses (route `/progress` = `ƒ`), `npm run lint` di baseline
 
+## Fase 8.6 — Perbaikan `/progress`, Label Bilingual, Export, dan Filter `/analytics`
+
+Batch permintaan user lanjutan dari Fase 8.5.
+
+- [x] Fix double horizontal scroll di `/progress` saat pindah tab N5 → N2 (tabel jadi lebih
+  lebar): root cause `TabsContent`/`CardContent` tidak punya `min-w-0`, jadi flex item tidak mau
+  menyusut di bawah lebar konten intrinsiknya (default CSS flexbox) dan mendorong container ikut
+  melebar → scrollbar ganda. Fix: tambah `min-w-0` di `src/components/ui/tabs.tsx` (`TabsContent`)
+  dan `src/components/ui/card.tsx` (`CardContent`)
+- [x] Label tipe mondai bilingual: `MONDAI_TYPE_TRANSLATIONS` + helper `mondaiTypeFullLabel()` di
+  `src/constants/jlpt.ts`, format `漢字読み (Cara Baca Kanji)`. Dipakai penuh di tempat yang ada
+  ruang (judul soal exam, judul section detail hasil, judul card). Di tempat sempit (kolom tabel
+  Progress, nav sidebar detail hasil) tetap label Jepang pendek + `title` attribute (tooltip)
+  supaya tabel tidak makin lebar
+- [x] Export `/progress` ke Excel & PDF sesuai level yang aktif — `xlsx` (SheetJS) +
+  `jspdf`/`jspdf-autotable`, tombol di `progress-export-buttons.tsx`, logic build baris di
+  `features/progress/lib/export.ts` (header & data row sama persis dengan yang tampil di tabel).
+  **Catatan keamanan**: `npm audit` melaporkan `xlsx` punya kerentanan HIGH (prototype pollution +
+  ReDoS) tanpa fix resmi di versi npm — sudah dikonfirmasi eksplisit ke user (3 opsi: CSV-only,
+  tetap xlsx, ganti `exceljs`) dan user **memilih tetap pakai `xlsx`**. Dipertahankan by design.
+- [x] Filter `/analytics` — scope (`Semua`/`Mock Test`/per-`JlptSection`, berdasar
+  `Attempt.sectionScope`, `null` = mock test) + rentang tanggal (preset `thisWeek`/`thisMonth`/
+  `last30Days`/`custom` via `Calendar` shadcn `mode="range"`, atau `all`). State di URL
+  searchParams (`?scope=&range=&from=&to=`), bukan `useState`, biar shareable & konsisten dengan
+  pola exam/result yang sudah ada. `getAnalytics(filters)` menerima `filters` sebagai **argumen
+  fungsi asli** (bukan closure) supaya `unstable_cache` bisa derive cache key otomatis dari
+  argumen — pakai ISO date string (bukan `Date`) biar key-nya stabil. Helper
+  `resolveDateRangePreset()` di `src/lib/date-range-preset.ts`
+- [x] `/analytics` diubah dari Card bertumpuk per level jadi `Tabs` per level (N1→N5, pola sama
+  seperti `/progress`) — `features/analytics/components/analytics-tabs.tsx`
+- [x] Verifikasi: `npm run build` sukses (`/analytics` tetap `ƒ`), `tsc --noEmit` bersih,
+  `npm run lint` bersih untuk file yang diubah (4 warning/error pre-existing di file lain, di luar
+  scope perubahan ini). **Tidak sempat diuji visual di browser** — tidak ada tool automasi browser
+  tersedia di environment ini dan tidak ada kredensial login untuk sesi ini; disarankan user cek
+  manual sebelum dianggap kelar
+
 ## Fase 9 — Verifikasi & Polish
 
 - [ ] `npm run build` setelah tiap perubahan struktural/server action/caching

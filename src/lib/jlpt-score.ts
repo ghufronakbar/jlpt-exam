@@ -1,5 +1,5 @@
 import type { MondaiType } from "@prisma/client";
-import { MONDAI_TYPE_LABELS } from "@/constants/jlpt";
+import { mondaiTypeFullLabel } from "@/constants/jlpt";
 
 // Proyeksi skor ala JLPT asli: 3 scoring section (moji-goi + bunpou digabung
 // jadi 言語知識), masing-masing diskalakan ke 60, total maks 180. Algoritma
@@ -112,7 +112,7 @@ export function computeJlptScoreProjection(stats: MondaiStatInput[]): JlptScoreP
       .filter((stat) => scoringSectionOf(stat.mondaiType) === key)
       .map((stat) => ({
         mondaiType: stat.mondaiType,
-        label: MONDAI_TYPE_LABELS[stat.mondaiType],
+        label: mondaiTypeFullLabel(stat.mondaiType),
         weight: MONDAI_WEIGHTS[stat.mondaiType],
         correct: stat.correct,
         total: stat.total,
