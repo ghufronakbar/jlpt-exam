@@ -178,7 +178,7 @@ model Question {
   // Penjelasan soal (hasil koreksi AI ditempel di sini). Markup sama berlaku.
   explanation String? @db.Text
 
-  questionContext   QuestionContext? @relation(fields: [questionContextId], references: [id])
+  questionContext   QuestionContext? @relation(fields: [questionContextId], references: [id], onDelete: Cascade)
   questionContextId Int?
 
   questionComments QuestionComment[]
@@ -222,7 +222,7 @@ model QuestionComment {
   question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId Int
 
-  user   User @relation(fields: [userId], references: [id])
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int
 
   commentText   String   @db.Text
@@ -241,10 +241,10 @@ model QuestionComment {
 model Attempt {
   id Int @id @default(autoincrement())
 
-  user   User @relation(fields: [userId], references: [id])
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int
 
-  testPackage   TestPackage @relation(fields: [testPackageId], references: [id])
+  testPackage   TestPackage @relation(fields: [testPackageId], references: [id], onDelete: Cascade)
   testPackageId Int
 
   // null = full test satu paket; diisi jika latihan satu seksi saja
@@ -267,7 +267,7 @@ model AttemptAnswer {
   attempt   Attempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
   attemptId Int
 
-  question   Question @relation(fields: [questionId], references: [id])
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId Int
 
   selectedAnswer Int? // codeAnswer yang dipilih (1-4); null = tidak dijawab/dilewati
