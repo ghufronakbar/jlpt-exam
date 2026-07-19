@@ -20,4 +20,7 @@ export const CACHE_KEYS = {
   attemptSummary: (attemptId: number) => ["attempt-summary", String(attemptId)],
   dashboardSummary: (userId: number) => ["dashboard-summary", String(userId)],
   analytics: (userId: number) => ["analytics", String(userId)],
+  // Shares CACHE_TAGS.analytics for invalidation — both derive from the same
+  // source (completed attempts), so one updateTag on submit refreshes both.
+  progress: (userId: number) => ["progress", String(userId)],
 };

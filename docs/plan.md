@@ -300,6 +300,30 @@ untuk semua level (aturan khusus N4/N5 yang 120+60 diabaikan demi konsistensi); 
 - [x] **Fix dokumen**: heading `## Fase 9` sempat hilang tertelan edit sebelumnya (item-itemnya
   jadi yatim) — dikembalikan
 
+## Fase 8.5 — Halaman Progress (Tracking Skor per Attempt)
+
+Permintaan user: tabel analytics per attempt (bukan agregat), dengan tab per level. Keputusan
+via AskUserQuestion: **tiap tipe mondai jadi kolom sendiri** (tabel lebar, scroll horizontal —
+kelemahan antar attempt kelihatan sejajar), ditaruh di **halaman baru `/progress`** dengan menu
+sidebar "Progress" (ikon TrendingUp) supaya `/analytics` tidak makin padat.
+
+- [x] `src/features/progress/actions.ts` — `getProgress()`: attempt `COMPLETED` per user, urut
+  `finishedAt` asc (baca seperti log perkembangan), grouped per level, tiap attempt bawa
+  `mondaiStats` sendiri. Cache pakai key baru `CACHE_KEYS.progress` tapi **share tag
+  `CACHE_TAGS.analytics`** — sumber datanya sama (completed attempts), jadi satu `updateTag` di
+  submit exam otomatis invalidasi dua-duanya tanpa menyentuh exam action
+- [x] `src/features/progress/components/progress-tabs.tsx` — client component: `Tabs` per level
+  (N1→N5, hanya yang ada datanya), tabel dengan header 2 baris (grup kolom: Akurasi per Mondai /
+  Skor per Section / Skor Berbobot / Total). Kolom: nama paket (link ke `/result/[attemptId]`),
+  tanggal, % benar per mondai (merah <60%, "–" kalau mondai tidak ada di attempt itu, mis.
+  latihan per seksi), skor per scoring section `48/60 (80%)`, skor berbobot per section,
+  total `142/180 (79%)` + total berbobot. Semua reuse `computeJlptScoreProjection` dari Fase 8.4
+- [x] Proyeksi & format dihitung server-side di `page.tsx` (tanggal diformat di server lalu
+  dikirim sebagai string — aman dari hydration mismatch locale), client component murni urusan
+  tab & render
+- [x] Menu sidebar "Progress" ditambahkan antara History dan Analytics
+- [x] Verifikasi: `npm run build` sukses (route `/progress` = `ƒ`), `npm run lint` di baseline
+
 ## Fase 9 — Verifikasi & Polish
 
 - [ ] `npm run build` setelah tiap perubahan struktural/server action/caching

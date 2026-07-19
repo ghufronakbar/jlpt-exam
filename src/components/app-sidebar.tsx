@@ -9,6 +9,7 @@ import {
   History,
   LayoutDashboard,
   LogOut,
+  TrendingUp,
   UserRound,
 } from "lucide-react";
 import {
@@ -29,6 +30,7 @@ const NAV_ITEMS = [
   { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { title: "Test Package", href: "/test-package", icon: BookOpen },
   { title: "History", href: "/history", icon: History },
+  { title: "Progress", href: "/progress", icon: TrendingUp },
   { title: "Analytics", href: "/analytics", icon: ChartNoAxesCombined },
 ];
 
