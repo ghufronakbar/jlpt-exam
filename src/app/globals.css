@@ -127,4 +127,13 @@
   html {
     @apply font-sans;
   }
+  /* Browsers' default <rt> size (~50% of the parent font-size) renders
+     unreadably small at our text-sm/text-base scale — size it explicitly. */
+  ruby {
+    ruby-position: over;
+  }
+  rt {
+    font-size: 0.65em;
+    line-height: 1.4;
+  }
 }

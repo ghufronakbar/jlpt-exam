@@ -7,20 +7,24 @@ export type NavMondaiItem = {
   id: number;
   mondaiType: MondaiType;
   section: JlptSection;
-  correctCount: number;
   totalCount: number;
+  // Omitted outside attempt review (e.g. mode-baca), where there's no
+  // right/wrong to tally yet.
+  correctCount?: number;
 };
 
 // Pure Server Component (just <Link>s) — reused by both the desktop sticky
-// sidebar and the mobile Sheet content in detail-mobile-nav.tsx.
-export function DetailNavList({
+// sidebar and the mobile Sheet content (question-nav-mobile.tsx), and by both
+// /result/[attemptId]/detail (attempt review) and /test-package/[id]/questions
+// (mode baca).
+export function QuestionNavList({
   items,
   activeId,
-  attemptId,
+  buildHref,
 }: {
   items: NavMondaiItem[];
   activeId: number;
-  attemptId: number;
+  buildHref: (itemId: number) => string;
 }) {
   const grouped = new Map<JlptSection, NavMondaiItem[]>();
   for (const item of items) {
@@ -42,7 +46,7 @@ export function DetailNavList({
               return (
                 <Link
                   key={item.id}
-                  href={`/result/${attemptId}/detail?mondai=${item.id}`}
+                  href={buildHref(item.id)}
                   title={mondaiTypeFullLabel(item.mondaiType)}
                   className={cn(
                     "flex items-center justify-between gap-2 rounded-md px-2 py-1.5 text-sm transition-colors",
@@ -51,7 +55,9 @@ export function DetailNavList({
                 >
                   <span className="truncate">{MONDAI_TYPE_LABELS[item.mondaiType]}</span>
                   <span className="shrink-0 text-xs text-muted-foreground">
-                    {item.correctCount}/{item.totalCount}
+                    {item.correctCount !== undefined
+                      ? `${item.correctCount}/${item.totalCount}`
+                      : item.totalCount}
                   </span>
                 </Link>
               );
@@ -63,14 +69,14 @@ export function DetailNavList({
   );
 }
 
-export function DetailSidebarNav(props: {
+export function QuestionNavSidebar(props: {
   items: NavMondaiItem[];
   activeId: number;
-  attemptId: number;
+  buildHref: (itemId: number) => string;
 }) {
   return (
     <aside className="sticky top-4 hidden max-h-[calc(100vh-2rem)] w-56 shrink-0 self-start overflow-y-auto rounded-lg border p-3 lg:block">
-      <DetailNavList {...props} />
+      <QuestionNavList {...props} />
     </aside>
   );
 }

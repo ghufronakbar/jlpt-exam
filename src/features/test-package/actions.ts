@@ -126,6 +126,8 @@ const getCachedTestPackageQuestions = (testPackageId: number) =>
                       commentText: true,
                       commentImages: true,
                       createdAt: true,
+                      updatedAt: true,
+                      user: { select: { username: true } },
                     },
                   },
                 },

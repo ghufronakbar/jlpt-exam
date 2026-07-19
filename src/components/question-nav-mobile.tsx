@@ -7,16 +7,16 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { DetailNavList, type NavMondaiItem } from "./detail-nav";
+import { QuestionNavList, type NavMondaiItem } from "./question-nav";
 
-export function DetailMobileNav({
+export function QuestionNavMobile({
   items,
   activeId,
-  attemptId,
+  buildHref,
 }: {
   items: NavMondaiItem[];
   activeId: number;
-  attemptId: number;
+  buildHref: (itemId: number) => string;
 }) {
   return (
     <div className="lg:hidden">
@@ -30,7 +30,7 @@ export function DetailMobileNav({
             <SheetTitle>Navigasi Mondai</SheetTitle>
           </SheetHeader>
           <div className="overflow-y-auto px-4 pb-4">
-            <DetailNavList items={items} activeId={activeId} attemptId={attemptId} />
+            <QuestionNavList items={items} activeId={activeId} buildHref={buildHref} />
           </div>
         </SheetContent>
       </Sheet>

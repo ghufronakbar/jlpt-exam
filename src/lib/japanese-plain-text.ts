@@ -2,8 +2,11 @@ import { parseJapaneseMarkup, type MarkupSegment } from "./japanese-markup";
 import { parseJapaneseDocument, type DocumentBlock } from "./japanese-document";
 
 // Plain-text export for the "copy question" feature (paste into an AI chat).
-// Furigana becomes 漢字(かんじ), underline becomes **text** (markdown emphasis,
-// universally read by AI chat contexts), slots become blanks.
+// Furigana is dropped down to just the kanji (no reading) — for
+// MOJI_GOI_READ_KANJI questions the reading IS the answer, so keeping it would
+// leak it into the clipboard regardless of whether it's visually hidden.
+// Underline becomes **text** (markdown emphasis, universally read by AI chat
+// contexts), slots become blanks.
 function segmentsToPlainText(segments: MarkupSegment[]): string {
   return segments
     .map((segment) => {
@@ -11,7 +14,7 @@ function segmentsToPlainText(segments: MarkupSegment[]): string {
         case "text":
           return segment.value;
         case "furigana":
-          return `${segment.kanji}(${segment.reading})`;
+          return segment.kanji;
         case "underline":
           return `**${segmentsToPlainText(segment.children)}**`;
         case "slot":

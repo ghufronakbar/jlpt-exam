@@ -359,6 +359,63 @@ Batch permintaan user lanjutan dari Fase 8.5.
   scope perubahan ini). **Tidak sempat diuji visual di browser** — tidak ada tool automasi browser
   tersedia di environment ini dan tidak ada kredensial login untuk sesi ini; disarankan user cek
   manual sebelum dianggap kelar
+- [x] Tombol show/hide furigana di `/test-package/[id]/questions` (mode baca) dan
+  `/result/[attemptId]/detail` (review jawaban) — `src/components/furigana-scope.tsx`, client
+  component pembungkus yang toggle visibilitas `<rt>` (bacaan furigana dari `JapaneseText`/
+  `JapanesePassage`, lihat `src/lib/japanese-markup.ts`) lewat selector CSS `[&_rt]:hidden`,
+  tanpa perlu mengubah Server Component yang merender soal
+- [x] Follow-up bugfix furigana (laporan user "toggle tidak berpengaruh, furigana tidak tampil"),
+  tiga akar masalah sekaligus:
+  1. Dev server tercemar — `npm run build` sempat dijalankan saat `next dev` masih hidup (share
+     folder `.next`), jadi chunk CSS dev yang tersaji basi (tanpa rule toggle & styling `rt`).
+     Fix: matikan dev server, `rm -rf .next`, start ulang. **Pelajaran: jangan `next build`
+     selagi `next dev` jalan.**
+  2. Styling `<rt>` default browser terlalu kecil (~50% → 7px) — ditambah `rt { font-size:
+     .65em; line-height: 1.4 }` + `ruby { ruby-position: over }` di `globals.css` @layer base
+  3. Paket yang diuji user (n2-2018-12) memang tidak punya furigana tampil sama sekali — semua
+     furigananya jawaban kanji-yomi yang di-force-hide `hideFuriganaInUnderline`. Keputusan:
+     di mode belajar & review (kunci jawaban toh sudah tampil) force-hide DIHAPUS — semua
+     furigana dikontrol toggle; force-hide tetap dipakai HANYA saat exam (`exam-runner.tsx`)
+  - Verifikasi headless Chrome (dump-dom + computed style) pada DOM halaman asli + CSS hasil
+    kompilasi: furigana tampil 9.1px di atas 離れて, dan class toggle mengubah `rt` jadi
+    `display: none`. Catatan environment: origin-protection dev server Next memblokir asset
+    `/_next/*` dari origin lain, jadi pengujian CSS harus pakai salinan lokal file CSS
+- [x] Copy-to-clipboard soal tidak lagi menyertakan bacaan furigana (hanya kanji polos) — perbaikan
+  di `src/lib/japanese-plain-text.ts` (`segmentsToPlainText`), berlaku untuk seluruh fitur copy.
+  Efek samping yang disengaja: ini juga menutup kebocoran jawaban `MOJI_GOI_READ_KANJI` — sebelum
+  ini, tombol copy menyalin `漢字(かんじ)` ke clipboard walau bacaannya secara visual disembunyikan
+- [x] `/test-package/[id]/questions` (mode baca) dibuat UI-nya sama dengan
+  `/result/[attemptId]/detail`: navigasi sidebar/mobile per mondai (satu mondai per halaman via
+  `?mondai=`, bukan semua soal ditumpuk), tombol copy per soal, dan form tambah catatan belajar.
+  Refactor pendukung — komponen yang sekarang dipakai 2 fitur sekaligus dipindah ke lokasi
+  bersama, bukan reuse cross-feature yang janggal:
+  - `features/result/components/{detail-nav,detail-mobile-nav}.tsx` → `src/components/
+    {question-nav,question-nav-mobile}.tsx`, prop `attemptId` digeneralisasi jadi
+    `buildHref(itemId) => string`; `correctCount` di `NavMondaiItem` jadi optional (mode baca
+    tidak punya benar/salah untuk ditampilkan)
+  - `features/result/components/copy-question-button.tsx` → `src/components/copy-question-button.tsx`
+  - Fitur comment (actions, schemas, 3 komponen) dipindah dari `features/result/` ke modul baru
+    `features/question-comment/` — `QuestionComment` di skema memang hanya terikat ke `Question`,
+    bukan `Attempt`, jadi sudah selayaknya bukan milik fitur result
+  - `getTestPackageQuestions` (`features/test-package/actions.ts`) ditambah `updatedAt` +
+    `user.username` di select `questionComments` biar cocok dengan tipe `CommentItem`
+  - Verifikasi: `npm run build` sukses, `tsc --noEmit` bersih, `npm run lint` bersih (4 warning/
+    error baseline pre-existing, ikut pindah lokasi bareng file yang dipindah, bukan baru).
+    Dicek juga via curl+JWT manual (session cookie di-mint pakai `SESSION_SECRET` dari `.env`) ke
+    kedua halaman: nav, tombol copy, form catatan, tombol prev/next, dan furigana semua tampil
+- [x] Bugfix parser table markdown di `storyText` (laporan user: tabel harga di soal 情報検索
+  "JLPT N2 - 2018年12月" tampil sebagai teks mentah `| ご旅行期間 | ... |`, bukan tabel).
+  Root cause di `src/lib/japanese-document.ts`: heading (mis. "頑丈で安全性の高いフレームタイプ")
+  dan baris header tabel cuma dipisah `\n` tunggal (bukan baris kosong), jadi masuk **chunk**
+  yang sama; `isTableChunk` lama cuma cek baris PERTAMA chunk, jadi gagal deteksi & seluruh chunk
+  (heading + tabel) jatuh ke paragraf mentah. Fix: `parseChunk` sekarang scan PER BARIS di dalam
+  chunk (bukan per chunk), jadi heading & tabel yang cuma dipisah 1 newline tetap displit jadi
+  dua block terpisah (`paragraph` lalu `table`). `parseChunk` sekarang balikin `DocumentBlock[]`
+  (bisa >1 block per chunk), makanya semua caller-nya ganti `.map()` jadi `.flatMap()`. Pattern
+  ini ada di ≥2 file bank soal (`n2-2018-12.json` ctx-dokkai-14, dan paket baru `n2-2016-12.json`
+  yang sedang diimpor user), jadi bukan kasus sekali pakai. Verifikasi: `tsc --noEmit` bersih,
+  `npm run lint` bersih, dicek langsung lewat curl+JWT ke `/test-package/23/questions` — 2 tag
+  `<table>` muncul (sebelumnya 0), tidak ada lagi teks `|` mentah bocor ke halaman
 
 ## Fase 9 — Verifikasi & Polish
 
