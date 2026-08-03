@@ -1,0 +1,62 @@
+[
+  {
+    "mondaiType": "CHOUKAI_QUICK_RESPONSE",
+    "order": 1,
+    "reason": "原資料は発話選択肢が1〜3のみ。repository要件のため4番目を空欄でパディング。要レビュー。"
+  },
+  {
+    "mondaiType": "CHOUKAI_QUICK_RESPONSE",
+    "order": 2,
+    "reason": "原資料は発話選択肢が1〜3のみ。repository要件のため4番目を空欄でパディング。要レビュー。"
+  },
+  {
+    "mondaiType": "CHOUKAI_QUICK_RESPONSE",
+    "order": 3,
+    "reason": "原資料は発話選択肢が1〜3のみ。repository要件のため4番目を空欄でパディング。要レビュー。"
+  },
+  {
+    "mondaiType": "CHOUKAI_QUICK_RESPONSE",
+    "order": 4,
+    "reason": "原資料は発話選択肢が1〜3のみ。repository要件のため4番目を空欄でパディング。要レビュー。"
+  },
+  {
+    "mondaiType": "CHOUKAI_QUICK_RESPONSE",
+    "order": 5,
+    "reason": "原資料は発話選択肢が1〜3のみ。repository要件のため4番目を空欄でパディング。要レビュー。"
+  },
+  {
+    "mondaiType": "CHOUKAI_QUICK_RESPONSE",
+    "order": 6,
+    "reason": "原資料は発話選択肢が1〜3のみ。repository要件のため4番目を空欄でパディング。要レビュー。"
+  },
+  {
+    "mondaiType": "CHOUKAI_QUICK_RESPONSE",
+    "order": 7,
+    "reason": "原資料は発話選択肢が1〜3のみ。repository要件のため4番目を空欄でパディング。要レビュー。"
+  },
+  {
+    "mondaiType": "CHOUKAI_QUICK_RESPONSE",
+    "order": 8,
+    "reason": "原資料は発話選択肢が1〜3のみ。repository要件のため4番目を空欄でパディング。要レビュー。"
+  },
+  {
+    "mondaiType": "CHOUKAI_QUICK_RESPONSE",
+    "order": 9,
+    "reason": "原資料は発話選択肢が1〜3のみ。repository要件のため4番目を空欄でパディング。要レビュー。"
+  },
+  {
+    "mondaiType": "CHOUKAI_QUICK_RESPONSE",
+    "order": 10,
+    "reason": "原資料は発話選択肢が1〜3のみ。repository要件のため4番目を空欄でパディング。要レビュー。"
+  },
+  {
+    "mondaiType": "CHOUKAI_QUICK_RESPONSE",
+    "order": 11,
+    "reason": "原資料は発話選択肢が1〜3のみ。repository要件のため4番目を空欄でパディング。要レビュー。"
+  },
+  {
+    "mondaiType": "CHOUKAI_QUICK_RESPONSE",
+    "order": 12,
+    "reason": "原資料は発話選択肢が1〜3のみ。repository要件のため4番目を空欄でパディング。要レビュー。"
+  }
+]

@@ -1,0 +1,47 @@
+{
+  "status": "blocked",
+  "asset_folder": "jlpt-exam/data/n2-2013-12",
+  "overwrite": false,
+  "preflight_search": [
+    {
+      "public_id": "n2-2013-12-01",
+      "total_count": 0
+    },
+    {
+      "public_id": "n2-2013-12-02",
+      "total_count": 0
+    },
+    {
+      "public_id": "n2-2013-12-03",
+      "total_count": 0
+    },
+    {
+      "public_id": "n2-2013-12-04",
+      "total_count": 0
+    },
+    {
+      "public_id": "n2-2013-12-05",
+      "total_count": 0
+    }
+  ],
+  "verified_uploads": [],
+  "blocker": {
+    "type": "local_file_upload_unsupported",
+    "tool": "mcp__cloudinary_asset_mgmt__upload_asset",
+    "exact_errors": [
+      "Unsupported source URL: file:///opt/data/jlpt-pipeline/sources/n2-2013-12/generated/audio/n2-2013-12-01.mp3",
+      "Unsupported source URL: file:///opt/data/jlpt-pipeline/sources/n2-2013-12/generated/audio/n2-2013-12-02.mp3",
+      "Unsupported source URL: file:///opt/data/jlpt-pipeline/sources/n2-2013-12/generated/audio/n2-2013-12-03.mp3"
+    ],
+    "subsequent_attempts": [
+      {
+        "public_id": "n2-2013-12-04",
+        "error": "MCP server 'cloudinary-asset-mgmt' is unreachable after 3 consecutive failures. Auto-retry available in ~58s."
+      },
+      {
+        "public_id": "n2-2013-12-05",
+        "error": "MCP server 'cloudinary-asset-mgmt' is unreachable after 3 consecutive failures. Auto-retry available in ~57s."
+      }
+    ]
+  }
+}
