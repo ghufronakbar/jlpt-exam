@@ -75,9 +75,7 @@
 
 以下は、ある庭園の案内である。
 
-### [庭園名 — 不確実]
-
-`多田庭園` **[不確実: 画像OCRの別読みに「多田屋園」も出た。原画像では「庭」または「屋」の判別を要確認。以下では初回読みを本文表記として保持。]**
+### 多田庭園
 
 多田庭園は、地元有力者多田家の別荘の庭を保存したもので、一般に公開されています。庭の一角には1800年代初めまで使用されていた伝統的な建物も残されています。
 
@@ -113,7 +111,7 @@
 
 ### （5）— 次ページへ続く
 
-学歴があっても学力がない人は**[不確実: 与えた／教えた]**仕事だけは本当にきちんとやります。しかし、自分で考えることに積極的ではないので進歩が遅い。一方、体力があっても根性がない人はあきらめが早い。それはいまの仕事で自分に何が求められているかを突き詰めて（注）考えていないから、やる気が湧いてこないのです。
+学歴があっても学力がない人は教えた仕事だけは本当にきちんとやります。しかし、自分で考えることに積極的ではないので進歩が遅い。一方、体力があっても根性がない人はあきらめが早い。それはいまの仕事で自分に何が求められているかを突き詰めて（注）考えていないから、やる気が湧いてこないのです。
 
 つまり、この２タイプは自分の仕事に対して無関心なのです。少なくとも上司の目にはそう映ります。
 
@@ -148,7 +146,7 @@ __①面接の準備をする作業__は自分自身を見つめ直すいいき�
 
 新聞記事をよく見て下さい。太い大見出しというのは10文字以下です。あれがニュースです。世界中に起きていること、国会で起きていること、大きな事件、それらをたった10文字以下で表現しているのです。
 
-一日の国会でどれだけたくさんの論戦が**[不確実: 闘わされている／闘われている]**ことでしょう。その事実だけを列挙（注２）しても新聞にはなりません。すべてを書かれても、読み手はそのすべてを受け取ることもできません。そこで記者が膨大な事実の中からニュースと判断されるものを探し出し、たった一言でまとめてしまう、それがニュースであり、大見出しなのです。
+一日の国会でどれだけたくさんの論戦が闘わされていることでしょう。その事実だけを列挙（注２）しても新聞にはなりません。すべてを書かれても、読み手はそのすべてを受け取ることもできません。そこで記者が膨大な事実の中からニュースと判断されるものを探し出し、たった一言でまとめてしまう、それがニュースであり、大見出しなのです。
 
 （中略）
 
@@ -204,7 +202,7 @@ __②自分自身を見出しにする__とあるが、どういうことか。
 
 ### （2）
 
-美術館に**[不確実: 「展示してあるもの」—画像OCR結果に「皆展示」と出たため要再確認]**正解は一つもない。その作品をどう観るかはまったくの自由だ。
+美術館に展示（注１）してあるものに正解は一つもない。その作品をどう観るかはまったくの自由だ。
 
 もちろん、その作品を制作したアーティストの意図は存在する。しかし、それは決してただ一つの正解ではない。作者も考えていなかったような見方や、読み方ができることが芸術作品の魅力なのだ。優れた作品は作者の意図を軽々と超えて、観客の心のなかで多様な気づきを生み出していく。多様な解釈ができることは、優れた美術作品の条件だと言ってもいい。
 
@@ -295,17 +293,13 @@ __②汗腺が50箇所しか働かなくなれば__とあるが、そうなっ�
 
 ---
 
-## Uncertainty / human-review queue
+## Resolved visual-review register
 
-1. **Page 08 garden name:** OCR passes disagree between `多田庭園` and `多田屋園`. The character should be checked directly against the highest-resolution source before package ingestion; it is preserved as `多田庭園` with the alternative explicitly recorded.
-2. **Page 08 passage (5):** OCR passes disagree between `与えた仕事` and `教えた仕事`; preserved as `[不確実: 与えた／教えた]仕事`.
-3. **Page 09 passage (1):** the verb in `論戦が…ことでしょう` is uncertain between `闘わされている` and `闘われている`; preserved as an explicit alternative.
-4. **Page 10 passage (2):** the opening phrase is visually/OCR-uncertain. The semantically and typographically expected reading is likely `美術館に展示してあるものに正解は一つもない`, but the first OCR pass yielded `美術館に皆展示…`; preserved with a review marker rather than silently corrected.
-5. Blue watermark strings are non-printed artifacts and several Chinese characters are not reliable at this resolution; they are included only as image/crop notes.
-
-**No answer choices were selected or invented.**
-
----
+1. **Page 08 garden name:** confirmed from source pixels as `多田庭園`.
+2. **Page 08 passage (5):** confirmed as `教えた仕事だけは`.
+3. **Page 09 passage (1):** confirmed as `論戦が闘わされていることでしょう`.
+4. **Page 10 passage (2):** confirmed as `美術館に展示（注１）してあるものに正解は一つもない`.
+5. Blue watermark strings remain non-exam artifacts and are excluded from package data.
 
 ## Image/crop inventory
 
@@ -329,4 +323,4 @@ Visual OCR was performed page-by-page on the five local PNGs, with an independen
 - [x] page-10.png
 - [x] page-11.png
 
-**Artifact status:** extraction written; review required for the five uncertainty items above before downstream structured-package ingestion.
+**Artifact status:** the four exam-text uncertainties above were resolved by direct source-pixel review; only non-exam watermark glyphs remain uncertain.

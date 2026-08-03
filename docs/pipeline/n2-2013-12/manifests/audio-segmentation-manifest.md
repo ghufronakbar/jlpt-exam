@@ -1,6 +1,6 @@
 # N2 2013-12 listening segmentation manifest
 
-Status: `needs_review` until clips are uploaded/read back and boundary spot-check is complete.
+Status: `verified`. All clips were uploaded/read back, HTTP-byte checked, and their ASR-marker/silence boundaries plus full-waveform edges were reviewed.
 
 Source: `source-listening.mp3` (2735.856 s, MP3, 32 kHz stereo).
 

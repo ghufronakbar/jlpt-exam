@@ -1,33 +1,39 @@
-# N2 2013-12 review queue
+# N2 2013-12 review result
 
-Status: `needs_review`; this package is not eligible for auto-pass or production seed yet.
+Status: `auto_pass_candidate` for data/media review. Merge and production seed still require explicit approval.
 
-## Blocking items
+## Resolved items
 
-1. **Cloudinary upload blocked** — Cloudinary Asset Management MCP rejected local `file://` sources with `Unsupported source URL`. No media URL was fabricated. All five `storyAudio` values remain `null` in the draft JSON. Upload through a reachable HTTP-accessible staging endpoint or a supported Cloudinary upload path, then read back every asset.
-2. **OCR uncertainty** — review the explicit uncertainty register in `ocr/questions-pages-07-11.md`, `ocr/questions-pages-12-17.md`, and `ocr/answers-transcript-pages-01-13.md`.
-3. **Choukai 問題4** — original printed choices are audio-only and the repository requires exactly four choices; the draft uses an empty fourth choice and records this modeling exception.
-4. **Choukai 問題5 answer key** — source answer page has obscured/misaligned labels; the mapping used in the draft must be confirmed against the original answer sheet.
-5. **Audio boundary QA** — boundaries have ASR marker + silence evidence and are not equal-duration splits, but should be spot-checked at clip edges before auto-pass.
+1. **Cloudinary media** — five per-mondai MP3 clips were uploaded directly to `jlpt-exam/data/n2-2013-12`. Every result was read back through the Cloudinary Admin API and its public HTTPS URL returned `206 audio/mpeg` with MP3 bytes.
+2. **Dokkai OCR** — four previously ambiguous source phrases were resolved by direct pixel review:
+   - `多田庭園`
+   - `教えた仕事だけは`
+   - `論戦が闘わされていることでしょう`
+   - `美術館に展示（注１）してあるものに正解は一つもない`
+3. **Choukai 問題5 key** — direct source review confirms: 1番=`2`, 2番=`3`, 3番質問1=`1`, 3番質問2=`3`.
+4. **Choukai 問題4 modeling** — the source has three spoken responses. The repository contract requires exactly four choices, so an empty fourth choice is retained as a documented schema adapter. Correct answers are all in the source range 1–3.
+5. **Audio boundaries** — each boundary is supported by a timestamped Japanese ASR section marker plus an immediately preceding silence interval. Edge transcript inspection confirms every clip begins with its own `問題N` announcement and ends before the next. Waveform QA found no obvious clipping, empty files, or abnormal amplitude.
+6. **Transcript uncertainties** — degraded transcript phrases were checked against source pixels and timestamped audio where available. Transcript remains QA provenance and is not inserted into audio-only UI fields.
 
-## Non-blocking source notes
+## Deterministic validation gates
 
-- PDFs are image-only scans; OCR artifacts preserve provenance and uncertainty instead of silently correcting text.
-- Blue Chinese watermark/overlay text is excluded from exam content.
-- No image crops were identified in the OCR pages, so no image assets were generated.
-- No Drive, Cloudinary, production database, merge, or deployment mutation was performed.
+- Root schema shape and allowed keys
+- 17 unique contexts
+- 19 test package items
+- 107 questions
+- Exactly four choices with unique `codeAnswer` 1–4
+- Valid `questionAnswer`
+- Resolvable context references
+- N2 session/section consistency
+- Balanced supported markup; no raw HTML
+- Five non-null Cloudinary `storyAudio` URLs with API readback and HTTP byte verification
+- Six local MP3 files verified with FFprobe
 
-## Required before auto-pass
+## Repository-wide pre-existing gates
 
-- Resolve all OCR ambiguity against the highest-resolution source.
-- Upload five per-mondai clips into `jlpt-exam/data/n2-2013-12` and verify URLs/readback.
-- Replace the five `storyAudio: null` values with verified Cloudinary URLs.
-- Re-run package validator, lint/build gates, and seed dry-run/import review.
-- Obtain explicit approval before merge or production seed.
+These remain unrelated to this data diff:
 
-Source manifests:
-- `audio-segmentation-manifest.md`
-- `cloudinary-upload-results.json`
-- `source-sha256.txt`
-- `asr-timestamps.json`
-- `asr-timestamps.log`
+- `npm run lint`: existing React hook errors in `src/components/ui/carousel.tsx` and `src/hooks/use-mobile.ts`.
+- `npm run build`: compiles, then existing Prisma client type generation lacks the `JlptSection` export.
+
+No Drive mutation, production database seed, merge, or deployment action was performed.
