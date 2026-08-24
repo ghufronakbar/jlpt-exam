@@ -2250,7 +2250,7 @@
       ]
     },
     {
-      "mondaiType": "CHOUKAI_QUICK_RESPONSE",
+      "mondaiType": "CHOUKAI_EXPRESSION",
       "section": "CHOUKAI",
       "session": 3,
       "order": 4,
@@ -2260,7 +2260,7 @@
           "order": 1,
           "questionText": "",
           "questionAnswer": 2,
-          "questionImage": null,
+          "questionImage": "https://res.cloudinary.com/dankuh3tf/image/upload/v1787580341/n3-2022-12-choukai-04-01.png",
           "questionContextRef": "ctx-choukai-4",
           "questionChoices": [
             {
@@ -2285,7 +2285,7 @@
           "order": 2,
           "questionText": "",
           "questionAnswer": 1,
-          "questionImage": null,
+          "questionImage": "https://res.cloudinary.com/dankuh3tf/image/upload/v1787580344/n3-2022-12-choukai-04-02.png",
           "questionContextRef": "ctx-choukai-4",
           "questionChoices": [
             {
@@ -2310,7 +2310,7 @@
           "order": 3,
           "questionText": "",
           "questionAnswer": 3,
-          "questionImage": null,
+          "questionImage": "https://res.cloudinary.com/dankuh3tf/image/upload/v1787580347/n3-2022-12-choukai-04-03.png",
           "questionContextRef": "ctx-choukai-4",
           "questionChoices": [
             {
@@ -2335,7 +2335,7 @@
           "order": 4,
           "questionText": "",
           "questionAnswer": 2,
-          "questionImage": null,
+          "questionImage": "https://res.cloudinary.com/dankuh3tf/image/upload/v1787580350/n3-2022-12-choukai-04-04.png",
           "questionContextRef": "ctx-choukai-4",
           "questionChoices": [
             {
