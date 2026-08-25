@@ -3,7 +3,7 @@
 - Source: `/opt/data/jlpt-pipeline/sources/n3-2017-07/audio.mp3`
 - Source duration: `2284.524s`; ffprobe: MP3, 32 kHz, stereo, 64 kb/s
 - ASR: `asr-timestamps.json`, faster-whisper small, Japanese, word timestamps; 421 segments; duration readback `2284.4895s`
-- Boundary method: ASR 問題 markers plus section transition timing. These are provisional source-envelope boundaries and should be spot-checked before treating as fully auto-pass.
+- Boundary method: ASR 問題 markers plus section transition timing. These are provisional source-envelope boundaries. ASR markers are clear, but the current silence scan did not produce discrete silence intervals at the selected boundaries; keep the clips `needs_review` rather than auto-pass.
 
 | Mondai | Output | Start | End | FFprobe duration | Marker evidence | Status |
 |---|---|---:|---:|---:|---|---|
