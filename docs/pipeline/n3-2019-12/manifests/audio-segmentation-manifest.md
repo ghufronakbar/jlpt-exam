@@ -41,7 +41,7 @@ MP3 frame/encoder padding accounts for the small difference between intended spa
 - Reproduction script: `generated/segment_choukai_audio.py`
 - All five outputs were re-encoded at MP3/48 kHz/stereo/128 kb/s and read successfully by FFprobe.
 - Counts and script order are 6/6/3/4/9; no item marker falls across a chosen section boundary.
-- The fragment intentionally keeps all five `storyAudio` fields `null`: these are local clips only, and repository/Cloudinary writes are outside scope.
+- The package-local fragment initially kept all five `storyAudio` fields `null` during source-only generation. Final assembly uploaded/read back the five clips and populated verified Cloudinary URLs in `src/test-package-data/n3-2019-12.json`.
 
 ## Review caveat
 
