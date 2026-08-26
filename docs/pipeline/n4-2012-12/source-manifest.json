@@ -2,7 +2,7 @@
   "manifestVersion": "2.0",
   "package": "n4-2012-12",
   "exam": "JLPT N4 December 2012",
-  "status": "candidate_generated_needs_review",
+  "status": "user_reviewed",
   "sourceFiles": {
     "questionsPdf": {
       "path": "/opt/data/jlpt-pipeline/sources/n4-2012-12/questions.pdf",
@@ -100,8 +100,8 @@
     "imageChecksums": "/opt/data/jlpt-pipeline/sources/n4-2012-12/generated/image-checksums.sha256"
   },
   "reviewItems": [
-    "Spot-check Q11 distractor glyphs: focused native scan recovery is 揚所 / 場所 / 揚所 / 場所.",
-    "Spot-check Q13 distractors: focused native scan recovery is 便宜 / 便理 / 便立 / 便利.",
+    "Q11 reviewed by user: option 4 is the correct 場所; option 2 is the wrong distractor 場炉; options 1 and 3 are 揚所.",
+    "Q13 reviewed by user: choices 便宜 / 便理 / 便立 / 便利 are safe.",
     "Spot-check the 16 M1 answer-image panels, composite M1 q4 image, and five M3 scene images in the UI.",
     "Spot-check the four audio boundaries; the clips are marker-anchored, non-overlapping, and FFprobe-verified.",
     "M4 has three spoken response alternatives in the source; schema code 4 is intentionally an empty adapter choice."
