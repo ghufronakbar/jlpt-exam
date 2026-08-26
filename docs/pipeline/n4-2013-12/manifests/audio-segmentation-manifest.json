@@ -1,0 +1,103 @@
+{
+  "source": "source/audio",
+  "source_duration": 2456.529002,
+  "clips": [
+    {
+      "clip": "n4-2013-12-01",
+      "source_start": 79.812789,
+      "source_end": 868.778322,
+      "source_duration": 788.965533,
+      "boundary_evidence": "M1 marker 87.000; leading silence 79.813-83.221; boundary silence 856.366-868.778",
+      "asr_marker_evidence": "faster-whisper-small-ja.json",
+      "ffprobe_duration": 789.002449,
+      "bytes": 12624601,
+      "sha256": "a951bb316931d1d48ec0dcd6b632e4c3b2fba2ff36bffe22a795d85b1c942ff3",
+      "edge_samples": {
+        "head": {
+          "samples": 22050,
+          "peak": 0.01709,
+          "rms": 0.000777
+        },
+        "tail": {
+          "samples": 20422,
+          "peak": 0.009491,
+          "rms": 0.00018
+        }
+      },
+      "status": "needs_review_audio_edge_playback"
+    },
+    {
+      "clip": "n4-2013-12-02",
+      "source_start": 856.366259,
+      "source_end": 1776.608866,
+      "source_duration": 920.242607,
+      "boundary_evidence": "M2 marker 871.910; leading silence 856.366-868.778; M3 marker 1779.080 follows boundary",
+      "asr_marker_evidence": "faster-whisper-small-ja.json",
+      "ffprobe_duration": 920.293878,
+      "bytes": 14725264,
+      "sha256": "9bc9e83f202145b1b39320460212c41e9cc03dd87287539e526959bf64e1ac6b",
+      "edge_samples": {
+        "head": {
+          "samples": 22050,
+          "peak": 0.004028,
+          "rms": 0.000359
+        },
+        "tail": {
+          "samples": 19793,
+          "peak": 0.00827,
+          "rms": 0.000168
+        }
+      },
+      "status": "needs_review_audio_edge_playback"
+    },
+    {
+      "clip": "n4-2013-12-03",
+      "source_start": 1764.060839,
+      "source_end": 2093.025034,
+      "source_duration": 328.9641949999998,
+      "boundary_evidence": "M3 marker 1779.080; leading silence 1764.061-1776.609; M4 marker 2095.950 follows boundary",
+      "asr_marker_evidence": "faster-whisper-small-ja.json",
+      "ffprobe_duration": 329.012245,
+      "bytes": 5264757,
+      "sha256": "a9cf0a75a131c352a1ac2859938ae292acba7530ea8ea2641a13453b1fbdc432",
+      "edge_samples": {
+        "head": {
+          "samples": 22050,
+          "peak": 0.014557,
+          "rms": 0.000814
+        },
+        "tail": {
+          "samples": 19931,
+          "peak": 0.007629,
+          "rms": 0.000134
+        }
+      },
+      "status": "needs_review_audio_edge_playback"
+    },
+    {
+      "clip": "n4-2013-12-04",
+      "source_start": 2082.700204,
+      "source_end": 2456.529002,
+      "source_duration": 373.828798,
+      "boundary_evidence": "M4 marker 2095.950; leading silence 2082.700-2093.025; source tail retained",
+      "asr_marker_evidence": "faster-whisper-small-ja.json",
+      "ffprobe_duration": 373.86449,
+      "bytes": 5982393,
+      "sha256": "54e54b4b0480120fdd1418042d0e009ca7ef85b218b6309b8276fe8e3681f25c",
+      "edge_samples": {
+        "head": {
+          "samples": 22050,
+          "peak": 0.001953,
+          "rms": 8.9e-05
+        },
+        "tail": {
+          "samples": 20476,
+          "peak": 0.0,
+          "rms": 0.0
+        }
+      },
+      "status": "needs_review_audio_edge_playback"
+    }
+  ],
+  "policy": "Clip spans overlap only silence between mondai to retain leading marker/instruction and add boundary padding. ASR and silencedetect evidence are recorded; human listening review remains needed for semantic edge ownership."
+}
