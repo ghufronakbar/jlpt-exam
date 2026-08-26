@@ -8,13 +8,13 @@
 - 19 source-native picture crops were inspected. The initially too-tight four vehicle crops were regenerated and individually passed visual QA.
 - 4 MP3s and 19 PNGs were uploaded to Cloudinary under `jlpt-exam/data/n4-2013-12`. Every asset has Admin API readback and independent HTTPS byte-range/MIME verification.
 
-## Needs review before marking PR ready
+## Audio review approved
 
-The four Choukai clips were segmented using timestamped Japanese ASR markers plus long silence intervals. Each retained its own leading marker/instruction by starting within the silence before it. The final MP3 edge samples are low-amplitude/silent, so there is no numeric evidence of clipped waveform edges.
+The four Choukai clips were segmented using timestamped Japanese ASR markers plus long silence intervals. The user reviewed the full per-Mondai playback files on Discord and approved all four final cuts. Final local audio checksums are identical to those reviewed files, then the four Cloudinary audio assets were overwritten and verified again via Admin readback plus independent HTTPS range/MIME checks.
 
-A human audio playback review is still required to confirm semantic ownership at each M1→M2, M2→M3, and M3→M4 boundary. The final audio ledger and checksums are in `manifests/audio-segmentation-manifest.json`.
+The final audio ledger, exact spans, checksums, and approval status are in `manifests/audio-segmentation-manifest.json`.
 
-This is a review gate—not missing media or a failed structural check. The JSON deliberately leaves Choukai spoken text empty where the original test UI is audio-only; it does not insert the transcript as on-screen question/choice text.
+The JSON deliberately leaves Choukai spoken text empty where the original test UI is audio-only; it does not insert the transcript as on-screen question/choice text.
 
 ## Three-choice listening schema adapter
 

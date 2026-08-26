@@ -1,6 +1,6 @@
 {
   "package": "n4-2013-12",
-  "status": "candidate_generated_needs_audio_review",
+  "status": "auto_pass_candidate",
   "structural_validation": "PASS",
   "total_questions": 98,
   "item_counts": {
@@ -33,5 +33,6 @@
     "repository_contract": "All questions retain four structural choice codes 1-4.",
     "policy": "Choice code 4 is empty only as a structural adapter; every official answer remains in source codes 1-3."
   },
-  "remaining_gate": "Human playback review of three Choukai inter-mondai boundaries before converting draft PR to ready for review."
+  "remaining_gate": null,
+  "audio_review": "User approved the four per-Mondai playback cuts on Discord; final Cloudinary audio assets were re-uploaded and re-verified afterward."
 }

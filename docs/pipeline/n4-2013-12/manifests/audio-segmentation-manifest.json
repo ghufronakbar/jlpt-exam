@@ -4,100 +4,104 @@
   "clips": [
     {
       "clip": "n4-2013-12-01",
-      "source_start": 79.812789,
+      "source_start": 87.0,
       "source_end": 868.778322,
-      "source_duration": 788.965533,
-      "boundary_evidence": "M1 marker 87.000; leading silence 79.813-83.221; boundary silence 856.366-868.778",
+      "source_duration": 781.778322,
+      "boundary_evidence": "ASR 問題1 @ 87.000s; user playback approval; end silence before 問題2: 856.366–868.778s",
       "asr_marker_evidence": "faster-whisper-small-ja.json",
-      "ffprobe_duration": 789.002449,
-      "bytes": 12624601,
-      "sha256": "a951bb316931d1d48ec0dcd6b632e4c3b2fba2ff36bffe22a795d85b1c942ff3",
+      "ffprobe_duration": 781.818776,
+      "bytes": 12509662,
+      "sha256": "faf07aa9272c57c5c9d56c4c5ec6f92d185286f0719e9d469303f6cb6b032fff",
       "edge_samples": {
-        "head": {
+        "first_half_second": {
           "samples": 22050,
-          "peak": 0.01709,
-          "rms": 0.000777
+          "peak": 0.605408,
+          "rms": 0.255239
         },
-        "tail": {
-          "samples": 20422,
+        "last_half_second": {
+          "samples": 20266,
           "peak": 0.009491,
-          "rms": 0.00018
+          "rms": 0.000181
         }
       },
-      "status": "needs_review_audio_edge_playback"
+      "status": "human_playback_approved",
+      "approved_review_source": "review-audio/per-mondai-v3/01-Mondai-1.mp3"
     },
     {
       "clip": "n4-2013-12-02",
-      "source_start": 856.366259,
+      "source_start": 871.91,
       "source_end": 1776.608866,
-      "source_duration": 920.242607,
-      "boundary_evidence": "M2 marker 871.910; leading silence 856.366-868.778; M3 marker 1779.080 follows boundary",
+      "source_duration": 904.6988660000001,
+      "boundary_evidence": "ASR 問題2 @ 871.910s; user playback approval; end silence before 問題3: 1764.061–1776.609s",
       "asr_marker_evidence": "faster-whisper-small-ja.json",
-      "ffprobe_duration": 920.293878,
-      "bytes": 14725264,
-      "sha256": "9bc9e83f202145b1b39320460212c41e9cc03dd87287539e526959bf64e1ac6b",
+      "ffprobe_duration": 904.75102,
+      "bytes": 14476578,
+      "sha256": "c9b75a167e2515da0ab1dfd555d75180f5f440e473d9fba0a125e4afc7d9f7a0",
       "edge_samples": {
-        "head": {
+        "first_half_second": {
           "samples": 22050,
-          "peak": 0.004028,
-          "rms": 0.000359
+          "peak": 0.0,
+          "rms": 0.0
         },
-        "tail": {
+        "last_half_second": {
           "samples": 19793,
-          "peak": 0.00827,
-          "rms": 0.000168
+          "peak": 0.008301,
+          "rms": 0.000167
         }
       },
-      "status": "needs_review_audio_edge_playback"
+      "status": "human_playback_approved",
+      "approved_review_source": "review-audio/per-mondai-v3/02-Mondai-2.mp3"
     },
     {
       "clip": "n4-2013-12-03",
-      "source_start": 1764.060839,
+      "source_start": 1776.608866,
       "source_end": 2093.025034,
-      "source_duration": 328.9641949999998,
-      "boundary_evidence": "M3 marker 1779.080; leading silence 1764.061-1776.609; M4 marker 2095.950 follows boundary",
+      "source_duration": 316.41616799999974,
+      "boundary_evidence": "ASR 問題3 @ 1779.080s; user playback approval; starts before marker after M2 break; end silence before 問題4: 2082.700–2093.025s",
       "asr_marker_evidence": "faster-whisper-small-ja.json",
-      "ffprobe_duration": 329.012245,
-      "bytes": 5264757,
-      "sha256": "a9cf0a75a131c352a1ac2859938ae292acba7530ea8ea2641a13453b1fbdc432",
+      "ffprobe_duration": 316.447347,
+      "bytes": 5063719,
+      "sha256": "4b8480f2716ab33dd8ebd2fcbe8b0d6f4e69b085e5754db389e200130c8ba00c",
       "edge_samples": {
-        "head": {
+        "first_half_second": {
           "samples": 22050,
-          "peak": 0.014557,
-          "rms": 0.000814
+          "peak": 0.705902,
+          "rms": 0.220244
         },
-        "tail": {
-          "samples": 19931,
-          "peak": 0.007629,
-          "rms": 0.000134
+        "last_half_second": {
+          "samples": 20675,
+          "peak": 0.007782,
+          "rms": 0.000131
         }
       },
-      "status": "needs_review_audio_edge_playback"
+      "status": "human_playback_approved",
+      "approved_review_source": "review-audio/per-mondai-v3/03-Mondai-3.mp3"
     },
     {
       "clip": "n4-2013-12-04",
-      "source_start": 2082.700204,
+      "source_start": 2095.95,
       "source_end": 2456.529002,
-      "source_duration": 373.828798,
-      "boundary_evidence": "M4 marker 2095.950; leading silence 2082.700-2093.025; source tail retained",
+      "source_duration": 360.5790020000004,
+      "boundary_evidence": "ASR 問題4 @ 2095.950s; user playback approval; source tail retained",
       "asr_marker_evidence": "faster-whisper-small-ja.json",
-      "ffprobe_duration": 373.86449,
-      "bytes": 5982393,
-      "sha256": "54e54b4b0480120fdd1418042d0e009ca7ef85b218b6309b8276fe8e3681f25c",
+      "ffprobe_duration": 360.620408,
+      "bytes": 5770488,
+      "sha256": "a8cbe31d0d9add5ab09a4506543dad020635f4cdfb31e92401ee49fcfcda4518",
       "edge_samples": {
-        "head": {
+        "first_half_second": {
           "samples": 22050,
-          "peak": 0.001953,
-          "rms": 8.9e-05
+          "peak": 6.1e-05,
+          "rms": 5e-06
         },
-        "tail": {
-          "samples": 20476,
+        "last_half_second": {
+          "samples": 20224,
           "peak": 0.0,
           "rms": 0.0
         }
       },
-      "status": "needs_review_audio_edge_playback"
+      "status": "human_playback_approved",
+      "approved_review_source": "review-audio/per-mondai-v3/04-Mondai-4.mp3"
     }
   ],
-  "policy": "Clip spans overlap only silence between mondai to retain leading marker/instruction and add boundary padding. ASR and silencedetect evidence are recorded; human listening review remains needed for semantic edge ownership."
+  "policy": "Final clips match the user-approved per-Mondai review files exactly. Boundaries are supported by timestamped ASR markers and preceding/following silence evidence; user approved playback on Discord."
 }
