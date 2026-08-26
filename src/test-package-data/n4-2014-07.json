@@ -2570,7 +2570,7 @@
             }
           ],
           "questionContextRef": "ctx-choukai-3",
-          "questionImage": "https://res.cloudinary.com/dankuh3tf/image/upload/v1787733351/n4-2014-07-choukai-m3-q1.png",
+          "questionImage": "https://res.cloudinary.com/dankuh3tf/image/upload/v1787739735/n4-2014-07-user-choukai-m3-q1.png",
           "questionAudio": null,
           "explanation": null
         },
@@ -2601,7 +2601,7 @@
             }
           ],
           "questionContextRef": "ctx-choukai-3",
-          "questionImage": null,
+          "questionImage": "https://res.cloudinary.com/dankuh3tf/image/upload/v1787739890/n4-2014-07-user-choukai-m3-q2.png",
           "questionAudio": null,
           "explanation": null
         },
@@ -2632,7 +2632,7 @@
             }
           ],
           "questionContextRef": "ctx-choukai-3",
-          "questionImage": null,
+          "questionImage": "https://res.cloudinary.com/dankuh3tf/image/upload/v1787739894/n4-2014-07-user-choukai-m3-q3.png",
           "questionAudio": null,
           "explanation": null
         },
@@ -2663,7 +2663,7 @@
             }
           ],
           "questionContextRef": "ctx-choukai-3",
-          "questionImage": null,
+          "questionImage": "https://res.cloudinary.com/dankuh3tf/image/upload/v1787739897/n4-2014-07-user-choukai-m3-q4.png",
           "questionAudio": null,
           "explanation": null
         },
@@ -2694,7 +2694,7 @@
             }
           ],
           "questionContextRef": "ctx-choukai-3",
-          "questionImage": null,
+          "questionImage": "https://res.cloudinary.com/dankuh3tf/image/upload/v1787739900/n4-2014-07-user-choukai-m3-q5.png",
           "questionAudio": null,
           "explanation": null
         }
